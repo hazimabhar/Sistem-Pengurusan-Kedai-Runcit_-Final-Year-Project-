@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  idAccount String   @id @default(uuid())
+  Worker    Worker?
+  Manager   Manager?
+  Sale      Sale[]
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model Worker {
+  idWorker    String   @id @default(uuid())
+  icNumber    String   @unique
+  name        String
+  password    String
+  address     String
+  phoneNumber String
+  gender      String
+  email       String
+  role        String
+  User        User     @relation(fields: [idAccount], references: [idAccount])
+  idAccount   String   @unique
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
+model Manager {
+  idManager   String   @id @default(uuid())
+  icNumber    String   @unique
+  name        String
+  password    String
+  address     String
+  phoneNumber String
+  gender      String
+  email       String
+  role        String
+  User        User     @relation(fields: [idAccount], references: [idAccount])
+  idAccount   String   @unique
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
+model ItemBuyListUser {
+  Item      Item     @relation(fields: [idItem], references: [idItem])
+  idItem    String   @unique
+  BuyList   BuyList  @relation(fields: [idBuyList], references: [idBuyList])
+  idBuyList String   @unique
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  @@id([idItem, idBuyList])
+}
+
+model Item {
+  idItem          String           @id @default(uuid())
+  name            String
+  category        String
+  price           Float
+  barcode         String           @unique
+  weight          String
+  quantity        Int
+  BuyList         BuyList[]
+  createdAt       DateTime         @default(now())
+  updateAt        DateTime         @updatedAt
+  ItemBuyListUser ItemBuyListUser?
+}
+
+model BuyList {
+  idBuyList       String           @id @default(uuid())
+  Item            Item[]
+  Sale            Sale             @relation(fields: [idSale], references: [idSale])
+  idSale          String           @unique
+  createdAt       DateTime         @default(now())
+  updateAt        DateTime         @updatedAt
+  ItemBuyListUser ItemBuyListUser?
+}
+
+model Sale {
+  idSale        String    @id @default(uuid())
+  price         Float
+  paymentMethod String
+  BuyList       BuyList[]
+  User          User      @relation(fields: [idAccount], references: [idAccount])
+  idAccount     String    @unique
+  Report        Report    @relation(fields: [idReport], references: [idReport])
+  idReport      String    @unique
+  createdAt     DateTime  @default(now())
+  updateAt      DateTime  @updatedAt
+}
+
+model Report {
+  idReport    String   @id @default(uuid())
+  Sale        Sale[]
+  numberSale  Int
+  saleRevenue Float
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}

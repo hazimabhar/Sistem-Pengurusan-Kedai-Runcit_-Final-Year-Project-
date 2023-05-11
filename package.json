@@ -1,0 +1,40 @@
+{
+  "name": "final-year-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.7",
+    "@prisma/client": "^4.13.0",
+    "@vue/compiler-sfc": "^3.2.47",
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.4",
+    "nodemon": "^2.0.22",
+    "pocketbase": "^0.10.0",
+    "prisma": "^4.13.0",
+    "vue": "^3.2.47",
+    "vue-jstree": "^2.1.6",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.0"
+  },
+  "description": "This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.",
+  "main": "vite.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
