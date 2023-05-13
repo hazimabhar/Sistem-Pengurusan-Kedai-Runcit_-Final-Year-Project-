@@ -54,7 +54,6 @@ export default {
             </div>
         </div>
     </RouterLink>
-    </div>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
     <dialog class="w-1/4 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
         <div class="">
@@ -89,4 +88,5 @@ export default {
             </div>
         </div>
     </dialog>
+</div>
 </template>

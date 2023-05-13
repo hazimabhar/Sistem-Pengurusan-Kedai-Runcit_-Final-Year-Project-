@@ -10,23 +10,26 @@ import {
 
     const navItems = [
         {link:"/manageinventory", label: "Urus Inventori", children: [
-            {link:"/manageinventory/add", label:"Tambah Stok", children:[], icon:null},
-            {link:"/manageinventory/delete", label:"Buang Produk", children:[], icon:null},
-            {link:"/registerProduct", label:"Daftar Produk", children:[], icon:null},
-            {link:"/manageinventory/update", label:"Kemaskini Maklumat", children:[], icon:null},            
+            {link:"/manager/managermanageinventory/add", label:"Tambah Stok", children:[], icon:null},
+            {link:"/manager/managermanageinventory/delete", label:"Buang Produk", children:[], icon:null},
+            {link:"/manager/registerproduct", label:"Daftar Produk", children:[], icon:null},
+            {link:"/manager/managermanageinventory/update", label:"Kemaskini Maklumat", children:[], icon:null},            
         ], icon:null},
         {link:"/showstock", label: "Kategori", children:[
-            {link:"/listitem/can", label:"Tin", children:[], icon:null},
-            {link:"/listitem/detergent", label:"Sabun", children:[], icon:null}, 
-            {link:"/listitem/drink", label:"Minuman", children:[], icon:null},
-            {link:"/listitem/spice", label:"Rempah", children:[], icon:null},
-            {link:"/listitem/bread", label:"Roti", children:[], icon:null},
-            {link:"/listitem/sauce", label:"Sos dan Kicap", children:[], icon:null},
-            {link:"/listitem/food", label:"Makanan", children:[], icon:null},
-            {link:"/listitem/tool", label:"Alatan", children:[], icon:null},
+            {link:"/manager/managerlistitem/can", label:"Tin", children:[], icon:null},
+            {link:"/manager/managerlistitem/detergent", label:"Sabun", children:[], icon:null}, 
+            {link:"/manager/managerlistitem/drink", label:"Minuman", children:[], icon:null},
+            {link:"/manager/managerlistitem/spice", label:"Rempah", children:[], icon:null},
+            {link:"/manager/managerlistitem/bread", label:"Roti", children:[], icon:null},
+            {link:"/manager/managerlistitem/sauce", label:"Sos dan Kicap", children:[], icon:null},
+            {link:"/manager/managerlistitem/food", label:"Makanan", children:[], icon:null},
+            {link:"/manager/managerlistitem/tool", label:"Alatan", children:[], icon:null},
         ]},
-        {link:"/cashier", label:"Juruwang", children:[], icon:"../assets/box.png"},
-        {link:"/closesale", label:"Tutup Jualan", children:[], icon:null},
+        {link:"/manager/managercashier", label:"Juruwang", children:[], icon:"../assets/box.png"},
+        {link:"/manager/managerclosesale", label:"Tutup Jualan", children:[], icon:null},
+        {link:"/manager/registerworker", label:"Daftar Pekerja", children:[], icon:null},
+        {link:"/manager/updateworker", label:"Kemaskini Maklumat", children:[], icon:null},
+
     ]
 </script>
 

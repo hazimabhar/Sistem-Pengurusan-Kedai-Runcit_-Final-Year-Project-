@@ -1,6 +1,6 @@
 <script setup>
-import NavBar from '../components/NavBar.vue';
-import Product from '../../../components/Product.vue';
+import NavBar from '../../components/NavBar.vue';
+import Product from '../../../../components/Product.vue';
 import { RouterView } from 'vue-router';
 document.title="Senarai Produk"
 </script>

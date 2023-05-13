@@ -1,7 +1,7 @@
 <script setup>
-import MyButton from '../components/MyButton.vue';
+import MyButton from '../../components/MyButton.vue';
 import { RouterLink } from 'vue-router';
-import NavBar from '../components/NavBar.vue';
+import ManagerNavBar from '../../components/ManagerNavBar.vue';
 import { ref } from 'vue';
 
 const imageUrl = ref(null);
@@ -10,16 +10,16 @@ document.title="Register Product";
 </script>
 <template>
   <div>
-    <NavBar/>
+    <ManagerNavBar/>
     <div class="bg-slate-100 min-h-screen max-md:bg-white ">
         <div>
-            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">Daftar Produk</p>
+            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">Daftar Produk Hazim</p>
         </div>
             <div class="w-9/12 mx-auto mr-16 bg-white max-lg:w-11/12 max-lg:mx-auto max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
                 <ul class="inline-flex list-none px-8 pb-10">
-                    <RouterLink to="/home" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
+                    <RouterLink to="/manager" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
                     <span class="px-2">></span>
-                    <RouterLink to="/manageinventory" class="text-blue-500 hover:underline">Urus Inventori</RouterLink> 
+                    <RouterLink to="/manager/managermanageinventory" class="text-blue-500 hover:underline">Urus Inventori</RouterLink> 
                     <span class="px-2">></span>
                     <li>Daftar Produk</li>
                 </ul>
@@ -105,7 +105,7 @@ document.title="Register Product";
 </template>
 
 <script>
-import ImageInputReviewer from '../components/ImageInputReviewer.vue'
+import ImageInputReviewer from '../../components/ImageInputReviewer.vue'
 import axios from 'axios'
 
 export default {

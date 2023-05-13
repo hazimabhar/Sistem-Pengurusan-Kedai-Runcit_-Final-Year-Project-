@@ -1,5 +1,5 @@
 <script setup>
-import Product from '../../../components/Product.vue';
+import ProductVue from '../../../../components/Product.vue';
 import { RouterView } from 'vue-router';
 document.title="Senarai Produk"
 </script>
