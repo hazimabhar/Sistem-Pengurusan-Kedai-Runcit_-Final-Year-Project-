@@ -1,0 +1,77 @@
+<script>
+import { ref } from 'vue';
+import axios from 'axios';
+
+export default {
+
+    data()
+    {
+        return {
+            item: [],
+            isOpen: false,
+            selectedItem: null
+        }
+    },
+    mounted(){
+        axios.get('http://localhost:3000/item/detergent')
+        .then(response=> {
+            this.item = response.data
+            console.log(response)
+        })
+        .catch(error=> console.log(error))
+    },
+    methods: {
+        toggleDialog(item) {
+            this.selectedItem = item;
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
+        }
+    }
+}
+
+
+
+</script>
+
+<template>
+  <div class="w-10/12 grid grid-cols-5 gap-32 mx-auto text-center max-md:block max-md:w-60" >
+    <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
+        <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">
+            <div class="bg-white py-5 rounded-xl  h-44">
+                <img class="mx-auto" src="" alt="Produk">
+            </div>
+             <div class="p-2">
+                {{item.name}}
+            </div>
+        </div>
+    </RouterLink>
+    </div>
+    <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
+    <dialog class="w-1/4 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+        <div class="">
+            <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
+                <img class="mx-auto" src="" alt="Produk">
+            </div>
+            <div class="py-2" v-if="selectedItem">
+                <div class="flex justify-between p-5">
+                <div class="">
+                    <p>Nama Produk</p>
+                    <p>Harga Produk</p>
+                    <p>Berat Produk</p>
+                    <p>Kuantiti Produk</p>
+                    <p>Kategori</p>
+                </div>
+                <div class="">
+                    <p>{{selectedItem.name}}</p>
+                    <p>RM {{selectedItem.price}}</p>
+                    <p>{{selectedItem.weight}}</p>
+                    <p>{{selectedItem.quantity}}</p>
+                    <p>{{selectedItem.category}}</p>
+                </div>
+                </div>
+            </div>
+            <div class="w-max mx-auto">
+                <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Ok</button>
+            </div>
+        </div>
+    </dialog>
+</template>
