@@ -3,7 +3,6 @@ import MyButton from '../components/MyButton.vue';
 import { RouterLink } from 'vue-router';
 import NavBar from '../components/NavBar.vue';
 import { ref } from 'vue';
-import PocketBase, { Record } from 'pocketbase';
 
 
 const imageUrl = ref(null);

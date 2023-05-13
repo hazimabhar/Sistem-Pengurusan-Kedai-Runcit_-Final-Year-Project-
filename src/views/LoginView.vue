@@ -6,9 +6,7 @@ import NumberInput from '../components/NumberInput.vue';
 import { RouterLink } from 'vue-router';
 import router from "../router"
 import { ref } from '@vue/reactivity';
-import PocketBase from "pocketbase"; 
 
-const pb = new PocketBase('http://127.0.0.1:8090');
 
 async function submit()
 {

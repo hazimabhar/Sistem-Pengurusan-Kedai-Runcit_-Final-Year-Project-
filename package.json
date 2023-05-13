@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "start": "nodemon index.js"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.7",
