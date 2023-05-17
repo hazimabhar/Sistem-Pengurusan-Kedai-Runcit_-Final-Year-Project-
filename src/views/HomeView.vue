@@ -1,8 +1,6 @@
 <script setup>
-import { RouterLink } from 'vue-router';
 import NavBar from '../components/NavBar.vue';
 import Process from '../components/Process.vue';
-import SideBar from '../components/SideBar.vue';
 
 document.title='Home Page'
 </script>

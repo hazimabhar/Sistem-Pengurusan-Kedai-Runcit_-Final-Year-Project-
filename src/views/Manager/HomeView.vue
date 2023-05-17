@@ -19,8 +19,8 @@ document.title='Home Page'
                 <div class="w-3/5 grid grid-cols-2 gap-10 mx-auto text-center max-md:block max-md:w-2/3">
                     <Process class="hover:text-black" to="/manager/managermanageinventory" text="Urus Inventori" icon="fa-solid fa-boxes-stacked"/>
                     <Process class="hover:text-black" to="/manager/managershowstock" text="Papar Stok" icon="fa-solid fa-circle-info"/>
-                    <Process class="hover:text-black" to="/manager/managercashier" text="Juruwang" icon="fa-solid fa-cash-register"/>
-                    <Process class="hover:text-black" to="/manager/managerclosesale" text="Tutup Jualan" icon="fa-sharp fa-solid fa-money-bills"/>
+                    <Process class="hover:text-black" to="/manager/registerworker" text="Daftar Pekerja" icon="fa-solid fa-file-circle-plus"/>
+                    <Process class="hover:text-black" to="/manager/listworker" text="Senarai Pekerja" icon="fa-solid fa-pen-to-square"/>
                 </div>
             <div class="flex mt-20 justify-evenly max-md:block max-md:w-96 max-md:mx-auto max-sm:mx-auto">
                 <div class= "rounded-2xl p-5 shadow-container w-5/12 max-md:px-12 max-md:w-8/12 max-md:mx-11">

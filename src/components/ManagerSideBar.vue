@@ -25,10 +25,8 @@ import {
             {link:"/manager/managerlistitem/food", label:"Makanan", children:[], icon:null},
             {link:"/manager/managerlistitem/tool", label:"Alatan", children:[], icon:null},
         ]},
-        {link:"/manager/managercashier", label:"Juruwang", children:[], icon:"../assets/box.png"},
-        {link:"/manager/managerclosesale", label:"Tutup Jualan", children:[], icon:null},
         {link:"/manager/registerworker", label:"Daftar Pekerja", children:[], icon:null},
-        {link:"/manager/updateworker", label:"Kemaskini Maklumat", children:[], icon:null},
+        {link:"/manager/listworker", label:"Senarai Pekerja", children:[], icon:null},
 
     ]
 </script>

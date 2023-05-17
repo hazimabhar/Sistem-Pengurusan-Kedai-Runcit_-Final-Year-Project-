@@ -398,6 +398,10 @@ const router = createRouter({
                     component:()=> import ("../views/Manager/RegisterWorker.vue")
                 },
                 {
+                    path:"listworker",
+                    component:()=> import("../views/Manager/ListWorker.vue")
+                },
+                {
                     path:"updateworker",
                     component:()=> import ("../views/Manager/UpdateWorker.vue")
                 }

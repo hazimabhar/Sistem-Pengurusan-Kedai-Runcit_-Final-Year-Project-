@@ -79,7 +79,7 @@ document.title="Register Product";
                                 <label class="text-red-600 font-light text-sm" for="errorName" id="errorName"></label><br>
                                 <label class="text-gray-500" for="Nama Produk">Kodbar Produk</label><br>
                                 <input class="outline-gray-300 outline outline-2 w-1/5 p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500 absolute max-lg:w-1/3 max-sm:w-4/5" type="text" placeholder="Barkod Produk" id="barkod" v-model="barkodProduk"><br>
-                                <i class="fa-solid fa-camera relative bottom-2 left-3/4 pl-10 hover:opacity-50 cursor-pointer max-lg:left-2/3 max-sm:left-3/4"></i>
+                                <i class="fa-solid fa-camera relative bottom-2 left-3/4 pl-10 hover:opacity-50 cursor-pointer max-lg:left-2/3 max-sm:left-[78%]"></i>
                                 <label class="text-red-600 font-light text-sm" for="errorName" id="errorName"></label><br>
                             </div>
                             <div class="w-2/12 mx-auto max-lg:w-4/12 max-sm:w-full">
