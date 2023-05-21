@@ -9,7 +9,8 @@ export default {
         return {
             item: [],
             isOpen: false,
-            selectedItem: null
+            selectedItem: null,
+            updateId:""
         }
     },
     mounted(){
@@ -23,6 +24,7 @@ export default {
     methods: {
         toggleDialog(item) {
             this.selectedItem = item;
+            this.updateId=this.selectedItem.idItem
             this.isOpen = !this.isOpen; // Toggle the isOpen property
         }
     }
@@ -84,14 +86,14 @@ export default {
           </div>
         </div>
       </div>
-      <div class="w-max mx-auto">
-        <button
-          class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black"
-          @click="toggleDialog"
-        >
-          Kemaskini
-        </button>
-      </div>
+        <div class="flex justify-evenly">
+                <div>
+                    <button class="w-max bg-red-600 text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Batal</button>
+                </div>
+                <div class="mt-[7px]">
+                    <RouterLink  v-bind:to="`/updateproduct/`+updateId" class="w-max bg-blue-600 text-white p-2 px-5 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " >Kemaskini</RouterLink>
+                </div>
+            </div>
     </div>
   </dialog>
 </div>

@@ -26,7 +26,16 @@ export default {
             this.isOpen = !this.isOpen; // Toggle the isOpen property
         },
         deleteProduct(item)
-        {
+        {            
+            axios.delete('http://localhost:3000/item/'+item)
+            .then(response => {
+                const index = this.item.findIndex(i => i.idItem === item)
+                if (index !== -1) {
+                    this.item.splice(index, 1); // Remove the selected item from the item array
+                }
+            })
+            .catch(error=> console.log(error))
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
             console.log(item)
         }
     }
@@ -74,7 +83,7 @@ export default {
                     <button class="bg-black text-white p-2 px-8 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Batal</button>
                 </div>
                 <div>
-                    <button class="bg-red-600 text-white p-2 px-8 rounded-xl hover:bg-white hover:text-red-600 hover:outline hover:outline-red-600" @click="deleteProduct(selectedItem)">Buang</button>
+                    <button class="bg-red-600 text-white p-2 px-8 rounded-xl hover:bg-white hover:text-red-600 hover:outline hover:outline-red-600" @click="deleteProduct(selectedItem.idItem)">Buang</button>
                 </div>
             </div>
         </div>

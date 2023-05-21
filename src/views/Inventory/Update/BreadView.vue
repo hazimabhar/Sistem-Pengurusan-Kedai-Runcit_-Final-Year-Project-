@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import axios from 'axios';
 
 export default {
@@ -9,21 +9,31 @@ export default {
         return {
             item: [],
             isOpen: false,
-            selectedItem: null
+            selectedItem: null,
+            updateId:""
         }
     },
     mounted(){
         axios.get('http://localhost:3000/item/bread')
         .then(response=> {
             this.item = response.data
-            console.log(response)
+            console.log(this.item[0].idItem)
         })
         .catch(error=> console.log(error))
     },
     methods: {
         toggleDialog(item) {
             this.selectedItem = item;
+            this.updateId=this.selectedItem.idItem
             this.isOpen = !this.isOpen; // Toggle the isOpen property
+            console.log(this.selectedItem)
+        },
+        updateItem(selectedItem)
+        {
+            
+            // const updateItem = item.value.filter((item)=>item.idItem !== selectedItem.idItem)
+            // item.value = [...updateItem, selectedItem]
+         //copy element target, buang element dalam array, update element target, tambah element update    
         }
     }
 }
@@ -67,8 +77,13 @@ export default {
                 </div>
                 </div>
             </div>
-            <div class="w-max mx-auto">
-                <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Kemaskini</button>
+            <div class="flex justify-evenly">
+                <div>
+                    <button class="w-max bg-red-600 text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Batal</button>
+                </div>
+                <div class="mt-[7px]">
+                    <RouterLink  v-bind:to="`/updateproduct/`+updateId" class="w-max bg-blue-600 text-white p-2 px-5 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " >Kemaskini</RouterLink>
+                </div>
             </div>
         </div>
     </dialog>

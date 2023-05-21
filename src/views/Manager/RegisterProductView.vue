@@ -25,7 +25,7 @@ document.title="Register Product";
                 </ul>
                 <div class="w-full px-10 max-sm:p-0">
                     <p class=" text-xl font-semibold mb-4">Sila Masukkan Maklumat Produk</p>
-                    <form class="" @submit.prevent="registerProduct()">
+                    <form class="" @submit.prevent="registerWorker()">
                         <div class="flex justify-between max-sm:block">
                             <div class="">
                                 <label class="text-gray-500" for="Nama Produk">Nama Produk</label><br>
