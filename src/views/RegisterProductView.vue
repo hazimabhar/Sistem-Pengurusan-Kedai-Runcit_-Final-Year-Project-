@@ -41,11 +41,11 @@ document.title="Register Product";
                                     </div>
                                     <div class="py-4">
                                         <select class=" w-full cursor-pointer" name="berat" id="berat" v-model="unit">
-                                        <option value="">Unit</option>
+                                        <option disabled value="">Unit</option>
                                         <option value="G">Gram</option>
                                         <option value="Kg">Kg</option>
-                                        <option value="Kg">Mililiter</option>
-                                        <option value="Kg">Liter</option>
+                                        <option value="Mililiter">Mililiter</option>
+                                        <option value="Liter">Liter</option>
                                         </select>
                                     </div>
                                 </div>
@@ -128,7 +128,8 @@ export default {
     submitForm() {
         const name = this.namaProduk
         const price = parseFloat(this.hargaProduk)
-        const weight = (this.berat + this.unit)
+        const weight = this.berat
+        const unit = this.unit 
         const quantity = parseInt(this.kuantitiProduk)
         const category = document.querySelector('input[name="Kategori"]:checked')?.value
         const barcode = this.barkodProduk
@@ -138,6 +139,7 @@ export default {
             name,
             price,
             weight,
+            unit,
             quantity,
             category,
             barcode

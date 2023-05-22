@@ -78,13 +78,13 @@ document.title = "Update Product";
                       class="w-full cursor-pointer"
                       name="berat"
                       id="berat"
-                      v-model="unit"
+                      v-model="item.unit"
                     >
-                      <option value="">Unit</option>
+                      <option disabled value="">Unit</option>
                       <option value="G">Gram</option>
                       <option value="Kg">Kg</option>
-                      <option value="Kg">Mililiter</option>
-                      <option value="Kg">Liter</option>
+                      <option value="Mililiter">Mililiter</option>
+                      <option value="Liter">Liter</option>
                     </select>
                   </div>
                 </div>
@@ -156,9 +156,9 @@ document.title = "Update Product";
               </div>
               <div>
                 <MyButton
-                  txt="Daftar"
+                  txt="Kemaskini"
                   class="max-sm:px-8"
-                  @click.prevent="submitForm"
+                  @click.prevent="updateInfo"
                 />
               </div>
             </div>
@@ -182,7 +182,15 @@ export default {
     return {
       selectedImage: null,
       itemId:router.currentRoute.value.params.id,
-      item:""
+      item:{
+        name:'',
+        price:'',
+        weight:'',
+        unit:'',
+        quantity:'',
+        category:'',
+        barcode:''
+      }
     };
   },
   mounted(){
@@ -196,10 +204,17 @@ export default {
         .catch(error=> console.log(error))
     },
   methods: {
-    submitForm() {
-      // Do something with the selected image
-      console.log(item.value);
-      //   console.log(this.selectedImage)
+    updateInfo() {
+      this.item.price = parseFloat(this.item.price)
+      this.item.quantity = parseInt(this.item.quantity)
+
+      axios.put ('http://localhost:3000/item/'+this.itemId,this.item)
+      .then(response=>{
+        const updateItem = response.data;
+        console.log(updateItem)
+
+      })
+      .catch(error=>console.log(error))
     },
   },
 };

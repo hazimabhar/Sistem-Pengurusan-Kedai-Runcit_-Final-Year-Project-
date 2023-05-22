@@ -62,7 +62,7 @@ export default {
                   <div class="">
                       <p>{{selectedItem.name}}</p>
                       <p>RM {{selectedItem.price}}</p>
-                      <p>{{selectedItem.weight}}</p>
+                      <p>{{selectedItem.weight}} {{selectedItem.unit}}</p>
                       <p>{{selectedItem.quantity}}</p>
                       <p>{{selectedItem.category}}</p>
                       <p>{{selectedItem.barcode}}</p>
