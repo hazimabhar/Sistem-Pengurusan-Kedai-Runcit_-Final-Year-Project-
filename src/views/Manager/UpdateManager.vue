@@ -18,10 +18,10 @@ document.title='Home Page'
                     <span class="px-2">></span>
                     <RouterLink to="/manager/listworker" class="text-blue-500 hover:underline">Senarai Pekerja</RouterLink> 
                     <span class="px-2">></span>
-                    <li>Kemaskini Maklumat Pekerja </li>
+                    <li>Kemaskini Maklumat Pengurus </li>
                 </ul>
                 <div class="w-full px-10 max-sm:p-0">
-                    <p class=" text-xl font-semibold mb-4">Kemaskini Maklumat Pekerja</p>
+                    <p class=" text-xl font-semibold mb-4">Kemaskini Maklumat Pengurus</p>
                     <form class="" @submit.prevent="registerProduct()">
                         <div>
                             <label class="text-gray-500" for="Nama Penuh">Nama Penuh</label><br>
@@ -126,22 +126,25 @@ export default
                 gender:'',
                 role:''
             },
-            cantChange:{
+            cantChange:
+            {
                 icNumber:'',
                 password:'',
             }
+            
 
         }
     },
     async mounted()
     {
         console.log(this.userId)
-        await axios.get("http://localhost:3000/worker/"+this.userId)
+        await axios.get("http://localhost:3000/manager/"+this.userId)
         .then(response=>{
             this.user = response.data
             console.log(this.user)
         })
         .catch(error=>console.log(error))
+
         const idAccount = this.user.idAccount
         console.log(idAccount)
         await axios.get("http://localhost:3000/"+ idAccount)
@@ -157,11 +160,10 @@ export default
             console.log(this.user)
             console.log(this.userId)
 
-            await axios.put("http://localhost:3000/worker/"+this.userId, this.user)
+            await axios.put("http://localhost:3000/manager/"+this.userId, this.user)
             .then(response=>console.log(response))
             .catch(error=>console.log(error))
         }
-
     }
 }
 </script>

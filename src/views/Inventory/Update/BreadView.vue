@@ -28,13 +28,6 @@ export default {
             this.isOpen = !this.isOpen; // Toggle the isOpen property
             console.log(this.selectedItem)
         },
-        updateItem(selectedItem)
-        {
-            
-            // const updateItem = item.value.filter((item)=>item.idItem !== selectedItem.idItem)
-            // item.value = [...updateItem, selectedItem]
-         //copy element target, buang element dalam array, update element target, tambah element update    
-        }
     }
 }
 </script>

@@ -9,7 +9,10 @@ export default {
         return {
             item: [],
             isOpen: false,
-            selectedItem: null
+            selectedItem: null,
+            item:{
+                quantity:'',
+            }
         }
     },
     mounted(){
@@ -23,8 +26,24 @@ export default {
     methods: {
         toggleDialog(item) {
             this.selectedItem = item;
+            console.log(item.idItem)
             this.isOpen = !this.isOpen; // Toggle the isOpen property
+        },
+        updateStock(item)
+        {
+            this.item.quantity = parseInt(this.item.quantity)
+
+            axios.put ('http://localhost:3000/updatestock/'+ item.idItem ,this.item)
+            .then(response=>{
+            const updateItem = response.data;
+            console.log(updateItem)
+
+            })
+            .catch(error=>console.log(error))
+
+            console.log(item.idItem)
         }
+
     }
 }
 </script>
@@ -57,13 +76,14 @@ export default {
                 <div class="">
                     <p>{{selectedItem.quantity}}</p>
                     <input class="" type="text" placeholder="88888888888">
-                    <input class="w-1/3" placeholder="0" type="number">
+                    <input class="w-1/3" placeholder="0" type="number" v-model="item.quantity"
+>
 
                 </div>
                 </div>
             </div>
             <div class="w-max mx-auto">
-                <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Sah</button>
+                <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
             </div>
         </div>
     </dialog>

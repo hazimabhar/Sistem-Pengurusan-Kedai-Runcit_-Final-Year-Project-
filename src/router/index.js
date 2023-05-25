@@ -402,8 +402,12 @@ const router = createRouter({
                     component:()=> import("../views/Manager/ListWorker.vue")
                 },
                 {
-                    path:"updateworker",
+                    path:"updateworker/:id",
                     component:()=> import ("../views/Manager/UpdateWorker.vue")
+                },
+                {
+                    path:"updatemanager/:id",
+                    component:()=> import ("../views/Manager/UpdateManager.vue")
                 }
                 
             ]

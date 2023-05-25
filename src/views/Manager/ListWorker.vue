@@ -2,8 +2,7 @@
 import ManagerNavBar from '../../components/ManagerNavBar.vue';
 import MyButton from '../../components/MyButton.vue';
 import { RouterLink } from 'vue-router';
-
-
+import { ref } from 'vue';
 
 document.title='Home Page'
 </script>
@@ -21,74 +20,64 @@ document.title='Home Page'
                     <span class="px-2">></span>
                     <li>Senarai Pekerja </li>
                 </ul>
-                <div class="w-full px-10 max-sm:p-0">
+                <div class="w-full px-10  max-sm:p-0">
                     <p class=" text-xl font-semibold mb-4">Senarai Pekerja</p>
-                    <table class="border-2 border-slate-600 w-full" >
-                        <thead class="h-10 border-b-2 border-slate-600">
-                            <th class="border-r-2 border-slate-600">Nama</th>
-                            <th class="border-r-2 border-slate-600" >Nombor Telefon</th>
-                            <th class="border-r-2 border-slate-600" >Tindakan</th>
+                    <table  class="w-11/12 text-center" >
+                        <colgroup>
+                            <col class="w-1/2">
+                            <col class="w-1/4">
+                            <col class="w-1/4">
+                        </colgroup>
+                        <thead class="bg-teal-500 text-sm text-white">
+                            <th class="font-semibold py-2 px-2 rounded-l-2xl">Nama</th>
+                            <th class="font-semibold" >Nombor Telefon</th>
+                            <th class="font-semibold py-2 px-2 rounded-r-2xl" >Tindakan</th>
                         </thead>
-                        <tbody >
-                            <tr class=" text-center border-b-2 border-black">
-                                <td class="border-r-2 border-slate-600">Muhammed Hazim Abhar bin Mohamed Azahar</td>
-                                <td class="border-r-2 border-slate-600">0129126107</td>
-                                <td class="border-r-2 border-slate-600">
+                        <tbody>
+                            <tr  v-for="user in worker" :key="user.id" class="text-slate-500 text-sm border-b-2 ">
+                                <td class="border-slate-600">{{user.name}}</td>
+                                <td class="border-slate-600">{{user.phoneNumber}}</td>
+                                <td class="border-slate-600">
                                     <div class="flex justify-evenly">
                                         <div>
-                                            <button class="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600 hover:outline hover:outline-black">Delete</button>
+                                            <i class="fa-solid fa-trash text-red-500 text-2xl hover:text-red-300 cursor-pointer" @click="toggleDialog(user, 'worker')" ></i>
                                         </div>
                                         <div>
-                                            <RouterLink to="/manager/updateworker">
-                                                <Button class="bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-600 hover:outline hover:outline-black">Kemaskini</Button>
+                                            <RouterLink v-bind:to="`/manager/updateworker/` +user.idWorker">
+                                                <i class="fa-regular fa-pen-to-square text-blue-500 text-2xl hover:text-blue-300 cursor-pointer"></i>
                                             </RouterLink>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            <tr class=" text-center border-b-2 border-black">
-                                <td class="border-r-2 border-slate-600">Muhammed Hazim Abhar bin Mohamed Azahar</td>
-                                <td class="border-r-2 border-slate-600">0129126107</td>
-                                <td class="border-r-2 border-slate-600">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-full mt-10 px-10 max-sm:p-0">
+                    <p class=" text-xl font-semibold mb-4">Senarai Pengurus</p>
+                    <table  class="w-11/12 text-center" >
+                        <colgroup>
+                            <col class="w-1/2">
+                            <col class="w-1/4">
+                            <col class="w-1/4">
+                        </colgroup>
+                        <thead class="bg-teal-500 text-sm text-white">
+                            <th class="font-semibold py-2 px-2 rounded-l-2xl">Nama</th>
+                            <th class="font-semibold" >Nombor Telefon</th>
+                            <th class="font-semibold py-2 px-2 rounded-r-2xl" >Tindakan</th>
+                        </thead>
+                        <tbody>
+                            <tr  v-for="user in manager" :key="user.id" class="text-slate-500 text-sm border-b-2 ">
+                                <td class="border-slate-600">{{user.name}}</td>
+                                <td class="border-slate-600">{{user.phoneNumber}}</td>
+                                <td class="border-slate-600">
                                     <div class="flex justify-evenly">
                                         <div>
-                                            <button class="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600 hover:outline hover:outline-black">Delete</button>
+                                            <i class="fa-solid fa-trash text-red-500 text-2xl hover:text-red-300 cursor-pointer" @click="toggleDialog(user,'manager')" ></i>
                                         </div>
                                         <div>
-                                            <RouterLink to="/manager/updateworker">
-                                                <Button class="bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-600 hover:outline hover:outline-black">Kemaskini</Button>
-                                            </RouterLink>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class=" text-center border-b-2 border-black">
-                                <td class="border-r-2 border-slate-600">Muhammed Hazim Abhar bin Mohamed Azahar</td>
-                                <td class="border-r-2 border-slate-600">0129126107</td>
-                                <td class="border-r-2 border-slate-600">
-                                    <div class="flex justify-evenly">
-                                        <div>
-                                            <button class="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600 hover:outline hover:outline-black">Delete</button>
-                                        </div>
-                                        <div>
-                                            <RouterLink to="/manager/updateworker">
-                                                <Button class="bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-600 hover:outline hover:outline-black">Kemaskini</Button>
-                                            </RouterLink>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class=" text-center border-b-2 border-black">
-                                <td class="border-r-2 border-slate-600">Muhammed Hazim Abhar bin Mohamed Azahar</td>
-                                <td class="border-r-2 border-slate-600">0129126107</td>
-                                <td class="border-r-2 border-slate-600">
-                                    <div class="flex justify-evenly">
-                                        <div>
-                                            <button class="bg-red-500 rounded-lg p-2 text-white hover:bg-red-600 hover:outline hover:outline-black">Delete</button>
-                                        </div>
-                                        <div>
-                                            <RouterLink to="/manager/updateworker">
-                                                <Button class="bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-600 hover:outline hover:outline-black">Kemaskini</Button>
+                                            <RouterLink v-bind:to="`/manager/updatemanager/` +user.idManager">
+                                                <i class="fa-regular fa-pen-to-square text-blue-500 text-2xl hover:text-blue-300 cursor-pointer"></i>
                                             </RouterLink>
                                         </div>
                                     </div>
@@ -99,5 +88,116 @@ document.title='Home Page'
                 </div>
             </div>
             </div>
+            <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
+    <dialog class="w-1/3 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+        <div class="">
+            <div class="py-2" v-if="selectedUser" >
+                <div class="flex justify-between p-5">
+                <div class="">
+                    <p>Nama</p>
+                    <p>Nombor Telefon</p>
+                    <p>Emel</p>
+                    <p>Jantina</p>
+                    <p>Peranan</p>
+                </div>
+                <div class="">
+                    <p>{{selectedUser.name}}</p>
+                    <p>{{selectedUser.phoneNumber}}</p>
+                    <p>{{selectedUser.email}}</p>
+                    <p>{{selectedUser.gender}}</p>
+                    <p>{{selectedUser.role}}</p>
+                </div>
+                </div>
+            </div>
+            <div class="flex w-max mx-auto gap-4">
+                <div>
+                    <button class="bg-black text-white p-2 px-8 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Batal</button>
+                </div>
+                <div>
+                    <button class="bg-red-600 text-white p-2 px-8 rounded-xl hover:bg-white hover:text-red-600 hover:outline hover:outline-red-600" @click="deleteUser(selectedUser)">Buang</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
         </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default
+{
+    data()
+    {
+        return {
+            worker: [],
+            manager:[],
+            isOpen: false,
+            selectedUser: null,
+            role:null
+
+        }
+    },
+    mounted()
+    {
+        axios.get("http://localhost:3000/worker")
+        .then(response=>{
+            this.worker = response.data
+            console.log(this.worker)
+        })
+        .catch(error=>console.log(error))
+
+        axios.get("http://localhost:3000/manager")
+        .then(response=>{
+            this.manager = response.data
+            console.log(this.manager)
+        })
+        .catch(error=>console.log(error))
+
+    },
+    methods:{
+        toggleDialog(user, role)
+        {
+            console.log(user)
+            this.selectedUser = user
+            this.role = role
+            console.log(role)
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
+        },
+        async deleteUser(selectedUser)
+        {
+            console.log(selectedUser);
+            if (this.role === 'worker')
+            {
+                await axios.delete("http://localhost:3000/worker/"+selectedUser.idWorker)
+                .then(response => {
+                const index = this.worker.findIndex(i => i.idWorker === selectedUser.idWorker)
+                if (index !== -1) {
+                    this.worker.splice(index, 1); // Remove the selected item from the item array
+                }
+            })
+            .catch(error=>console.log(error))
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
+            }
+            else if (this.role === 'manager')
+            {
+                await axios.delete("http://localhost:3000/manager/"+selectedUser.idManager)
+                .then(response => {
+                const index = this.manager.findIndex(i => i.idManager === selectedUser.idManager)
+                if (index !== -1) {
+                    this.manager.splice(index, 1); // Remove the selected item from the item array
+                }
+            })
+            .catch(error=>console.log(error))
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
+            }
+
+
+        }
+
+
+    }
+
+
+}
+</script>
