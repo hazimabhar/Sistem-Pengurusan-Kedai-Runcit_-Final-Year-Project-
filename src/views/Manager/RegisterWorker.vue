@@ -131,7 +131,8 @@ export default {
 
         const user={
             icNumber,
-            password
+            password,
+            role
         }
         
         const info={
@@ -140,7 +141,6 @@ export default {
             email,
             address,
             gender,
-            role
         }
 
         if (role === "Pengurus")
