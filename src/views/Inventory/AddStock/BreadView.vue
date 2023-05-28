@@ -1,18 +1,16 @@
 <script >
 import { ref } from 'vue';
 import axios from 'axios';
+import { parse } from '@vue/compiler-sfc';
 
 export default {
 
     data()
     {
         return {
-            item: [],
             isOpen: false,
             selectedItem: null,
-            item:{
-                quantity:'',
-            }
+            item:[],
         }
     },
     mounted(){
@@ -26,22 +24,44 @@ export default {
     methods: {
         toggleDialog(item) {
             this.selectedItem = item;
-            console.log(item.idItem)
             this.isOpen = !this.isOpen; // Toggle the isOpen property
         },
-        updateStock(item)
+        async updateStock(selectedItem)
         {
-            this.item.quantity = parseInt(this.item.quantity)
+            console.log(selectedItem)
+            console.log(this.item.quantity)
 
-            axios.put ('http://localhost:3000/updatestock/'+ item.idItem ,this.item)
-            .then(response=>{
-            const updateItem = response.data;
-            console.log(updateItem)
+            if(this.item.quantity < 1)
+            {
+                alert("Sila Masukkan kuantiti")
+            }
+            else{
+                const newQuantity = selectedItem.quantity+this.item.quantity
+                selectedItem.quantity=newQuantity
+                if (isNaN(selectedItem.quantity))
+                {
+                    selectedItem.quantity=0
+                    this.isOpen = !this.isOpen; 
+                    alert("Sila Masukkan kuantiti")
+                    location.reload()
+                }
+                else
+                {
+                    console.log(selectedItem.idItem)
+                    this.item.quantity=''
 
-            })
-            .catch(error=>console.log(error))
+                    console.log(newQuantity)
 
-            console.log(item.idItem)
+                    await axios.put("http://localhost:3000/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
+                    .then(response=>{
+                        const update =response.data
+                        console.log(update)
+                    })
+                    .catch(error=>console.log(error))
+                    this.isOpen = !this.isOpen; // Toggle the isOpen property
+                }
+                }
+
         }
 
     }
@@ -76,15 +96,19 @@ export default {
                 <div class="">
                     <p>{{selectedItem.quantity}}</p>
                     <input class="" type="text" placeholder="88888888888">
-                    <input class="w-1/3" placeholder="0" type="number" v-model="item.quantity"
->
+                    <input class="w-1/3" placeholder="0" type="number" v-model="item.quantity">
+                </div>
+                </div>
+            </div>
+            <div class="flex w-max mx-auto gap-5">
+                <div class="">
+                    <button class="w-max bg-red-600 text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Batal</button>
+                </div>
+                <div class="">
+                    <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
+                </div>
+            </div>
 
-                </div>
-                </div>
-            </div>
-            <div class="w-max mx-auto">
-                <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
-            </div>
         </div>
     </dialog>
 </div>
