@@ -22,40 +22,43 @@ document.title='Home Page'
                 </ul>
                 <div class="w-full px-10 max-sm:p-0">
                     <p class=" text-xl font-semibold mb-4">Sila Masukkan Butiran Pekerja</p>
-                    <form autocomplete="off" class="" @submit.prevent="registerProduct()" >
+                    <form autocomplete="off" class="">
                         <div>
                             <label class="text-gray-500" for="Nama Penuh">Nama Penuh</label><br>
                             <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="Ali bin Ahmad" id="namapenuh" v-model="namapenuh"><br>
-                            <label class="text-red-600 font-light text-sm" for="errorName" id="errorName"></label><br>
+                            <label class="text-red-600 font-medium text-xs" for="errorName" id="errorName">{{ errorName }}</label><br>
                             <div class="flex gap-5 mb-2">
                             <div class="block gap-5 mb-2">
                                     <div>
                                         <label class="text-gray-500" for="Nombor IC">Nombor Kad Pengenalan</label><br>
                                         <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="888888888888" id="nomboric" v-model="nomboric"><br>
-                                        <label class="text-red-600 font-light text-sm" for="errornric" id="errorNric"></label><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errornric" id="errorNric">{{ errorNric }}</label>                                        
+                                        <label class="text-red-600 font-medium text-xs" for="errornric" id="errorNric">{{ errorCheckedNric }}</label><br>
                                     </div>
                                     <div>
                                         <label class="text-gray-500" for="Nombor Telefon">Nombor Telefon</label><br>
                                         <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="0123456789" id="telefon" v-model="telefon"><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorTelephone" id="errorTelephone"></label><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errorTelephone" id="errorTelephone">{{ errorPhone }}</label><br>
                                     </div>
                             </div>
                             <div class="block gap-5 mb-2">
                                     <div>
                                         <label class="text-gray-500" for="Password">Kata Laluan</label><br>
                                         <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="password" placeholder="Kata Laluan" id="password" v-model="password"><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorpassword" id="errorPassword"></label><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errorpassword" id="errorPassword">{{ errorPassword }}</label>
+                                        <label class="text-red-600 font-medium text-xs" for="errorpassword" id="errorPassword">{{ errorCheckedPassword }}</label><br>
                                     </div>
                                     <div>
                                         <label class="text-gray-500" for="E-mel">E-mel</label><br>
                                         <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="email" placeholder="ali@gmail.com" id="email" v-model="email" required><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorEmail" id="errorEmail"></label><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errorEmail" id="errorEmail">{{ errorEmail }}</label>
+                                        <label class="text-red-600 font-medium text-xs" for="errorEmail" id="errorEmail">{{ errorCheckedEmail }}</label><br>
                                     </div>
                             </div>
                             <div class="ml-[5%]">
                             <label class="text-gray-500" for="Alamat">Alamat</label><br>
-                            <textarea rows="4" cols="60" class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" placeholder="Persiaran Tun Dr. Ismail, 86400 Parit Raja, Johor" id="alamat" v-model="alamat"></textarea><br>
-                            <label class="text-red-600 font-light text-sm" for="errorAddress" id="errorAddress"></label><br>
+                            <textarea rows="5" cols="60" class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" placeholder="Persiaran Tun Dr. Ismail, 86400 Parit Raja, Johor" id="alamat" v-model="alamat"></textarea><br>
+                            <label class="text-red-600 font-medium text-xs" for="errorAddress" id="errorAddress">{{ errorAddress }}</label><br>
                             </div>
                         </div>
                             <div class="flex gap-96 mb-2">
@@ -84,6 +87,14 @@ document.title='Home Page'
                                     </div>
                                 </div>
                             </div>
+                            <div class="flex">
+                                <div>
+                                    <label class="text-red-600 font-medium text-xs" for="errorGender" id="errorGender">{{ errorGender }}</label>
+                                </div>
+                                <div>
+                                    <label class="text-red-600 font-medium text-xs" for="errorRole" id="errorRole">{{ errorRole }}</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="w-max mx-auto flex gap-10 mt-5 max-sm:gap-5">
                             <div>
@@ -97,8 +108,40 @@ document.title='Home Page'
                 </div>
             </div>
             </div>
-   
-
+            <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !completeRegister}"></div>
+    <dialog class="w-1/4 mx-auto shadow-product rounded-2xl  fixed top-44 z-50" v-bind:open="completeRegister">
+        <div class="">
+            <div>
+                <p class="font-semibold text-green-700 text-center text-xl">Pengguna Berjaya Didaftarkan!</p>
+            </div>
+            <div class="py-2" v-if="user">
+                <div class="flex justify-between p-5">
+                <div class="">
+                    <p>Nama</p>
+                    <p>Nombor Telefon</p>
+                    <p>Email</p>
+                    <p>Alamat</p>
+                    <p>Jantina</p>
+                </div>
+                <div class="">
+                    <p>{{user.name}}</p>
+                    <p>{{user.phoneNumber}}</p>
+                    <p>{{user.email}}</p>
+                    <p>{{user.address}}</p>
+                    <p>{{user.gender}}</p>
+                </div>
+                </div>
+            </div>
+            <div class="flex justify-evenly">
+                <div class="mt-[7px]">
+                    <RouterLink  to="/manager/listworker" class="w-max bg-blue-600 text-white p-2 px-5 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black text-sm " >Senarai Pekerja</RouterLink>
+                </div>
+                <div>
+                    <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black text-sm " @click="closeCompleteRegister">Daftar</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
         </div>
 </template>
 <script>
@@ -115,11 +158,52 @@ export default {
       alamat: '',
       jantina:null,
       peranan: null,
+
+      errorName:'',
+      errorNric:'',
+      errorCheckedNric:'',
+      errorPassword:'',
+      errorPhone:'',
+      errorEmail:'',
+      errorCheckedEmail:'',
+      errorAddress:'',
+      errorGender:'',
+      errorRole:'',
+
+      checkedEmailManager:'',
+      checkedEmailWorker:'',
+      checkedNric:'',
+
+      completeRegister:false,
+
+
+      user:[]
     }
   },
   methods:{
-    submitForm()
+    async submitForm()
     {
+        await axios.get("http://localhost:3000/emailmanager")
+        .then(response=>{
+            this.checkedEmailManager = response.data
+            console.log(this.checkedEmailManager)
+        })
+        .catch(error=>console.log(error))
+
+        await axios.get("http://localhost:3000/emailworker")
+        .then(response=>{
+            this.checkedEmailWorker = response.data
+            console.log(this.checkedEmailWorker)
+        })
+        .catch(error=>console.log(error))
+
+        await axios.get("http://localhost:3000/nric")
+        .then(response=>{
+            this.checkedNric = response.data
+            console.log(this.checkedNric)
+        })
+        .catch(error=>console.log(error))
+
         const name = this.namapenuh
         const icNumber = this.nomboric
         const password = this.password
@@ -129,58 +213,189 @@ export default {
         const gender = document.querySelector('input[name="Jantina"]:checked')?.value
         const role = document.querySelector('input[name="Peranan"]:checked')?.value
 
-        const user={
-            icNumber,
-            password,
-            role
-        }
-        
-        const info={
-            name,
-            phoneNumber,
-            email,
-            address,
-            gender,
-        }
+        const existingEmailManager = this.checkedEmailManager.find(manager => manager.email === this.email);
+        const existedEmailWorker = this.checkedEmailWorker.find(worker=>worker.email === this.email)
 
-        if (role === "Pengurus")
+        const existedEmail= existingEmailManager||existedEmailWorker
+
+        const existedNric = this.checkedNric.find(user=>user.icNumber===this.nomboric)
+
+        if(this.namapenuh && this.nomboric && this.password && this.telefon && this.email && this.alamat && this.jantina && this.peranan && !existedEmail && !existedNric)
         {
-            console.log("Manager");
-            console.log(user);
-            console.log(info);
-            axios.post("http://localhost:3000/", user)
-            .then(response=>{
-                const idAccount = response.data.idAccount
-                info.idAccount = idAccount
+            this.errorCheckedEmail=''
+            this.errorCheckedNric=''
 
-                axios.post("http://localhost:3000/manager", info)
-                .then(response => {console.log(response.data)})
-                .catch(error => {console.log(error)})
-            })
-            .catch(error => {console.log(error)})
+                if(!/(?=.*[A-Z])(?=.*[0-9]).{8,}/.test(this.password)){
+                    this.errorPassword ='*Kata Laluan Tidak Sah';
+                }
+                else{
+                    this.errorPassword = ''   
+                }
+                
+                if(!/^[\w.-]+@[a-zA-Z_-]+\.[a-zA-Z]{2,4}$/.test(this.email)){
+                    this.errorEmail = '*Emel Tidak Sah';
+                }
+                else{
+                    this.errorEmail = ''
+                }
+
+                if(!this.errorPassword && !this.errorEmail)
+                {
+                    this.completeRegister = !this.completeRegister; // Toggle the isOpen property
+
+                    const user={
+                        icNumber,
+                        password,
+                        role
+                    }
+
+                    const info={
+                        name,
+                        phoneNumber,
+                        email,
+                        address,
+                        gender,
+                    }
+
+                    this.user=info
+
+
+
+                    if (role === "Pengurus")
+                    {
+                        console.log("Manager");
+                        console.log(user);
+                        console.log(info);
+                        axios.post("http://localhost:3000/", user)
+                        .then(response=>{
+                            const idAccount = response.data.idAccount
+                            info.idAccount = idAccount
+
+                            axios.post("http://localhost:3000/manager", info)
+                            .then(response => {console.log(response.data)})
+                            .catch(error => {console.log(error)})
+                        })
+                        .catch(error => {console.log(error)})
+                    }
+                    else
+                    {
+                        console.log("Worker");
+                        console.log(user);
+                        console.log(info);
+                        axios.post("http://localhost:3000/", user)
+                        .then(response=>{
+                            const idAccount = response.data.idAccount
+                            info.idAccount = idAccount
+
+                            axios.post("http://localhost:3000/worker", info)
+                            .then(response => {console.log(response.data)})
+                            .catch(error => {console.log(error)})
+                        })
+                        .catch(error => {console.log(error)})
+
+                    }
+                }
+
+   
         }
         else
         {
-            console.log("Worker");
-            console.log(user);
-            console.log(info);
-            axios.post("http://localhost:3000/", user)
-            .then(response=>{
-                const idAccount = response.data.idAccount
-                info.idAccount = idAccount
+            if(existedEmail){
+                this.errorCheckedEmail='*Email Ini Telah Didaftarkan'
+            }
+            else{
+                this.errorCheckedEmail=''
+            }
+            if(existedNric){
+                this.errorCheckedNric='*IC Ini Telah Didaftarkan'
+            }
+            else{
+                this.errorCheckedNric=''
+            }
 
-                axios.post("http://localhost:3000/worker", info)
-                .then(response => {console.log(response.data)})
-                .catch(error => {console.log(error)})
-            })
-            .catch(error => {console.log(error)})
+            if(this.namapenuh===''){
+                this.errorName='*Sila Masukkan Nama Penuh'
+            }
+            else{
+                this.errorName=''
+            }
+
+            if(this.nomboric===''){
+                this.errorNric='*Sila Masukkan Nombor IC'
+            }
+            else{
+                this.errorNric=''
+            }
+
+            if(this.password===''){
+                this.errorPassword='*Sila Masukkan Kata Laluan'
+            }
+            else{
+                this.errorPassword=''
+            }
+
+            if(this.telefon===''){
+                this.errorPhone='*Sila Masukkan Nombor Telefon'
+            }
+            else{
+                this.errorPhone=''
+            }
+
+            if(this.email===''){
+                this.errorEmail='*Sila Masukkan Emel'
+            }
+            else{
+                this.errorEmail=''
+            }
+                
+            if(this.alamat===''){
+                this.errorAddress='*Sila Masukkan Alamat'
+            }
+            else{
+                this.errorAddress=''
+            }
+                
+            if(this.jantina===null){
+                this.errorGender='*Sila Pilih Jantina'
+            }
+            else{
+                this.errorGender=''
+            }
+
+            if(this.peranan===null){
+                this.errorRole='*Sila Pilih Peranan'
+            }
+            else{
+                this.errorRole=''
+            }
+
+
         }
+    },
+    cancelForm()
+    {
+        this.namapenuh='',
+        this.nomboric='',
+        this.password='',
+        this.telefon='',
+        this.email='',
+        this.alamat='',
+        this.jantina=null,
+        this.peranan=null
+    },
+    closeCompleteRegister()
+    {
+        this.completeRegister = !this.completeRegister; // Toggle the isOpen property
 
-
+        this.namapenuh='',
+                this.nomboric='',
+                this.password='',
+                this.telefon='',
+                this.email='',
+                this.alamat='',
+                this.jantina=null,
+                this.peranan=null
     }
-    
   }
-
-
-}
+  }
 </script>

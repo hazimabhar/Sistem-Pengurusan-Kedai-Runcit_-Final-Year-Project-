@@ -85,7 +85,8 @@ document.title="Register Product";
                                 <div @click="camScanner">
                                     <i class="fa-solid fa-camera relative bottom-2 pl-10 hover:opacity-50 cursor-pointer lg:hidden  max-lg:left-[62%] max-sm:left-[78%]"></i>
                                 </div>
-                                <label class="text-red-600 font-medium text-xs" for="errorBarcode" id="errorBarcode">{{ errorBarcode }}</label><br>
+                                <label class="text-red-600 font-medium text-xs" for="errorBarcode" id="errorBarcode">{{ errorBarcode }}</label>
+                                <label class="text-red-600 font-medium text-xs" for="errorCheckedBarcode" id="errorCheckedBarcode">{{ errorCheckedBarcode }}</label><br>
                             </div>
                             <div class="w-2/12 mx-auto max-lg:w-4/12 max-sm:w-full">
                                 <div class="pb-6 max-sm:pt-6">
@@ -219,13 +220,23 @@ export default {
       errorQuantity:'',
       errorCategory:'',
       errorBarcode:'',
+      errorCheckedBarcode:'',
 
+      checkedBarcode:'',
 
       item:[]
     }
   },
   methods: {
-    submitForm() {
+    async submitForm() {
+        
+        await axios.get("http://localhost:3000/barcode")
+        .then(response=>{
+            this.checkedBarcode = response.data
+            console.log(this.checkedBarcode)
+        })
+        .catch(error=>console.log(error))
+
         const name = this.namaProduk
         const price = parseFloat(this.hargaProduk)
         const weight = this.berat
@@ -234,40 +245,36 @@ export default {
         const category = document.querySelector('input[name="Kategori"]:checked')?.value
         const barcode = this.barkodProduk
 
+        const existingData = this.checkedBarcode.find(item => item.barcode === this.barkodProduk);
+
         
-        if(this.namaProduk && this.hargaProduk && this.berat && this.unit && this.kuantitiProduk && this.barkodProduk && this.kategori)
+        if(this.namaProduk && this.hargaProduk && this.berat && this.unit && this.kuantitiProduk && this.barkodProduk && this.kategori && !existingData)
         {
             const item =
-        {
-            name,
-            price,
-            weight,
-            unit,
-            quantity,
-            category,
-            barcode
-        }
-        this.item= item
+            {
+                name,
+                price,
+                weight,
+                unit,
+                quantity,
+                category,
+                barcode
+            }
+            this.item= item
 
-        axios.post('http://localhost:3000/item', item)
-        .then(response => {console.log(response.data)})
-        .catch(error => {console.log(error)})
-            this.completeRegister = !this.completeRegister; // Toggle the isOpen property
+            axios.post('http://localhost:3000/item', item)
+            .then(response => {console.log(response.data)})
+            .catch(error => {console.log(error)})
             
-           this.namaProduk ="" 
-           this.hargaProduk=""
-           this.berat=""
-           this.kuantitiProduk=""
-           this.kuantitiProduk=""
-           this.barkodProduk=""
-           this.kategori = null
+            this.completeRegister = !this.completeRegister; // Toggle the isOpen property
 
-           this.errorName=''
-           this.errorPrice=''
-           this.errorWeight=''
-           this.errorQuantity=''
-           this.errorCategory=''
-           this.errorBarcode=''
+            this.errorName=''
+            this.errorPrice=''
+            this.errorWeight=''
+            this.errorQuantity=''
+            this.errorCategory=''
+            this.errorBarcode=''
+            this.errorCheckedBarcode=''
         }
         else
         {
@@ -319,16 +326,30 @@ export default {
             {
                 this.errorBarcode=''
             }
+            if(existingData)
+            {
+                this.errorCheckedBarcode='*Kodbar ini telah didaftarkan'
+            }
+            else
+            {
+                this.errorCheckedBarcode=''
+            }
         }
         window.scrollTo({
             top: 0,
             behavior: 'smooth' // Optional: Add smooth scrolling animation
         })
-    
         },
         closeCompleteRegister()
         {
             this.completeRegister = !this.completeRegister; // Toggle the isOpen property
+            this.namaProduk ="" 
+            this.hargaProduk=""
+            this.berat=""
+            this.kuantitiProduk=""
+            this.kuantitiProduk=""
+            this.barkodProduk=""
+            this.kategori = null
         },
         cancelForm()
         {

@@ -150,7 +150,7 @@ document.title = "Update Product";
               <div class="mt-[31px]">
                     <RouterLink  to="/manageinventory/update" class="w-max bg-red-600 text-white rounded-3xl py-2 px-20 mt-6 hover:outline hover:outline-black  hover:bg-white hover:text-black" >Batal</RouterLink>
               </div>
-              <div>
+              <div class="mt-[14px]">
                 <MyButton
                   txt="Kemaskini"
                   class="max-sm:px-8"

@@ -80,12 +80,14 @@ document.title="Login"
             <h1 class="font-bold tracking-wider text-xl text-center pb-3">Log Masuk</h1>
             <div class="w-4/5 mx-auto">
                 <MyLabel text="Nombor Kad Pengenalan" />
-                <input class="mt-2 mb-4 bg-gray-300 w-full p-3 rounded-xl focus:outline-emerald-700 shadow-input" placeholder="888888888888" v-model="icNumber" type="text" id="icNumber" ><br>
+                <input class="mt-2 mb-2 bg-gray-300 w-full p-3 rounded-xl focus:outline-emerald-700 shadow-input" placeholder="888888888888" v-model="icNumber" type="text" id="icNumber" ><br>
                 <div>
                     <label for="" id="nricError" class="text-red-600 font-light text-sm"></label>
                 </div>
+                <label class="text-red-600 font-medium text-xs" for="errorNric" id="errorNric">{{ errorNric }}</label><br>
                 <MyLabel text="Kata Laluan"/>
-                <input class="mt-2 mb-4 bg-gray-300 w-full p-3 rounded-xl focus:outline-emerald-700 shadow-input" placeholder="Katalaluan..." v-model="password" type="password" id="password" ><br>
+                <input class="mt-2 mb-2 bg-gray-300 w-full p-3 rounded-xl focus:outline-emerald-700 shadow-input" placeholder="Katalaluan..." v-model="password" type="password" id="password" ><br>
+                <label class="text-red-600 font-medium text-xs" for="errorPassword" id="errorPassword">{{ errorPassword }}</label><br>
                 <div>
                     <label for="" id="passError" class="text-red-600 font-light text-sm"></label>
                 </div>
@@ -109,7 +111,10 @@ export default
     {
         return{
             icNumber:"",
-            password:""
+            password:"",
+
+            errorNric:'',
+            errorPassword:'',
         }
     },
     async mounted()
@@ -121,31 +126,83 @@ export default
     {
         async submitLogin()
         {
-            console.log(this.icNumber)
-            console.log(this.password)
-            try {
-                const response = await axios.post("http://localhost:3000/login",{
-                    icNumber : this.icNumber,
-                    password: this.password
-                })
-                console.log(response.data)
-                sessionStorage.setItem("idAccount",JSON.stringify(response.data))
-
-                const responseUser = await axios.get( `http://localhost:3000/${response.data}`)
-                console.log(responseUser)
-
-                if(responseUser.data.role ==="Pekerja")
-                {                
-                        router.push("/home")
-                }
-                else if(responseUser.data.role === "Pengurus")
-                {
-                    router.push("/manager")
-                }
-            }
-            catch(error)
+            if(this.icNumber&&this.password)
             {
-                console.log(error)
+                this.errorNric=''
+                this.errorPassword=''
+                console.log(this.icNumber)
+                console.log(this.password)
+                try {
+                    const response = await axios.post("http://localhost:3000/login",{
+                        icNumber : this.icNumber,
+                        password: this.password
+                    })
+                    console.log(response.data)
+                    sessionStorage.setItem("idAccount",JSON.stringify(response.data))
+
+                    const responseUser = await axios.get( `http://localhost:3000/${response.data}`)
+                    console.log(responseUser)
+
+                    if(responseUser.data.role ==="Pekerja")
+                    {                
+                            router.push("/home")
+                    }
+                    else if(responseUser.data.role === "Pengurus")
+                    {
+                        router.push("/manager")
+                    }
+                }
+                catch(error)
+                {
+                    if(error.response)
+                    {
+                        if(error.response.status === 401)
+                        {
+                            if(error.response.data==="Invalid Identification Number")
+                            {
+                                this.errorNric="*Nombor Kad Pengenalan Tidak Sah"
+                                this.icNumber=''
+                                this.password=''
+                            }
+                            else
+                            {
+                                this.errorNric=''
+                            }
+                            if(error.response.data==="Invalid Password")
+                            {
+                                this.errorPassword="*Salah Katalaluan"
+                                this.password=''
+                            }
+                            else
+                            {
+                                this.errorPassword=''
+                            }
+                        }
+                    }
+                    else {
+                        this.errorNric = 'An error occurred during login.';
+                    }
+                }
+
+            }
+            else
+            {
+                if(this.icNumber==='')
+                {
+                    this.errorNric='*Sila Masukkan Nombor Kad Pengenalan Anda'
+
+                }else{
+                    this.errorNric=''
+
+                }
+                
+                if(this.password==='')
+                {
+                    this.errorPassword='*Sila Masukkan Katalaluan'
+
+                }else{
+                    this.errorPassword=''
+                }
             }
         }
 

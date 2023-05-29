@@ -121,7 +121,16 @@ export default {
       kuantitiProduk: '',
       barkodProduk: '',
       kategori:null,
-      selectedImage: null
+      selectedImage: null,
+
+      checkedBarcode:''
+    }
+  },
+  async mounted()
+  {
+    await axios.get("http://localhost:3000/barcode")
+    {
+
     }
   },
   methods: {
