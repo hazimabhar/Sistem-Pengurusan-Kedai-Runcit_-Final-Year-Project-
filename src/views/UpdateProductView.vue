@@ -147,12 +147,8 @@ document.title = "Update Product";
               </div>
             </div>
             <div class="w-max mx-auto flex gap-10 mt-5 max-sm:gap-5">
-              <div>
-                <MyButton
-                  txt="Batal"
-                  class="bg-red-600 max-sm:px-8"
-                  @click.prevent="toggleDialog('open')"
-                />
+              <div class="mt-[31px]">
+                    <RouterLink  to="/manageinventory/update" class="w-max bg-red-600 text-white rounded-3xl py-2 px-20 mt-6 hover:outline hover:outline-black  hover:bg-white hover:text-black" >Batal</RouterLink>
               </div>
               <div>
                 <MyButton
