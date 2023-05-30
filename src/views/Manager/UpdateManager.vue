@@ -84,14 +84,6 @@ document.title='Home Page'
                                     </div>
                                 </div>
                             </div>
-                            <!-- <label for="">Nama Penuh</label>
-                            <label for="">Nombor Kad Pengenalan</label>
-                            <label for="">Kata Laluan</label>
-                            <label for="">Nombor Telefon</label>
-                            <label for="">E-mel</label>
-                            <label for="">Alamat</label>
-                            <label for="">Jantina</label>
-                            <label for="">Peranan</label> -->
                         </div>
                         <div class="w-max mx-auto flex gap-10 mt-5 max-sm:gap-5">
                             <div>

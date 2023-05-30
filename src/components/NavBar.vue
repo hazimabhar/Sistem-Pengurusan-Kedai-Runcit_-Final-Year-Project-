@@ -25,7 +25,7 @@ import { isCoreComponent } from '@vue/compiler-core';
                 <RouterLink to="/home"><i class="fa-solid fa-house text-white text-2xl lg:hidden max-sm:pl-28 max-md:pt-1 max-lg:pt-1 "></i></RouterLink>
             </div>
         </div>
-        <SideBar id="sidebar"/>
+        <SideBar id="sidebar" v-bind:is-close="openSideBar"/>
     </div>
 
          
@@ -33,21 +33,23 @@ import { isCoreComponent } from '@vue/compiler-core';
 
 <script>
     
-    let isOpen = true;
-
-    function closeOpenSideBar()
+    export default
     {
-        if (isOpen == true)
-        {
-            document.getElementById('sidebar').style.display='none'
-            isOpen=false
+        data()
+    {
+        return {
+            openSideBar:false
         }
-        else 
+    },
+        methods:
         {
-            document.getElementById('sidebar').style.display='block'
-            isOpen=true
+            closeOpenSideBar()
+            {
+                this.openSideBar = !this.openSideBar
+            }
         }
     }
+ 
 </script>
 
 <style>

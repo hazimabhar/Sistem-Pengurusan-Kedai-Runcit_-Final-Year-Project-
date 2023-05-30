@@ -162,6 +162,8 @@ document.title = "Update Product";
         </div>
       </div>
     </div>
+    <ToastMessageVue ref="toast"/>
+    <toast />
   </div>
 </template>
 
@@ -169,10 +171,17 @@ document.title = "Update Product";
 import ImageInputReviewer from "../components/ImageInputReviewer.vue";
 import router from '../router';
 import axios from 'axios';
+import ToastMessageVue from "../components/ToastMessage.vue";
+import { useToast } from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
+
+
 
 export default {
+
   components: {
     ImageInputReviewer,
+    ToastMessageVue,
   },
   data() {
     return {
@@ -208,9 +217,13 @@ export default {
       .then(response=>{
         const updateItem = response.data;
         console.log(updateItem)
-
       })
       .catch(error=>console.log(error))
+
+      const message ='Produk Telah Dikemaskini'
+      const status = 'Berjaya'
+      
+      this.$refs.toast.toast(message,status,'success')
     },
   },
 };
