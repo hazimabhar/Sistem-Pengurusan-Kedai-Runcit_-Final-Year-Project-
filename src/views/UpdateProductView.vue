@@ -163,7 +163,6 @@ document.title = "Update Product";
       </div>
     </div>
     <ToastMessageVue ref="toast"/>
-    <toast />
   </div>
 </template>
 
@@ -172,10 +171,6 @@ import ImageInputReviewer from "../components/ImageInputReviewer.vue";
 import router from '../router';
 import axios from 'axios';
 import ToastMessageVue from "../components/ToastMessage.vue";
-import { useToast } from 'vue-toastification';
-import 'vue-toastification/dist/index.css';
-
-
 
 export default {
 

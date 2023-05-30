@@ -2,9 +2,12 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { parse } from '@vue/compiler-sfc';
+import ToastMessageVue from "../../../components/ToastMessage.vue";
 
 export default {
-
+    components: {
+    ToastMessageVue,
+  },
     data()
     {
         return {
@@ -33,17 +36,21 @@ export default {
 
             if(this.item.quantity < 1)
             {
-                alert("Sila Masukkan kuantiti")
+                const message ='Sila Masukkan Kuantiti'
+                const status = 'Gagal'
+                this.$refs.toast.toast(message,status,'error')
             }
             else{
                 const newQuantity = selectedItem.quantity+this.item.quantity
+                const oldQuantity = selectedItem.quantity
                 selectedItem.quantity=newQuantity
                 if (isNaN(selectedItem.quantity))
                 {
-                    selectedItem.quantity=0
-                    this.isOpen = !this.isOpen; 
-                    alert("Sila Masukkan kuantiti")
-                    location.reload()
+                    selectedItem.quantity=oldQuantity
+                    const message ='Sila Masukkan Kuantiti'
+                    const status = 'Gagal'
+                    this.$refs.toast.toast(message,status,'error')
+
                 }
                 else
                 {
@@ -59,6 +66,10 @@ export default {
                     })
                     .catch(error=>console.log(error))
                     this.isOpen = !this.isOpen; // Toggle the isOpen property
+
+                    const message ='Kuantiti Telah Dikemaskini'
+                    const status = 'Berjaya'
+                    this.$refs.toast.toast(message,status,'success')
                 }
                 }
 
@@ -81,7 +92,7 @@ export default {
         </div>
     </RouterLink>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-    <dialog class="w-2/4 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+    <dialog class="w-2/4 mx-auto shadow-product rounded-2xl  fixed top-44 z-50" v-bind:open="isOpen">
         <div class="">
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
                 <img class="mx-auto" src="" alt="Produk">
@@ -108,8 +119,8 @@ export default {
                     <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
                 </div>
             </div>
-
         </div>
     </dialog>
 </div>
+<ToastMessageVue ref="toast"/>
 </template>

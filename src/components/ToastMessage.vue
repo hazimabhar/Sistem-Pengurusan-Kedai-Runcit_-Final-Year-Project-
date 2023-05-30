@@ -6,7 +6,7 @@
           <span class="mr-2">
             <!-- Add appropriate icon based on the status -->
             <i v-if="type === 'success'" class="fa-solid fa-circle-check text-3xl text-green-700"></i>
-            <i v-else-if="type === 'error'" class="fas fa-exclamation-circle text-xl"></i>
+            <i v-else-if="type === 'error'" class="fa-solid fa-circle-xmark text-3xl text-red-500"></i>
             <i v-else class="fa-solid fa-circle-check text-3xl"></i>
           </span>
           <div class="ml-2">
@@ -71,7 +71,7 @@
                     'px-4 py-4 rounded-lg  text-sm font-medium drop-shadow-2xl',
                     {
                         'bg-[#c5f7dd]': this.type==='success',
-                        'bg-red-500': this.type === 'error',
+                        'bg-[#ffd0cb]': this.type === 'error',
                         'bg-green-400 ': this.type === 'info' 
                     },
                 ]

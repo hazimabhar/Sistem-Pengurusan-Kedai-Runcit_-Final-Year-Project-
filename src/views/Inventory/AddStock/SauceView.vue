@@ -2,8 +2,12 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-export default {
+import ToastMessageVue from "../../../components/ToastMessage.vue";
 
+export default {
+    components: {
+    ToastMessageVue,
+  },
     data()
     {
         return {
@@ -32,17 +36,21 @@ export default {
 
             if(this.item.quantity < 1)
             {
-                alert("Sila Masukkan kuantiti")
+                const message ='Sila Masukkan Kuantiti'
+                const status = 'Gagal'
+                this.$refs.toast.toast(message,status,'error')
             }
             else{
                 const newQuantity = selectedItem.quantity+this.item.quantity
+                const oldQuantity = selectedItem.quantity
                 selectedItem.quantity=newQuantity
                 if (isNaN(selectedItem.quantity))
                 {
-                    selectedItem.quantity=0
-                    this.isOpen = !this.isOpen; 
-                    alert("Sila Masukkan kuantiti")
-                    location.reload()
+                    selectedItem.quantity=oldQuantity
+                    const message ='Sila Masukkan Kuantiti'
+                    const status = 'Gagal'
+                    this.$refs.toast.toast(message,status,'error')
+
                 }
                 else
                 {
@@ -58,6 +66,10 @@ export default {
                     })
                     .catch(error=>console.log(error))
                     this.isOpen = !this.isOpen; // Toggle the isOpen property
+
+                    const message ='Kuantiti Produk Telah Dikemaskini'
+                    const status = 'Berjaya'
+                    this.$refs.toast.toast(message,status,'success')
                 }
                 }
 
@@ -109,4 +121,5 @@ export default {
         </div>
     </dialog>
 </div>
+<ToastMessageVue ref="toast"/>
 </template>
