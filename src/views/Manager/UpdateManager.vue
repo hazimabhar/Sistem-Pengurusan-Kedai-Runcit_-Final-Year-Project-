@@ -12,7 +12,7 @@ document.title='Home Page'
             <div>
                 <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">Daftar Pekerja Hazim</p>
             </div>
-            <div class="w-9/12 mx-auto mr-16 bg-white pt-4 max-sm:w-11/12 max-sm:mx-auto rounded-3xl">
+            <div class="w-9/12 mx-auto mr-16 bg-white pt-4 pb-5 max-sm:w-11/12 max-sm:mx-auto rounded-3xl">
                 <ul class="inline-flex list-none px-8 pb-10">
                     <RouterLink to="/manager" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
                     <span class="px-2">></span>
@@ -35,16 +35,16 @@ document.title='Home Page'
                                         <label class="text-red-600 font-light text-sm" for="errornric" id="errorNric"></label><br>
                                     </div>
                                     <div>
-                                        <label class="text-gray-500" for="Password">Kata Laluan</label><br>
-                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="password" placeholder="Kata Laluan" id="password" v-model="cantChange.password"><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorpassword" id="errorPassword"></label><br>
+                                        <label class="text-gray-500" for="Nombor Telefon">Nombor Telefon</label><br>
+                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="0123456789" id="telefon" v-model="user.phoneNumber"><br>
+                                        <label class="text-red-600 font-light text-sm" for="errorTelephone" id="errorTelephone"></label><br>
                                     </div>
                             </div>
                             <div class="block gap-5 mb-2">
                                     <div>
-                                        <label class="text-gray-500" for="Nombor Telefon">Nombor Telefon</label><br>
-                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="0123456789" id="telefon" v-model="user.phoneNumber"><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorTelephone" id="errorTelephone"></label><br>
+                                        <label class="text-gray-500" for="Password">Kata Laluan</label><br>
+                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="password" placeholder="Kata Laluan" id="password" v-model="cantChange.password"><br>
+                                        <label class="text-red-600 font-light text-sm" for="errorpassword" id="errorPassword"></label><br>
                                     </div>
                                     <div>
                                         <label class="text-gray-500" for="E-mel">E-mel</label><br>
@@ -75,21 +75,21 @@ document.title='Home Page'
                                 </div>
                                 <div class="flex gap-5 mb-2">
                                     <div>
-                                        <input type="radio" name="Peranan" value="Pengurus" v-model="user.role">
+                                        <input type="radio" name="Peranan" value="Pengurus" v-model="cantChange.role">
                                         <label class="pl-2" for="lelaki">Pengurus</label><br>
                                     </div>
                                     <div>
-                                        <input type="radio" name="Peranan" value="Pekerja" v-model="user.role">
+                                        <input type="radio" name="Peranan" value="Pekerja" v-model="cantChange.role">
                                         <label class="pl-2" for="perempuan">Pekerja</label><br>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="w-max mx-auto flex gap-10 mt-5 max-sm:gap-5">
-                            <div>
-                                <MyButton txt="Batal" class="bg-red-600 max-sm:px-8" @click.prevent="cancelForm"/>
+                            <div class="mt-[31px]">
+                                <RouterLink  to="/manager/listworker" class="w-max bg-red-600 text-white rounded-3xl py-2 px-20 mt-6 hover:outline hover:outline-black  hover:bg-white hover:text-black" >Batal</RouterLink>
                             </div>
-                            <div>
+                            <div class="mt-[14px]">
                                 <MyButton txt="Kemaskini" class="max-sm:px-8" @click.prevent="submitForm"/>
                             </div>
                         </div>
@@ -99,13 +99,17 @@ document.title='Home Page'
             </div>
    
         </div>
+        <ToastMessageVue ref="toast"/>
 </template>
 <script>
 import axios from 'axios';
 import router from '../../router';
+import ToastMessageVue from "../../components/ToastMessage.vue";
 
-export default
-{
+export default {
+    components: {
+    ToastMessageVue,
+  },
     data()
     {
         return {
@@ -154,6 +158,9 @@ export default
 
             await axios.put("http://localhost:3000/manager/"+this.userId, this.user)
             .then(response=>console.log(response))
+            const message ='Maklumat Pengurus Berjaya Dikemaskini'
+            const status = 'Berjaya'
+            this.$refs.toast.toast(message,status,'success')
             .catch(error=>console.log(error))
         }
     }

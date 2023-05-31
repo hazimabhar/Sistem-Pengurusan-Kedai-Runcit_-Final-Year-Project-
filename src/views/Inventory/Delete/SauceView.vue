@@ -1,9 +1,12 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
+import ToastMessageVue from "../../../components/ToastMessage.vue";
 
 export default {
-
+    components: {
+    ToastMessageVue,
+  },
     data()
     {
         return {
@@ -33,6 +36,9 @@ export default {
                 if (index !== -1) {
                     this.item.splice(index, 1); // Remove the selected item from the item array
                 }
+                const message ='Produk Berjaya Dibuang'
+                const status = 'Berjaya'
+                this.$refs.toast.toast(message,status,'success')
             })
             .catch(error=> console.log(error))
             this.isOpen = !this.isOpen; // Toggle the isOpen property
@@ -89,4 +95,5 @@ export default {
         </div>
     </dialog>
 </div>
+<ToastMessageVue ref="toast"/>
 </template>

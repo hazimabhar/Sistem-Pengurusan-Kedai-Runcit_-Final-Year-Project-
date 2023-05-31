@@ -92,20 +92,21 @@ document.title='Home Page'
     <dialog class="w-1/3 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
         <div class="">
             <div class="py-2" v-if="selectedUser" >
+                <div>
+                    <p class="font-semibold text-blue-700 text-center text-xl">Info Pengguna</p>
+                </div>
                 <div class="flex justify-between p-5">
                 <div class="">
                     <p>Nama</p>
                     <p>Nombor Telefon</p>
                     <p>Emel</p>
                     <p>Jantina</p>
-                    <p>Peranan</p>
                 </div>
                 <div class="">
                     <p>{{selectedUser.name}}</p>
                     <p>{{selectedUser.phoneNumber}}</p>
                     <p>{{selectedUser.email}}</p>
                     <p>{{selectedUser.gender}}</p>
-                    <p>{{selectedUser.role}}</p>
                 </div>
                 </div>
             </div>
@@ -120,13 +121,17 @@ document.title='Home Page'
         </div>
     </dialog>
         </div>
+        <ToastMessageVue ref="toast"/>
 </template>
 
 <script>
 import axios from 'axios';
+import ToastMessageVue from "../../components/ToastMessage.vue";
 
-export default
-{
+export default {
+    components: {
+    ToastMessageVue,
+  },
     data()
     {
         return {
@@ -175,6 +180,9 @@ export default
                 if (index !== -1) {
                     this.worker.splice(index, 1); // Remove the selected item from the item array
                 }
+                const message ='Rekod Pekerja Berjaya Dibuang'
+                const status = 'Berjaya'
+                this.$refs.toast.toast(message,status,'success')
             })
             .catch(error=>console.log(error))
             this.isOpen = !this.isOpen; // Toggle the isOpen property
@@ -187,6 +195,9 @@ export default
                 if (index !== -1) {
                     this.manager.splice(index, 1); // Remove the selected item from the item array
                 }
+                const message ='Rekod Pengguna Berjaya Dibuang'
+                const status = 'Berjaya'
+                this.$refs.toast.toast(message,status,'success')
             })
             .catch(error=>console.log(error))
             this.isOpen = !this.isOpen; // Toggle the isOpen property

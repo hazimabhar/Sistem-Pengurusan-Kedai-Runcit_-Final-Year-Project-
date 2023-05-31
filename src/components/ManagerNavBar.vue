@@ -15,7 +15,7 @@ import { isCoreComponent } from '@vue/compiler-core';
                     <i class="fa-solid fa-bars cursor-pointer text-white hover:text-black max-lg:hover:text-white"></i>
                 </div>
                 <div class="text-lg pt-2 px-2">
-                    <RouterLink class="font-semibold max-lg:hidden" to="/manager">Kedai Runcit Azzain</RouterLink>
+                    <RouterLink class="font-semibold max-lg:hidden" to="/manager">Sistem Kedai Runcit</RouterLink>
                 </div>
             </div>
             <div class="mx-auto pt-1 max-sm:ml-10">
