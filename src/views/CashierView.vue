@@ -25,51 +25,34 @@ document.title="Cashier"
                     </p>
                 </div>
                 <div class="flex max-lg:hidden">
-                    <div class=" w-3/5 mx-9" >
-                        <div class="shadow-product p-4 rounded-xl mb-5 bg-white">
-                            <p>Nama Produk</p>
-                            <div class="flex justify-between">
-                                    <p>Kuantiti</p>
-                                    <p class="">MYR88.88</p>
-                                    <i class="fa-solid fa-trash text-red-600 cursor-pointer text-l"></i>
-                            </div>
-                        </div>
-                        <div class="shadow-product p-4 rounded-xl  mb-5">
-                            <p>Nama Produk</p>
-                            <div class="flex justify-between">
-                                    <p>Kuantiti</p>
-                                    <p class="">MYR88.88</p>
-                                    <i class="fa-solid fa-trash text-red-600 cursor-pointer text-l"></i>
-                            </div>
-                        </div>
-                        <div class="shadow-product p-4 rounded-xl mb-5">
-                            <p>Nama Produk</p>
-                            <div class="flex justify-between">
-                                    <p>Kuantiti</p>
-                                    <p class="">MYR88.88</p>
-                                    <i class="fa-solid fa-trash text-red-600 cursor-pointer text-l"></i>
-                            </div>
-                        </div>
-                        <div class="shadow-product p-4 rounded-xl mb-5">
-                            <p>Nama Produk</p>
-                            <div class="flex justify-between">
-                                    <p>Kuantiti</p>
-                                    <p class="">MYR88.88</p>
-                                    <i class="fa-solid fa-trash text-red-600 cursor-pointer text-l"></i>
-                            </div>
-                        </div>
-                        <div class="shadow-product p-4 rounded-xl mb-5">
-                            <p>Nama Produk</p>
-                            <div class="flex justify-between">
-                                    <p>Kuantiti</p>
-                                    <p class="">MYR88.88</p>
-                                    <i class="fa-solid fa-trash text-red-600 cursor-pointer text-l"></i>
-                            </div>
-                        </div>
+                    <div class=" w-3/5 mx-9">
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="w-[5%] text-[#b3b3b3] border-b-2 font-medium" >No.</th>
+                                    <th class="w-[60%] text-[#b3b3b3] border-b-2 font-medium">Nama Produk</th>
+                                    <th class="w-[5%] text-[#b3b3b3] border-b-2 font-medium">Kuantiti</th>
+                                    <th class="w-[20%] text-[#b3b3b3] border-b-2 font-medium">Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in listItem" v-bind:key="item.idItem">
+                                    <td class="w-[5%] text-slate-500 border-b-2 font-medium py-2" >{{ index+1 }}</td>
+                                    <td class="w-[60%] text-slate-500 border-b-2 font-medium text-center" >{{ item.name }}</td>
+                                    <td class="w-[5%] text-slate-500 border-b-2 font-medium text-center select-none"> <i class="fa-solid fa-plus text-blue-500 font-medium text-sm cursor-pointer text-center" @click="addQuantity(item)"></i> {{ item.quantity }} <i class="fa-solid fa-minus text-sm text-red-500 cursor-pointer" @click="decreaseQuantity(item)"></i></td>
+                                    <td class="text-slate-500 border-b-2 font-medium text-end" >RM {{ item.price * item.quantity }}</td>
+                                    <td><i class="fa-solid fa-trash text-[#ff0000] cursor-pointer ml-5"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                         <br>
-                        <div class="bg-white shadow-product p-5 rounded-2xl border ">
-                            <input class="outline-none" type="text" placeholder="Imbas Kod Bar" id="kodbar" value="">
-                        </div>
+                        <form @submit.prevent="scanBarcode" autocomplete="off" >
+                            <div class="bg-white shadow-product p-5 rounded-2xl border ">
+                                <input ref="barkodProduk" v-model="barkodProduk" class="outline-none" type="text" placeholder="Imbas Kod Bar" id="kodbar">
+                            </div>
+                        </form>
                     </div>
                     <div class="w-3/12 h-fit bg-white shadow-product p-4 rounded-xl fixed right-20">
                         <div class="flex justify-between p-2">
@@ -101,6 +84,70 @@ document.title="Cashier"
         </div>  
     </div>
 </template>
-  
+<script>
+import axios from 'axios';
 
+export default
 
+{
+    data() 
+    {
+        return {
+        barkodProduk: '',
+        itemDetail:'',
+        exisitngItem:null,
+        listItem:[]
+        }
+    } ,
+    mounted()
+    {
+        this.$refs.barkodProduk.focus()
+    },
+    methods:
+    {
+        async scanBarcode(){
+            console.log(this.barkodProduk)   
+
+            await axios.get("http://localhost:3000/item/cashier/"+ this.barkodProduk)
+            .then(response=>{
+                this.itemDetail = response.data
+                console.log(this.itemDetail)
+                console.log(this.listItem)
+                this.barkodProduk=''
+
+                this.existingItem = this.listItem.find(item=> item.idItem === this.itemDetail.idItem)
+
+                if(this.existingItem)
+                {
+                    this.existingItem.quantity++
+                }
+                else
+                {
+                    this.listItem.push({...this.itemDetail,quantity:1})
+
+                }
+
+                window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth' // Optional: Add smooth scrolling animation
+            })
+            })
+            .catch(error=>console.log(error))
+        },
+        async addQuantity(item)
+        {
+            item.quantity++
+        },
+        async decreaseQuantity(item)
+        {
+            if(item.quantity>1)
+            {
+                item.quantity--
+            }
+        }
+    
+        
+    }
+}
+
+</script>
