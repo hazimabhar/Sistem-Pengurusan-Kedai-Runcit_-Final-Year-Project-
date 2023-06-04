@@ -40,7 +40,7 @@ document.title="Cashier"
                                 <tr v-for="(item, index) in listItem" v-bind:key="item.idItem">
                                     <td class="w-[5%] text-slate-500 border-b-2 font-medium py-2" >{{ index+1 }}</td>
                                     <td class="w-[60%] text-slate-500 border-b-2 font-medium text-center" >{{ item.name }}</td>
-                                    <td class="w-[5%] text-slate-500 border-b-2 font-medium text-center select-none"> <i class="fa-solid fa-plus text-blue-500 font-medium text-sm cursor-pointer text-center" @click="addQuantity(item)"></i> {{ item.quantity }} <i class="fa-solid fa-minus text-sm text-red-500 cursor-pointer" @click="decreaseQuantity(item)"></i></td>
+                                    <td class="w-[5%] text-slate-500 border-b-2 font-medium text-center select-none"> <i class="fa-solid fa-plus text-blue-500 font-medium text-xs cursor-pointer text-center px-1" @click="addQuantity(item)"></i> {{ item.quantity }} <i class="fa-solid fa-minus text-xs text-blue-500 cursor-pointer px-1" @click="decreaseQuantity(item)"></i></td>
                                     <td class="text-slate-500 border-b-2 font-medium text-end" >RM {{ item.price * item.quantity }}</td>
                                     <td><i class="fa-solid fa-trash text-[#ff0000] cursor-pointer ml-5" @click="deleteItem(index)"></i></td>
                                 </tr>
@@ -76,16 +76,72 @@ document.title="Cashier"
                             </div>
                         </div>
                         <div class="w-max mx-auto">
-                            <MyButton txt="Bayar" @click="completeSale"/>
+                            <MyButton txt="Bayar" @click="toggleDialog"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>  
     </div>
+    <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
+    <dialog class="w-2/6 mx-auto shadow-product rounded-2xl px-5 absolute top-44 z-50" v-bind:open="isOpen">
+        <div class="">
+            <div class="py-2" >
+                <table>
+                            <thead>
+                                <tr>
+                                    <th class="w-[5%] text-[#b3b3b3] border-b-2 font-medium" >No.</th>
+                                    <th class="w-[60%] text-[#b3b3b3] border-b-2 font-medium">Nama Produk</th>
+                                    <th class="w-[5%] text-[#b3b3b3] border-b-2 font-medium">Kuantiti</th>
+                                    <th class="w-[20%] text-[#b3b3b3] border-b-2 font-medium">Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item, index) in listItem" v-bind:key="item.idItem">
+                                    <td class="w-[5%] text-slate-500 font-medium py-2" >{{ index+1 }}</td>
+                                    <td class="w-[60%] text-slate-500 font-medium text-center" >{{ item.name }}</td>
+                                    <td class="w-[5%] text-slate-500 font-medium text-center select-none">{{ item.quantity }}</td>
+                                    <td class="text-slate-500 font-medium text-end" >RM {{ item.price * item.quantity }}</td>
+                                </tr>
+                            </tbody>
+                    </table>
+                    <div class="flex justify-between mt-5">
+                        <div>
+                            <p>Kuantiti</p>
+                            <p>Jenis Pembayaran</p>
+                        </div>
+                        <div>
+                            <p>{{ totalQuantity }}</p>
+                            <p>{{ paymentType }}</p>
+                        </div>
+                    </div>
+                    <hr class="border-[#b3b3b3] my-2">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="font-medium text-lg" >Jumlah</p>
+                        </div>
+                        <div>
+                            <p class="font-medium text-lg">RM {{ totalPrice }}</p>
+                        </div>
+                    </div>
+            </div>
+            <div class="flex justify-evenly">
+                <div>
+                    <button class="w-max bg-red-600 text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="closeDialog">Batal</button>
+                </div>
+                <div >
+                    <button class="w-max bg-blue-600 text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black" @click="completeSale">Sah</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <ToastMessageVue ref="toast"/>
 </template>
+
 <script>
 import axios from 'axios';
+import ToastMessageVue from "../components/ToastMessage.vue";
+
 
 export default
 
@@ -102,6 +158,7 @@ export default
         quantity:[],
         paymentType:'',
         worker:'',
+        isOpen: false,
         }
     } ,
     mounted()
@@ -183,7 +240,7 @@ export default
 
             const totalSale = this.totalPrice
 
-            const report = "8d9fad17-1230-407e-aad9-f38641d40f9d"
+            const report = "f8128355-c1a6-48ad-94d3-5ec0545af3a8"
 
             const saleData= {
                 price : totalSale,
@@ -203,14 +260,71 @@ export default
             console.log(this.idItems)
             console.log(this.price)
             console.log(this.quantity)
+
+            const itemData={
+                idItem : this.idItems,
+                quantity : this.quantity,
+                totalPrice : this.price
+            }
             
 
-            // await axios.post("http://localhost:3000/salebuylist",{saleData,itemData})
-            // .then(response=>console.log(response))
-            // .catch(error=>console.log(error))
+            await axios.post("http://localhost:3000/salebuylist",{saleData,itemData})
+            .then(response=>console.log(response))
+            .catch(error=>console.log(error))
+
+            this.idItems=[],
+            this.price=[],
+            this.quantity=[],
 
             this.listItem=[]
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
+            const message ='Pembelian Telah Direkodkan'
+            const status = 'Berjaya'
+            
+            this.$refs.toast.toast(message,status,'success')
 
+            await this.fetchItemData();
+            
+        },
+        toggleDialog() {
+
+            if(this.listItem.length===0)
+            {
+                const message ='Sila Masukkan Kodbar Produk'
+                const status = 'Ralat'
+            
+                this.$refs.toast.toast(message,status,'error')   
+            }
+            else
+            {
+                this.isOpen = !this.isOpen; // Toggle the isOpen property
+            }
+        },
+        closeDialog()
+        {
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
+
+            const message ='Pembelian Dibatalkan'
+            const status = 'Batal'
+            
+            this.$refs.toast.toast(message,status,'error')   
+
+            this.listItem=[]
+        },
+        async fetchItemData()
+        {
+            const promises = this.idItems.map(async (idItem) => {
+            try {
+            const response = await axios.get("http://localhost:3000/item/" + idItem)
+            const itemData = response.data;
+            console.log(itemData);
+            // Process the item data as needed
+            } catch (error) {
+            console.log(error);
+            }
+        })
+
+        await Promise.all(promises);
         }
     }
 }
