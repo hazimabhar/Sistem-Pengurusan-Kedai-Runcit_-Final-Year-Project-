@@ -96,15 +96,18 @@ export default
         barkodProduk: '',
         itemDetail:'',
         exisitngItem:null,
-        totalSale:null,
         listItem:[],
-        sale:[],
-        paymentType:''
+        idItems:[],
+        price:[],
+        quantity:[],
+        paymentType:'',
+        worker:'',
         }
     } ,
     mounted()
     {
         this.$refs.barkodProduk.focus()
+        this.worker=JSON.parse(sessionStorage.getItem("idAccount"))
     },
     computed:{
         totalQuantity()
@@ -115,10 +118,6 @@ export default
         {
            return this.listItem.reduce((total, item)=> total+(item.price*item.quantity),0)
         },
-        idItems()
-        {
-            return this.listItem.map(item=>item.idItem)
-        }
     },
     methods:
     {
@@ -174,46 +173,44 @@ export default
         },
         async completeSale()
         {
+            console.log(this.worker)
             console.log(this.listItem)
             console.log(this.totalPrice)
             console.log(this.totalQuantity)
             console.log(this.paymentType)
+
+
+
+            const totalSale = this.totalPrice
+
+            const report = "8d9fad17-1230-407e-aad9-f38641d40f9d"
+
+            const saleData= {
+                price : totalSale,
+                paymentMethod: this.paymentType,
+                idWorker:this.worker,
+                idReport : report
+            }
+
+            console.log(saleData)
+
+            this.listItem.forEach((item)=>{
+                this.idItems.push(item.idItem)
+                this.price.push(item.price*item.quantity)
+                this.quantity.push(item.quantity)
+            })
+
             console.log(this.idItems)
+            console.log(this.price)
+            console.log(this.quantity)
+            
 
-            this.sale.push([...this.listItem]),
-            this.listItem=[],
-            console.log(this.sale)
-            console.log(this.listItem)
-
-            console.log(this.sale.length)
-
-            this.totalSale= this.sale.reduce((total,outerArray)=> {
-                outerArray.forEach(item => {
-                  const itemPrice = item.price*item.quantity
-                  total += itemPrice  
-                })
-                return total
-            },0)
-            console.log(this.totalSale)
-
-            // const data={
-            //     items:this.idItems
-            // }
-            // console.log(data)
-
-            // await axios.post("http://localhost:3000/buylist",data)
+            // await axios.post("http://localhost:3000/salebuylist",{saleData,itemData})
             // .then(response=>console.log(response))
             // .catch(error=>console.log(error))
 
+            this.listItem=[]
 
-            const report ={
-                numberSale:this.sale.length,
-                saleRevenue:this.totalSale
-            }
-
-            await axios.post("http://localhost:3000/report",report)
-            .then(response=>console.log(response))
-            .catch(error=>console.log(error))
         }
     }
 }
