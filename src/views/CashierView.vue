@@ -156,6 +156,9 @@ export default
         idItems:[],
         price:[],
         quantity:[],
+        item:[],
+        idDatabase:[],
+        quantityDatabase:[],
         paymentType:'',
         worker:'',
         isOpen: false,
@@ -236,8 +239,6 @@ export default
             console.log(this.totalQuantity)
             console.log(this.paymentType)
 
-
-
             const totalSale = this.totalPrice
 
             const report = "f8128355-c1a6-48ad-94d3-5ec0545af3a8"
@@ -266,25 +267,97 @@ export default
                 quantity : this.quantity,
                 totalPrice : this.price
             }
-            
+
 
             await axios.post("http://localhost:3000/salebuylist",{saleData,itemData})
+            .then(response=>{
+                console.log(response)
+                this.listItem = [];
+                this.isOpen = !this.isOpen; // Toggle the isOpen property
+
+                const message = 'Pembelian Telah Direkodkan';
+                const status = 'Berjaya';
+
+                this.$refs.toast.toast(message, status, 'success');
+                })
+            .catch(error=>console.log(error))  
+
+            await axios.get("http://localhost:3000/item/quantity/"+ this.idItems)
+            .then(response=>
+            {
+                this.item = response.data
+                console.log(this.item)
+            })
+            .catch(error=>console.log(error))
+
+            this.item.forEach((item)=>{
+                this.idDatabase.push(item.idItem)
+                this.quantityDatabase.push(item.quantity)
+            })
+
+            const data ={
+                listItems:[
+                    {
+                        idItem : this.idItems,
+                        quantity : this.quantity,
+                    }
+                ],
+                item:[
+                    {
+                        idItem:this.idDatabase,
+                        quantity:this.quantityDatabase
+                    }
+                ]
+            }
+
+            console.log(data)
+
+            const newQuantity = {};
+
+            for (let i = 0; i < data.item[0].idItem.length; i++) {
+            const idItem = data.item[0].idItem[i];
+            const itemQuantity = data.item[0].quantity[i];
+            const listItemQuantity = data.listItems[0].quantity[i];
+            
+            newQuantity[idItem] = itemQuantity - listItemQuantity;
+            }
+
+            console.log(newQuantity);
+
+            await axios.put("http://localhost:3000/item/cashier/updatequantity",newQuantity)
             .then(response=>console.log(response))
             .catch(error=>console.log(error))
 
-            this.idItems=[],
-            this.price=[],
-            this.quantity=[],
-
-            this.listItem=[]
-            this.isOpen = !this.isOpen; // Toggle the isOpen property
-            const message ='Pembelian Telah Direkodkan'
-            const status = 'Berjaya'
             
-            this.$refs.toast.toast(message,status,'success')
 
-            await this.fetchItemData();
-            
+
+            // const listItems = data.listItems
+            // const itemDatabase = data.item
+            // const newQuantity = {}
+
+            // for (const buylist of listItems){
+            //     const idItem = buylist.idItem
+            //     const listQuantity = buylist.quantity
+
+            //     for(const item of itemDatabase){
+            //         if (item.idItem === idItem)
+            //         {
+            //             const itemQuantity = item.quantity
+            //             newQuantity[idItem] = listQuantity - itemQuantity
+            //             break; // Exit the loop once the matching item is found
+            //         }
+            //     }
+            // }
+            // console.log(newQuantity)
+
+ 
+
+            this.idItems=[]
+            this.price=[]
+            this.quantity=[]
+            this.idDatabase=[]
+            this.quantityDatabase=[]
+
         },
         toggleDialog() {
 
@@ -292,7 +365,6 @@ export default
             {
                 const message ='Sila Masukkan Kodbar Produk'
                 const status = 'Ralat'
-            
                 this.$refs.toast.toast(message,status,'error')   
             }
             else
@@ -311,21 +383,6 @@ export default
 
             this.listItem=[]
         },
-        async fetchItemData()
-        {
-            const promises = this.idItems.map(async (idItem) => {
-            try {
-            const response = await axios.get("http://localhost:3000/item/" + idItem)
-            const itemData = response.data;
-            console.log(itemData);
-            // Process the item data as needed
-            } catch (error) {
-            console.log(error);
-            }
-        })
-
-        await Promise.all(promises);
-        }
     }
 }
 
