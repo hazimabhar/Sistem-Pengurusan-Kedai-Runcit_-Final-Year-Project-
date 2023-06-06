@@ -5,13 +5,6 @@ import NavBar from '../components/NavBar.vue';
 
 document.title="Tutup Jualan"
 
-const isOpen = ref(false)
-
-function toggleDialog()
-{
-    isOpen.value=!isOpen.value;
-}
-
 </script>
 
 <template>
@@ -37,26 +30,26 @@ function toggleDialog()
                     <form method="dialog" class="max-sm:text-xs max-md:text-sm">
                         <div class="flex justify-between p-5">
                             <p>Hasil Jualan</p>
-                            <p>MYR88.88</p>
+                            <p>RM{{ parseFloat(totalSale.Online + totalSale.Tunai).toFixed(2) }}</p>
                         </div>
                         <div class="flex justify-between p-5">
                             <p>Pembayaran dalam Talian</p>
-                            <p>MYR88.88</p>
+                            <p>RM {{ parseFloat(totalSale.Online).toFixed(2) }}</p>
                         </div>
                         <div class="flex justify-between p-5">
                             <p>Pembayaran Tunai</p>
-                            <p>MYR88.88</p>
+                            <p>RM {{ parseFloat(totalSale.Tunai).toFixed(2) }}</p>
                         </div>
                         <div class="flex justify-between p-5">
                             <p>Jumlah Wang Tunai</p>
-                            <p>MYR88.88</p>
+                            <p>RM {{ (parseFloat(totalSale.Tunai) + 300).toFixed(2) }}</p>
                         </div>
                         <div class="flex justify-between p-5">
                             <p>Tarikh</p>
-                            <p>12.12.12</p>
+                            <p>{{ currentDate }}</p>
                         </div>
                         <div class="w-max mx-auto">
-                            <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog()">Sah</button>
+                            <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="closeSale">Sah</button>
                         </div>
                     </form>
                 </dialog>
@@ -64,3 +57,72 @@ function toggleDialog()
         </div>
   </div>
 </template>
+<script>
+import axios from 'axios';
+
+export default
+{
+    data()
+    {
+        return{
+            isOpen:false,
+            report:[],
+            allSale:[],
+            totalSale:[],
+            currentDate: '',
+        }
+    },
+    mounted()
+    {
+        axios.get("http://localhost:3000/report")
+        .then(response=>{
+            this.report = response.data
+            console.log(this.report)
+            this.allSale=(this.report[0].Sale)
+            console.log(this.allSale)
+        })
+        .catch(error=>console.log(error))
+
+        const currentDate = new Date();
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const year = String(currentDate.getFullYear());
+        this.currentDate = `${day}/${month}/${year}`;
+
+    },
+    methods:
+    {
+        toggleDialog()
+        {
+            this.isOpen=!this.isOpen
+
+            this.allSale.forEach((sale)=>
+            {
+                const paymentMethod = sale.paymentMethod
+                const price = sale.price
+
+                if(this.totalSale.hasOwnProperty(paymentMethod))
+                {
+                    this.totalSale[paymentMethod] += price
+                }
+                else{
+                    this.totalSale[paymentMethod] = price
+                }
+            })
+
+            console.log(this.allSale.length)
+            console.log(this.totalSale)
+
+
+
+        },
+        closeSale()
+        {
+
+            this.totalSale=[]
+            this.isOpen=!this.isOpen
+
+        }
+    }
+}
+</script>

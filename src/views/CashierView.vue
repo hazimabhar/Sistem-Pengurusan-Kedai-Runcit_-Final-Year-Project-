@@ -159,6 +159,8 @@ export default
         item:[],
         idDatabase:[],
         quantityDatabase:[],
+        report:[],
+        idReport:'',
         paymentType:'',
         worker:'',
         isOpen: false,
@@ -168,6 +170,14 @@ export default
     {
         this.$refs.barkodProduk.focus()
         this.worker=JSON.parse(sessionStorage.getItem("idAccount"))
+
+        axios.get("http://localhost:3000/report/today")
+        .then(response=>{
+            this.report=response.data
+            console.log(this.report)
+            this.idReport = this.report[0].idReport
+        })
+        .catch(error=>console.log(error))
     },
     computed:{
         totalQuantity()
@@ -238,16 +248,16 @@ export default
             console.log(this.totalPrice)
             console.log(this.totalQuantity)
             console.log(this.paymentType)
+            console.log(this.idReport)
 
             const totalSale = this.totalPrice
 
-            const report = "f8128355-c1a6-48ad-94d3-5ec0545af3a8"
 
             const saleData= {
                 price : totalSale,
                 paymentMethod: this.paymentType,
                 idWorker:this.worker,
-                idReport : report
+                idReport : this.idReport
             }
 
             console.log(saleData)
@@ -328,30 +338,6 @@ export default
             .then(response=>console.log(response))
             .catch(error=>console.log(error))
 
-            
-
-
-            // const listItems = data.listItems
-            // const itemDatabase = data.item
-            // const newQuantity = {}
-
-            // for (const buylist of listItems){
-            //     const idItem = buylist.idItem
-            //     const listQuantity = buylist.quantity
-
-            //     for(const item of itemDatabase){
-            //         if (item.idItem === idItem)
-            //         {
-            //             const itemQuantity = item.quantity
-            //             newQuantity[idItem] = listQuantity - itemQuantity
-            //             break; // Exit the loop once the matching item is found
-            //         }
-            //     }
-            // }
-            // console.log(newQuantity)
-
- 
-
             this.idItems=[]
             this.price=[]
             this.quantity=[]
@@ -361,9 +347,9 @@ export default
         },
         toggleDialog() {
 
-            if(this.listItem.length===0)
+            if(this.listItem.length===0 || this.paymentType === '')
             {
-                const message ='Sila Masukkan Kodbar Produk'
+                const message ='Sila Masukkan Kodbar dan Jenis Pembayaran'
                 const status = 'Ralat'
                 this.$refs.toast.toast(message,status,'error')   
             }
@@ -382,6 +368,7 @@ export default
             this.$refs.toast.toast(message,status,'error')   
 
             this.listItem=[]
+            this.paymentType=''
         },
     }
 }
