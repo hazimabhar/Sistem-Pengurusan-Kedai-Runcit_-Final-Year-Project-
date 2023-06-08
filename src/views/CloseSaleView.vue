@@ -26,11 +26,11 @@ document.title="Tutup Jualan"
                     <button class=" bg-black text-white p-5 rounded-2xl hover:bg-red-600 hover:scale-125" @click="toggleDialog()" >Tutup Jualan</button>
                 </div>
                 <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-                <dialog class="w-4/5 mx-auto shadow-product rounded-2xl outline absolute top-44 z-50" v-bind:open="isOpen">
+                <dialog class="w-7/12 mx-auto shadow-product rounded-2xl outline absolute top-44 z-50" v-bind:open="isOpen">
                     <form method="dialog" class="max-sm:text-xs max-md:text-sm">
                         <div class="flex justify-between p-5">
                             <p>Hasil Jualan</p>
-                            <p>RM{{ parseFloat(totalSale.Online + totalSale.Tunai).toFixed(2) }}</p>
+                            <p>RM {{ parseFloat(totalSale.Online + totalSale.Tunai).toFixed(2) }}</p>
                         </div>
                         <div class="flex justify-between p-5">
                             <p>Pembayaran dalam Talian</p>
@@ -49,7 +49,7 @@ document.title="Tutup Jualan"
                             <p>{{ currentDate }}</p>
                         </div>
                         <div class="w-max mx-auto">
-                            <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="closeSale">Sah</button>
+                            <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="closeSale">Laporan Jualan</button>
                         </div>
                     </form>
                 </dialog>
@@ -59,6 +59,8 @@ document.title="Tutup Jualan"
 </template>
 <script>
 import axios from 'axios';
+import jsPDF from 'jspdf';
+
 
 export default
 {
@@ -70,6 +72,13 @@ export default
             allSale:[],
             totalSale:[],
             currentDate: '',
+            updateReport:[],
+            listItem:[],
+            idItems:[],
+            reportIdItems:[],
+            price:[],
+            quantity:[],
+            item:[],
         }
     },
     mounted()
@@ -110,8 +119,30 @@ export default
                 }
             })
 
+            if (!this.totalSale.hasOwnProperty('Online') || isNaN(this.totalSale['Online']) || this.totalSale['Online'] === 0) {
+                this.totalSale['Online'] = 0;
+            }
+
+            if (!this.totalSale.hasOwnProperty('Tunai') || isNaN(this.totalSale['Tunai']) || this.totalSale['Tunai'] === 0) {
+                this.totalSale['Tunai'] = 0;
+            }
+
+            const total = this.totalSale.Tunai + this.totalSale.Online
             console.log(this.allSale.length)
+            console.log(total)
             console.log(this.totalSale)
+            console.log(this.report[0].idReport)
+
+            const reportData = {
+                numberSale : this.allSale.length,
+                saleRevenue : total
+            }
+
+            console.log(reportData)
+
+            axios.put("http://localhost:3000/report/"+this.report[0].idReport, reportData)
+            .then(response=>console.log(response))
+            .catch(error=>console.log(error))
 
 
 
@@ -119,10 +150,105 @@ export default
         closeSale()
         {
 
+            axios.get("http://localhost:3000/report")
+            .then(response=>{
+                this.updateReport = response.data
+                console.log(this.updateReport)
+                console.log(this.updateReport[0].Sale)
+
+                const idAccounts = this.updateReport[0].Sale.map(item => item.idAccount);
+                const paymentMethods = this.updateReport[0].Sale.map(item => item.paymentMethod);
+                const prices = this.updateReport[0].Sale.map(item => item.price);
+                const idSale = this.updateReport[0].Sale.map(item => item.idSale);
+
+
+                console.log('idAccounts:', idAccounts);
+                console.log('paymentMethods:', paymentMethods);
+                console.log('prices:', prices);
+                // console.log(idSale)
+
+            axios.get("http://localhost:3000/sale/" + idSale)
+            .then(response => {
+                this.listItem = response.data;
+                console.log(this.listItem);
+
+
+                const idItemsSet = new Set(); // Use a Set to store unique idItems
+
+                this.listItem.forEach(sale => {
+                const listItemArray = sale.ListItem;
+                // console.log(listItemArray);
+
+                const idItemsArray = listItemArray.map(item => item.idItem);
+                const itemPrice = listItemArray.map(item => item.price);
+                const itemQuantity = listItemArray.map(item => item.quantity);
+
+                // console.log(idItemsArray);
+                this.reportIdItems.push(idItemsArray)
+                this.price.push(itemPrice)
+                this.quantity.push(itemQuantity)
+
+                // console.log('all item id',this.reportIdItems)
+
+
+                idItemsArray.forEach(idItem => {
+                    idItemsSet.add(idItem); // Add unique idItems to the Set
+                });
+                });
+
+                this.idItems = Array.from(idItemsSet); // Convert Set to an array
+
+                console.log(this.idItems);
+
+                axios.get("http://localhost:3000/item/report/" + this.idItems)
+                .then(response => {
+                    this.item = response.data;
+
+
+                    console.log(this.item);
+
+                    console.log('Number Sale:',this.updateReport[0].numberSale)
+                    console.log('Total Sale',this.updateReport[0].saleRevenue)
+                    console.log('idAccounts:', idAccounts);
+                    console.log('paymentMethods:', paymentMethods);
+                    console.log('prices:', prices);
+                    console.log('all item id',this.reportIdItems)
+                    console.log('Price',this.price)
+                    console.log('Quantity',this.quantity)
+
+                    this.item = []
+                    this.reportIdItems=[]
+                    this.quantity=[]
+                    this.price=[]
+                })
+                .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
+        })
+            .catch(error=>console.log(error))
+
+
+            // const doc = new jsPDF();
+
+
+
+            // // Set font size and style
+            // doc.setFont('helvetica', 'bold');
+            // doc.setFontSize(8);
+            
+            // // Set text color
+            // doc.setTextColor('#FF0000');
+
+            // doc.text('Hello world! \nHazim Hensem', 10, 10);
+            // doc.save('Laporan Jualan.pdf');
+
             this.totalSale=[]
             this.isOpen=!this.isOpen
+
+
 
         }
     }
 }
 </script>
+

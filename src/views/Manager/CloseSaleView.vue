@@ -19,7 +19,7 @@ function toggleDialog()
     <div class="bg-slate-100 min-h-screen max-md:bg-white max-lg:bg-white ">
         <div>
             <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">
-                Hasil Jualan Hazim
+                Hasil Jualan
             </p>
         </div>
             <div class="w-9/12 mx-auto mr-16 bg-white max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
