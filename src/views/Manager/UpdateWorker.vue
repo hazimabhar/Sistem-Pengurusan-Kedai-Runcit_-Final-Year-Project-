@@ -31,7 +31,7 @@ document.title='Home Page'
                             <div class="block gap-5 mb-2">
                                     <div>
                                         <label class="text-gray-500" for="Nombor IC">Nombor Kad Pengenalan</label><br>
-                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="888888888888" id="nomboric" v-model="cantChange.icNumber"><br>
+                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500 disabled:bg-[#b0b0b0] cursor-not-allowed" type="text" placeholder="888888888888" id="nomboric" v-model="cantChange.icNumber" disabled ><br>
                                         <label class="text-red-600 font-light text-sm" for="errornric" id="errorNric"></label><br>
                                     </div>
                                     <div>
@@ -44,7 +44,7 @@ document.title='Home Page'
                             <div class="block gap-5 mb-2">
                                     <div>
                                         <label class="text-gray-500" for="Password">Kata Laluan</label><br>
-                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="password" placeholder="Kata Laluan" id="password" v-model="cantChange.password"><br>
+                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500 disabled:bg-[#b0b0b0] cursor-not-allowed" type="password" placeholder="Kata Laluan" id="password" v-model="cantChange.password" disabled><br>
                                         <label class="text-red-600 font-light text-sm" for="errorpassword" id="errorPassword"></label><br>
                                     </div>
                                     <div>

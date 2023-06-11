@@ -81,23 +81,18 @@ document.title="Login"
             <div class="w-4/5 mx-auto">
                 <MyLabel text="Nombor Kad Pengenalan" />
                 <input class="mt-2 mb-2 bg-gray-300 w-full p-3 rounded-xl focus:outline-emerald-700 shadow-input" placeholder="888888888888" v-model="icNumber" type="text" id="icNumber" ><br>
-                <div>
-                    <label for="" id="nricError" class="text-red-600 font-light text-sm"></label>
-                </div>
                 <label class="text-red-600 font-medium text-xs" for="errorNric" id="errorNric">{{ errorNric }}</label><br>
                 <MyLabel text="Kata Laluan"/>
                 <input class="mt-2 mb-2 bg-gray-300 w-full p-3 rounded-xl focus:outline-emerald-700 shadow-input" placeholder="Katalaluan..." v-model="password" type="password" id="password" ><br>
                 <label class="text-red-600 font-medium text-xs" for="errorPassword" id="errorPassword">{{ errorPassword }}</label><br>
-                <div>
-                    <label for="" id="passError" class="text-red-600 font-light text-sm"></label>
-                </div>
+
             </div>
   
             <div class="w-max mx-auto">            
                 <MyButton txt="Log Masuk"/>
             </div>
-            <div class="text-center py-4 underline">
-                <RouterLink to="/about">Tukar Kata Laluan</RouterLink>
+            <div class="text-center text-[13px] py-4 underline">
+                <RouterLink to="/userinfo">Tukar Kata Laluan</RouterLink>
             </div>
         </form>
     </div>
