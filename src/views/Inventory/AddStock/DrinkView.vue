@@ -83,7 +83,7 @@ export default {
     <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
         <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">
             <div class="bg-white py-5 rounded-xl  h-44">
-                <img class="mx-auto" src="" alt="Produk">
+                <img class="mx-auto h-[100%]" :src="item.image" alt="Produk">
             </div>
              <div class="p-2">
                 {{item.name}}
@@ -91,23 +91,20 @@ export default {
         </div>
     </RouterLink>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-    <dialog class="w-fit mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
-        <div class="">
+    <dialog class="w-1/3 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+        <div class="" v-if="selectedItem" >
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
-                <img class="mx-auto" src="" alt="Produk">
+                <img class="mx-auto w-[45%]" :src="selectedItem.image" alt="Produk">
             </div>
-            <div class="py-2" v-if="selectedItem" >
+            <div class="py-2">
                 <div class="flex justify-between p-5">
                 <div class="w-5/6">
                     <p>Stok Produk</p>
-                    <label for="">Imbas Barkod</label><br>
                     <label for="">Masukkan Kuantiti</label>
                 </div>
                 <div class="">
-                    <p>{{selectedItem.quantity}}</p>
-                    <input class="" type="text" placeholder="88888888888">
-                    <input class="w-1/3" placeholder="0" type="number" v-model="item.quantity">
-
+                    <p class="">{{selectedItem.quantity}}</p>
+                    <input class="w-1/3 ml-12" placeholder="0" type="number" v-model="item.quantity">
                 </div>
                 </div>
             </div>

@@ -143,7 +143,8 @@ document.title = "Update Product";
                     >Gambar Produk</label
                   ><br />
                 </div>
-                <image-input-reviewer v-model="selectedImage" />
+                <img class="mx-auto pb-5 w-[80%]" :src="item.image" alt="Produk">
+                <UploadPicture  id="upload" v-on:upload="handleUploaderEvent"/>
               </div>
             </div>
             <div class="w-max mx-auto flex gap-10 mt-5 max-sm:gap-5">
@@ -167,15 +168,15 @@ document.title = "Update Product";
 </template>
 
 <script>
-import ImageInputReviewer from "../components/ImageInputReviewer.vue";
 import router from '../router';
 import axios from 'axios';
 import ToastMessageVue from "../components/ToastMessage.vue";
+import UploadPicture from '../components/UploadPicture.vue';
+
 
 export default {
 
   components: {
-    ImageInputReviewer,
     ToastMessageVue,
   },
   data() {
@@ -189,12 +190,14 @@ export default {
         unit:'',
         quantity:'',
         category:'',
-        barcode:''
+        barcode:'',
+        image:'',
       }
     };
   },
   mounted(){
     console.log(this.itemId);
+    window.addEventListener("LR_UPLOAD_FINISH", this.handleUploadFinish);
 
         axios.get('http://localhost:3000/item/'+this.itemId)
         .then(response=> {
@@ -204,6 +207,13 @@ export default {
         .catch(error=> console.log(error))
     },
   methods: {
+    handleUploadFinish(e) {
+            const dataUpload = e.detail.data[0];
+            this.fileName = dataUpload.name;
+            this.item.image = dataUpload.cdnUrl + dataUpload.name;
+            console.log(this.fileName)
+            console.log(this.item.image)
+    },
     updateInfo() {
       this.item.price = parseFloat(this.item.price)
       this.item.quantity = parseInt(this.item.quantity)

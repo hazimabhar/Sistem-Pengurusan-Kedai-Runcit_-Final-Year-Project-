@@ -88,11 +88,13 @@ document.title="Register Product";
                                 <label class="text-red-600 font-medium text-xs" for="errorBarcode" id="errorBarcode">{{ errorBarcode }}</label>
                                 <label class="text-red-600 font-medium text-xs" for="errorCheckedBarcode" id="errorCheckedBarcode">{{ errorCheckedBarcode }}</label><br>
                             </div>
-                            <div class="w-2/12 mx-auto max-lg:w-4/12 max-sm:w-full">
+                            <div class="w-3/12 mx-auto max-lg:w-4/12 max-sm:w-full">
                                 <div class="pb-6 max-sm:pt-6">
                                     <label class="text-gray-500" for="Nama Produk">Gambar Produk</label><br>
                                 </div>
-                                <image-input-reviewer v-model="selectedImage" />
+                                <label class="text-red-600 font-medium text-xs" for="errorImage" id="errorImage">{{ errorImage }}</label>
+                                <img class="mx-auto pb-5 w-[80%]" :src="filePath" alt="Gambar Produk">
+                                <UploadPicture  id="upload" v-on:upload="handleUploaderEvent"/>
                             </div>
                         </div>
                         <div class="w-max mx-auto flex gap-10 mt-1 max-sm:gap-5">
@@ -190,13 +192,13 @@ document.title="Register Product";
 </template>
 
 <script>
-import ImageInputReviewer from '../components/ImageInputReviewer.vue'
 import axios from 'axios'
 import BarcodeScanner from '../components/BarcodeScanner.vue';
+import UploadPicture from '../components/UploadPicture.vue'
 
 export default {
   components: {
-    ImageInputReviewer
+    UploadPicture
   },
   data() {
     return {
@@ -209,6 +211,8 @@ export default {
       kategori:null,
       selectedImage: null,
       barcodeScanner:null,
+      fileName: '',
+      filePath: '',
 
       isOpen:false,
       completeRegister:false,
@@ -221,13 +225,25 @@ export default {
       errorCategory:'',
       errorBarcode:'',
       errorCheckedBarcode:'',
+      errorImage:'',
 
       checkedBarcode:'',
 
       item:[]
     }
   },
+  mounted()
+  {
+    window.addEventListener("LR_UPLOAD_FINISH", this.handleUploadFinish);
+  },
   methods: {
+    handleUploadFinish(e) {
+            const dataUpload = e.detail.data[0];
+            this.fileName = dataUpload.name;
+            this.filePath = dataUpload.cdnUrl + dataUpload.name;
+            console.log(this.fileName)
+            console.log(this.filePath)
+    },
     async submitForm() {
         
         await axios.get("http://localhost:3000/barcode")
@@ -244,11 +260,12 @@ export default {
         const quantity = parseInt(this.kuantitiProduk)
         const category = document.querySelector('input[name="Kategori"]:checked')?.value
         const barcode = this.barkodProduk
+        const image = this.filePath
 
         const existingData = this.checkedBarcode.find(item => item.barcode === this.barkodProduk);
 
         
-        if(this.namaProduk && this.hargaProduk && this.berat && this.unit && this.kuantitiProduk && this.barkodProduk && this.kategori && !existingData)
+        if(this.namaProduk && this.hargaProduk && this.berat && this.unit && this.kuantitiProduk && this.barkodProduk && this.kategori && this.filePath && !existingData)
         {
             const item =
             {
@@ -258,7 +275,8 @@ export default {
                 unit,
                 quantity,
                 category,
-                barcode
+                barcode,
+                image
             }
             this.item= item
 
@@ -275,6 +293,8 @@ export default {
             this.errorCategory=''
             this.errorBarcode=''
             this.errorCheckedBarcode=''
+            this.errorImage=''
+
         }
         else
         {
@@ -326,6 +346,14 @@ export default {
             {
                 this.errorBarcode=''
             }
+            if(this.fileName==='')
+            {
+                this.errorImage='*Sila Masukkan Gambar Produk'
+            }
+            else
+            {
+                this.errorImage=''
+            }
             if(existingData)
             {
                 this.errorCheckedBarcode='*Kodbar ini telah didaftarkan'
@@ -350,6 +378,7 @@ export default {
             this.kuantitiProduk=""
             this.barkodProduk=""
             this.kategori = null
+            this.filePath=""
         },
         cancelForm()
         {
@@ -360,6 +389,7 @@ export default {
            this.kuantitiProduk=""
            this.barkodProduk=""
            this.kategori = null
+           this.filePath=""
         },
         toggleDialog() {
             this.isOpen = !this.isOpen; // Toggle the isOpen property
@@ -395,8 +425,8 @@ export default {
                     this.phoneScanner=false
                 },500)
             }
-        }
-        
+        },
+
     }
 }
 </script>

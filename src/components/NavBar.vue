@@ -9,50 +9,48 @@ import { isCoreComponent } from '@vue/compiler-core';
 
 <template>
     <div class="fixed py-3 w-full bg-teal-500 select-none z-10" >
-        <div class="flex max-sm:w-2/3" >
+        <div class="max-sm:w-full" >
             <div class="flex pl-5">
-                <div id="icon" class="py-2 px-2" @click="closeOpenSideBar()">
+                <div id="icon" class="py-2 px-2  max-lg:mr-10 " @click="closeOpenSideBar()">
                     <i class="fa-solid fa-bars cursor-pointer text-white hover:text-black max-lg:hover:text-white"></i>
                 </div>
-                <div class="text-lg pt-2 px-2">
-                    <RouterLink class="font-semibold max-lg:hidden" to="/home">Sistem Kedai Runcit</RouterLink>
+                <div class="text-lg pt-2 ml-[650px] mr-[550px] max-sm:mx-[30px]  max-lg:ml-[245px] max-lg:mr-[200px]">
+                    <RouterLink class="font-semibold" to="/home">Sistem Kedai Runcit</RouterLink>
+                </div>
+                <div>
+                    <p class="font-semibold mt-2 max-sm:hidden">Pekerja</p>
                 </div>
             </div>
-            <div class="mx-auto pt-1 max-sm:ml-10">
-                <MySearch placeholder="Carian..." value="" type="text" id="carian"/>
-            </div>
-            <div class="pr-32">
-                <RouterLink to="/home"><i class="fa-solid fa-house text-white text-2xl lg:hidden max-sm:pl-28 max-md:pt-1 max-lg:pt-1 "></i></RouterLink>
-            </div>
+
         </div>
         <SideBar id="sidebar" v-bind:is-close="openSideBar"/>
     </div>
 
-         
 </template>
 
 <script>
-    
-    export default
-    {
-        data()
+import axios from 'axios';
+import ToastMessageVue from "../components/ToastMessage.vue";
+
+export default {
+    components: {
+    ToastMessageVue,
+  },
+    data()
     {
         return {
-            openSideBar:false
+            openSideBar:false,
+            
         }
     },
         methods:
         {
-            closeOpenSideBar()
+        closeOpenSideBar()
             {
                 this.openSideBar = !this.openSideBar
-            }
+            },
+    
         }
     }
  
 </script>
-
-<style>
-
-</style>
-

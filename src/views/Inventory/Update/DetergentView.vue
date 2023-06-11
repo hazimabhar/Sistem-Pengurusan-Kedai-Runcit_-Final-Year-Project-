@@ -45,7 +45,7 @@ export default {
         class="bg-teal-500 text-white w-48 rounded-2xl p-1 ease-in-out duration-500 hover:scale-110"
       >
         <div class="bg-white py-5 rounded-xl h-44">
-          <img class="mx-auto" src="" alt="Produk" />
+          <img class="mx-auto h-[100%]" :src="item.image" alt="Produk">
         </div>
         <div class="p-2">
           {{ item.name }}
@@ -62,11 +62,11 @@ export default {
     class="w-1/4 mx-auto shadow-product rounded-2xl absolute top-44 z-50"
     v-bind:open="isOpen"
   >
-    <div class="">
+    <div class=""  v-if="selectedItem">
       <div class="py-5 rounded-xl border-solid border-2 border-teal-500">
-        <img class="mx-auto" src="" alt="Produk" />
+        <img class="mx-auto w-[45%]" :src="selectedItem.image" alt="Produk">
       </div>
-      <div class="py-2" v-if="selectedItem">
+      <div class="py-2">
         <div class="flex justify-between p-5">
           <div class="">
             <p>Nama Produk</p>

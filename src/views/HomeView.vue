@@ -28,8 +28,8 @@ document.title='Home Page'
                     <div v-for="worker in worker" :key="worker.idWorker">
                         <div class="flex justify-evenly p-5 max-md:block">
                             <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../assets/worker.png" alt="">
-                            <p>{{ worker.name }}</p>
-                            <p>{{ worker.phoneNumber }}</p>
+                            <p class="text-sm ml-5">{{ worker.name }}</p>
+                            <p class="text-sm">{{ worker.phoneNumber }}</p>
                         </div>
                     </div>
                 </div>
@@ -38,8 +38,8 @@ document.title='Home Page'
                     <div v-for="manager in manager" :key="manager.idManager">
                         <div class="flex justify-evenly p-5 max-md:block ">
                             <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../assets/manager.png" alt="">
-                            <p class="max-md:w-36">{{ manager.name }}</p>
-                            <p >{{ manager.phoneNumber }}</p>
+                            <p class="text-sm ml-5">{{ manager.name }}</p>
+                            <p class="text-sm">{{ manager.phoneNumber }}</p>
                         </div>
                     </div>
                 </div>
