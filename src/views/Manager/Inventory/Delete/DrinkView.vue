@@ -1,9 +1,12 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
+import ToastMessageVue from "../../../../components/ToastMessage.vue";
 
 export default {
-
+    components: {
+    ToastMessageVue,
+  },
     data()
     {
         return {
@@ -26,7 +29,19 @@ export default {
             this.isOpen = !this.isOpen; // Toggle the isOpen property
         },
         deleteProduct(item)
-        {
+        {            
+            axios.delete('http://localhost:3000/item/'+item)
+            .then(response => {
+                const index = this.item.findIndex(i => i.idItem === item)
+                if (index !== -1) {
+                    this.item.splice(index, 1); // Remove the selected item from the item array
+                }
+                const message ='Produk Berjaya Dibuang'
+                const status = 'Berjaya'
+                this.$refs.toast.toast(message,status,'success')
+            })
+            .catch(error=> console.log(error))
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
             console.log(item)
         }
     }
@@ -38,7 +53,7 @@ export default {
     <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
         <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">
             <div class="bg-white py-5 rounded-xl  h-44">
-                <img class="mx-auto" src="" alt="Produk">
+                <img class="mx-auto h-[100%]" :src="item.image" alt="Produk">
             </div>
              <div class="p-2">
                 {{item.name}}
@@ -47,11 +62,11 @@ export default {
     </RouterLink>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
     <dialog class="w-1/4 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
-        <div class="">
+        <div class="" v-if="selectedItem" >
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
-                <img class="mx-auto" src="" alt="Produk">
+                <img class="mx-auto w-[45%]" :src="selectedItem.image" alt="Produk">
             </div>
-            <div class="py-2" v-if="selectedItem" >
+            <div class="py-2" >
                 <div class="flex justify-between p-5">
                 <div class="">
                     <p>Nama Produk</p>
@@ -63,7 +78,7 @@ export default {
                 <div class="">
                     <p>{{selectedItem.name}}</p>
                     <p>RM {{selectedItem.price}}</p>
-                    <p>{{selectedItem.weight}}</p>
+                    <p>{{selectedItem.weight}} {{selectedItem.unit}}</p>
                     <p>{{selectedItem.quantity}}</p>
                     <p>{{selectedItem.category}}</p>
                 </div>
@@ -74,10 +89,11 @@ export default {
                     <button class="bg-black text-white p-2 px-8 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="toggleDialog">Batal</button>
                 </div>
                 <div>
-                    <button class="bg-red-600 text-white p-2 px-8 rounded-xl hover:bg-white hover:text-red-600 hover:outline hover:outline-red-600" @click="deleteProduct(selectedItem)">Buang</button>
+                    <button class="bg-red-600 text-white p-2 px-8 rounded-xl hover:bg-white hover:text-red-600 hover:outline hover:outline-red-600" @click="deleteProduct(selectedItem.idItem)">Buang</button>
                 </div>
             </div>
         </div>
     </dialog>
 </div>
+<ToastMessageVue ref="toast"/>
 </template>

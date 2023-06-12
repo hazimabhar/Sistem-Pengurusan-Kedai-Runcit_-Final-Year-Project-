@@ -18,44 +18,45 @@ document.title='Home Page'
                     <span class="px-2">></span>
                     <RouterLink to="/manager/listworker" class="text-blue-500 hover:underline">Senarai Pekerja</RouterLink> 
                     <span class="px-2">></span>
-                    <li>Kemaskini Maklumat Pengurus </li>
+                    <li>Kemaskini Maklumat Pekerja </li>
                 </ul>
                 <div class="w-full px-10 max-sm:p-0">
-                    <p class=" text-xl font-semibold mb-4">Kemaskini Maklumat Pengurus</p>
+                    <p class=" text-xl font-semibold mb-4">Kemaskini Maklumat Pekerja</p>
                     <form class="" @submit.prevent="registerProduct()">
                         <div>
                             <label class="text-gray-500" for="Nama Penuh">Nama Penuh</label><br>
                             <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="Ali bin Ahmad" id="namapenuh" v-model="user.name"><br>
-                            <label class="text-red-600 font-light text-sm" for="errorName" id="errorName"></label><br>
+                            <label class="text-red-600 font-medium text-xs" for="errorName" id="errorName">{{ errorName }}</label><br>
                             <div class="flex gap-5 mb-2">
                             <div class="block gap-5 mb-2">
                                     <div>
                                         <label class="text-gray-500" for="Nombor IC">Nombor Kad Pengenalan</label><br>
-                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500 disabled:bg-[#b0b0b0] cursor-not-allowed" type="text" placeholder="888888888888" id="nomboric" v-model="cantChange.icNumber" disabled><br>
-                                        <label class="text-red-600 font-light text-sm" for="errornric" id="errorNric"></label><br>
+                                        <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500 disabled:bg-[#b0b0b0] cursor-not-allowed" type="text" placeholder="888888888888" id="nomboric" v-model="cantChange.icNumber" disabled ><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errornric" id="errorNric"></label><br>
                                     </div>
                                     <div>
                                         <label class="text-gray-500" for="Nombor Telefon">Nombor Telefon</label><br>
                                         <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="text" placeholder="0123456789" id="telefon" v-model="user.phoneNumber"><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorTelephone" id="errorTelephone"></label><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errorTelephone" id="errorTelephone">{{ errorPhone }}</label><br>
                                     </div>
+                
                             </div>
                             <div class="block gap-5 mb-2">
                                     <div>
                                         <label class="text-gray-500" for="Password">Kata Laluan</label><br>
                                         <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500 disabled:bg-[#b0b0b0] cursor-not-allowed" type="password" placeholder="Kata Laluan" id="password" v-model="cantChange.password" disabled><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorpassword" id="errorPassword"></label><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errorpassword" id="errorPassword"></label><br>
                                     </div>
                                     <div>
                                         <label class="text-gray-500" for="E-mel">E-mel</label><br>
                                         <input class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" type="email" placeholder="ali@gmail.com" id="email" v-model="user.email" required><br>
-                                        <label class="text-red-600 font-light text-sm" for="errorEmail" id="errorEmail"></label><br>
+                                        <label class="text-red-600 font-medium text-xs" for="errorEmail" id="errorEmail">{{ errorEmail }}</label><br>
                                     </div>
                             </div>
                             <div class="ml-[5%]">
                             <label class="text-gray-500" for="Alamat">Alamat</label><br>
                             <textarea rows="4" cols="60" class="outline-gray-300 outline outline-2 w-full p-2 rounded-md mt-2 mb-2 focus:outline focus:outline-blue-500" placeholder="Persiaran Tun Dr. Ismail, 86400 Parit Raja, Johor" id="alamat" v-model="user.address"></textarea><br>
-                            <label class="text-red-600 font-light text-sm" for="errorAddress" id="errorAddress"></label><br>
+                            <label class="text-red-600 font-medium text-xs" for="errorAddress" id="errorAddress">{{ errorAddress }}</label><br>
                             </div>
                         </div>
                             <div class="flex gap-96 mb-2">
@@ -75,13 +76,18 @@ document.title='Home Page'
                                 </div>
                                 <div class="flex gap-5 mb-2">
                                     <div>
-                                        <input type="radio" name="Peranan" value="Pengurus" v-model="cantChange.role">
+                                        <input type="radio" name="Peranan" value="Pengurus" v-model="cantChange.role" disabled class="opacity-100 cursor-not-allowed">
                                         <label class="pl-2" for="lelaki">Pengurus</label><br>
                                     </div>
                                     <div>
-                                        <input type="radio" name="Peranan" value="Pekerja" v-model="cantChange.role">
+                                        <input type="radio" name="Peranan" value="Pekerja" v-model="cantChange.role" disabled class="opacity-100 cursor-not-allowed">
                                         <label class="pl-2" for="perempuan">Pekerja</label><br>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div>
+                                    <label class="text-red-600 font-medium text-xs" for="errorGender" id="errorGender">{{ errorGender }}</label>
                                 </div>
                             </div>
                         </div>
@@ -120,14 +126,16 @@ export default {
                 email:'',
                 address:'',
                 gender:'',
-                role:''
             },
-            cantChange:
-            {
-                icNumber:'',
-                password:'',
-            }
-            
+            cantChange:[],
+
+            errorName:'',
+            errorNric:'',
+            errorPhone:'',
+            errorEmail:'',
+            errorAddress:'',
+            errorGender:'',
+
 
         }
     },
@@ -140,7 +148,6 @@ export default {
             console.log(this.user)
         })
         .catch(error=>console.log(error))
-
         const idAccount = this.user.idAccount
         console.log(idAccount)
         await axios.get("http://localhost:3000/"+ idAccount)
@@ -155,13 +162,83 @@ export default {
         {
             console.log(this.user)
             console.log(this.userId)
+            console.log(this.user.email)
 
-            await axios.put("http://localhost:3000/manager/"+this.userId, this.user)
-            .then(response=>console.log(response))
-            const message ='Maklumat Pengurus Berjaya Dikemaskini'
-            const status = 'Berjaya'
-            this.$refs.toast.toast(message,status,'success')
-            .catch(error=>console.log(error))
+            if(this.user.name && this.user.phoneNumber && this.user.email && this.user.address && this.user.gender)
+            {
+
+                if(!/^[\w.-]+@[a-zA-Z_-]+\.[a-zA-Z]{2,4}$/.test(this.user.email)){
+                    this.errorEmail = '*Emel Tidak Sah';
+                }
+                else{
+                    this.errorEmail = ''
+                }
+
+                if(!this.errorEmail)
+                {
+                    await axios.put("http://localhost:3000/manager/"+this.userId, this.user)
+                    .then(response=>console.log(response))
+                    const message ='Maklumat Pengurus Berjaya Dikemaskini'
+                    const status = 'Berjaya'
+                    this.$refs.toast.toast(message,status,'success')
+                    this.errorName=''
+                    this.errorNric=''
+                    this.errorPhone=''
+                    this.errorEmail=''
+                    this.errorAddress=''
+                    this.errorGender=''
+                    .catch(error=>console.log(error))
+
+                }
+
+            }
+            else
+        {
+            
+            if(this.user.name===''){
+                this.errorName='*Sila Masukkan Nama Penuh'
+            }
+            else{
+                this.errorName=''
+            }
+
+            if(this.user.phoneNumber===''){
+                this.errorPhone='*Sila Masukkan Nombor Telefon'
+            }
+            else{
+                this.errorPhone=''
+            }
+
+            if(this.user.email===''){
+                this.errorEmail='*Sila Masukkan Emel'
+            }
+            else{
+                this.errorEmail=''
+            }
+                
+            if(this.user.address===''){
+                this.errorAddress='*Sila Masukkan Alamat'
+            }
+            else{
+                this.errorAddress=''
+            }
+                
+            if(this.user.gender===null){
+                this.errorGender='*Sila Pilih Jantina'
+            }
+            else{
+                this.errorGender=''
+            }
+
+            if(this.user.role===null){
+                this.errorRole='*Sila Pilih Peranan'
+            }
+            else{
+                this.errorRole=''
+            }
+
+
+        }
         }
     }
 }

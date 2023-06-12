@@ -3,6 +3,8 @@ import ManagerNavBar from '../../components/ManagerNavBar.vue';
 import MyButton from '../../components/MyButton.vue';
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
+import router from "../../router"
+
 
 document.title='Home Page'
 </script>
@@ -295,8 +297,6 @@ export default {
 
                     }
                 }
-
-   
         }
         else
         {
@@ -381,7 +381,9 @@ export default {
         this.email='',
         this.alamat='',
         this.jantina=null,
-        this.peranan=null
+        this.peranan=null,
+
+        router.push('/manager')
     },
     closeCompleteRegister()
     {

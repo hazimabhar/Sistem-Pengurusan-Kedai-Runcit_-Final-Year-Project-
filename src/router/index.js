@@ -226,6 +226,10 @@ const router = createRouter({
 
                 },
                 {
+                    path: "updateproduct/:id",
+                    component: () => import("../views/Manager/UpdateProductView.vue"),
+                },
+                {
                     path:"managermanageinventory",
                     component: () => import ("../views/Manager/ManageInventory.vue"),
                     children:[

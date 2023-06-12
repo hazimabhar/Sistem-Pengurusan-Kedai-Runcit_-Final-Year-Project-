@@ -7,7 +7,10 @@ import {
   } from '@headlessui/vue';
   import { ref } from 'vue';
 
+
   const isOpen = ref(false)
+
+
 
 
     const navItems = [

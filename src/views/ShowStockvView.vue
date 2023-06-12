@@ -30,7 +30,7 @@ document.title="Papar Stok"
                         </div>
                     </div>
                 <div class="max-sm:mt-2 max-sm:ml-8 hover:text-black">
-                    <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white" ></i></button>
+                    <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
                 </div>
                 </form>
 

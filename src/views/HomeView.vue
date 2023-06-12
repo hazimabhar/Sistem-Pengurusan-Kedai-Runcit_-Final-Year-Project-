@@ -26,7 +26,7 @@ document.title='Home Page'
                 <div class= "rounded-2xl p-5 shadow-container w-5/12 max-md:px-12 max-md:w-8/12 max-md:mx-11">
                     <p class="pb-4 text-center font-semibold ">Pekerja</p>
                     <div v-for="worker in worker" :key="worker.idWorker">
-                        <div class="flex justify-evenly p-5 max-md:block">
+                        <div class="flex justify-between p-5 max-md:block">
                             <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../assets/worker.png" alt="">
                             <p class="text-sm ml-5">{{ worker.name }}</p>
                             <p class="text-sm">{{ worker.phoneNumber }}</p>
@@ -36,7 +36,7 @@ document.title='Home Page'
                 <div class="rounded-2xl p-5 shadow-container w-5/12 max-md:px-12 max-md:w-8/12 max-md:mt-5 max-md:mx-11">
                     <p class="pb-4 text-center font-semibold">Pengurus</p>
                     <div v-for="manager in manager" :key="manager.idManager">
-                        <div class="flex justify-evenly p-5 max-md:block ">
+                        <div class="flex justify-between p-5 max-md:block ">
                             <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../assets/manager.png" alt="">
                             <p class="text-sm ml-5">{{ manager.name }}</p>
                             <p class="text-sm">{{ manager.phoneNumber }}</p>

@@ -14,11 +14,12 @@ import { isCoreComponent } from '@vue/compiler-core';
                 <div id="icon" class="py-2 px-2  max-lg:mr-10 " @click="closeOpenSideBar()">
                     <i class="fa-solid fa-bars cursor-pointer text-white hover:text-black max-lg:hover:text-white"></i>
                 </div>
-                <div class="text-lg pt-2 ml-[650px] mr-[550px] max-sm:mx-[30px]  max-lg:ml-[245px] max-lg:mr-[200px]">
+                <div class="text-lg pt-2 ml-[650px] mr-[520px] max-sm:mx-[30px]  max-lg:ml-[245px] max-lg:mr-[200px]">
                     <RouterLink class="font-semibold" to="/manager">Sistem Kedai Runcit</RouterLink>
                 </div>
-                <div>
-                    <p class="font-semibold mt-2 max-sm:hidden">Pengurus</p>
+                <div class="flex">
+                    <i class="fa-solid fa-user mt-3"></i>
+                    <p class="font-semibold mt-2 ml-2 max-sm:hidden">Pengurus</p>
                 </div>
             </div>
         </div>

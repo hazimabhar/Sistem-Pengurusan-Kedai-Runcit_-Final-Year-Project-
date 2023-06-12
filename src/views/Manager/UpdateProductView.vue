@@ -1,8 +1,8 @@
 <script setup>
-import MyButton from "../components/MyButton.vue";
+import MyButton from "../../components/MyButton.vue";
 import { RouterLink } from "vue-router";
-import NavBar from "../components/NavBar.vue";
 import { ref } from "vue";
+import ManagerNavBarVue from "../../components/ManagerNavBar.vue";
 
 const imageUrl = ref(null);
 
@@ -10,7 +10,7 @@ document.title = "Update Product";
 </script>
 <template>
   <div>
-    <NavBar />
+    <ManagerNavBarVue />
     <div class="bg-slate-100 min-h-screen max-md:bg-white">
       <div>
         <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl">
@@ -21,12 +21,12 @@ document.title = "Update Product";
         class="w-9/12 mx-auto mr-16 bg-white max-lg:w-11/12 max-lg:mx-auto max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5"
       >
         <ul class="inline-flex list-none px-8 pb-10">
-          <RouterLink to="/home" class="text-blue-500 hover:underline"
+          <RouterLink to="/manager" class="text-blue-500 hover:underline"
             >Laman Utama</RouterLink
           >
           <span class="px-2">></span>
           <RouterLink
-            to="/manageinventory"
+            to="/manager/managermanageinventory"
             class="text-blue-500 hover:underline"
             >Urus Inventori</RouterLink
           >
@@ -153,7 +153,7 @@ document.title = "Update Product";
             </div>
             <div class="w-max mx-auto flex gap-10 mt-5 max-sm:gap-5">
               <div class="mt-[31px]">
-                    <RouterLink  to="/manageinventory/update" class="w-max bg-red-600 text-white rounded-3xl py-2 px-20 mt-6 hover:outline hover:outline-black  hover:bg-white hover:text-black" >Batal</RouterLink>
+                    <RouterLink  to="/manager/managermanageinventory/update" class="w-max bg-red-600 text-white rounded-3xl py-2 px-20 mt-6 hover:outline hover:outline-black  hover:bg-white hover:text-black" >Batal</RouterLink>
               </div>
               <div class="mt-[14px]">
                 <MyButton
@@ -217,11 +217,11 @@ document.title = "Update Product";
 </template>
 
 <script>
-import router from '../router';
+import router from '../../router';
 import axios from 'axios';
-import ToastMessageVue from "../components/ToastMessage.vue";
-import UploadPicture from '../components/UploadPicture.vue';
-import BarcodeScanner from '../components/BarcodeScanner.vue';
+import ToastMessageVue from "../../components/ToastMessage.vue";
+import UploadPicture from '../../components/UploadPicture.vue';
+import BarcodeScanner from '../../components/BarcodeScanner.vue';
 
 export default {
 

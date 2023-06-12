@@ -22,38 +22,64 @@ document.title='Home Page'
                     <Process class="hover:text-black" to="/manager/registerworker" text="Daftar Pekerja" icon="fa-solid fa-file-circle-plus"/>
                     <Process class="hover:text-black" to="/manager/listworker" text="Senarai Pekerja" icon="fa-solid fa-pen-to-square"/>
                 </div>
-            <div class="flex mt-20 justify-evenly max-md:block max-md:w-96 max-md:mx-auto max-sm:mx-auto">
+                <div class="flex mt-20 justify-evenly max-md:block max-md:w-96 max-md:mx-auto max-sm:mx-auto">
                 <div class= "rounded-2xl p-5 shadow-container w-5/12 max-md:px-12 max-md:w-8/12 max-md:mx-11">
                     <p class="pb-4 text-center font-semibold ">Pekerja</p>
-                    <div class="flex justify-evenly p-5 max-md:block">
-                        <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../../assets/worker.png" alt="">
-                        <p>Nama Pekerja</p>
-                        <p>888-88888888</p>
-                    </div>
-                    <div class="flex justify-evenly p-5 max-md:block ">
-                        <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../../assets/worker.png" alt="">
-                        <p>Nama Pekerja</p>
-                        <p>888-88888888</p>
-                    </div>
-                    <div class="flex justify-evenly p-5 max-md:block ">
-                        <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../../assets/worker.png" alt="">
-                        <p>Nama Pekerja</p>
-                        <p>888-88888888</p>
+                    <div v-for="worker in worker" :key="worker.idWorker">
+                        <div class="flex justify-between p-5 max-md:block">
+                            <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../../assets/worker.png" alt="">
+                            <p class="text-sm ml-5">{{ worker.name }}</p>
+                            <p class="text-sm">{{ worker.phoneNumber }}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="rounded-2xl p-5 shadow-container w-5/12 max-md:px-12 max-md:w-8/12 max-md:mt-5 max-md:mx-11">
                     <p class="pb-4 text-center font-semibold">Pengurus</p>
-                    <div class="flex justify-evenly p-5 max-md:block ">
-                        <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../../assets/manager.png" alt="">
-                        <p class="max-md:w-36">Nama Pengurus</p>
-                        <p >888-88888888</p>
+                    <div v-for="manager in manager" :key="manager.idManager">
+                        <div class="flex justify-between p-5 max-md:block ">
+                            <img class="w-1/12 max-md:hidden max-lg:hidden max-xl:hidden" src="../../assets/manager.png" alt="">
+                            <p class="text-sm ml-5">{{ manager.name }}</p>
+                            <p class="text-sm">{{ manager.phoneNumber }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
             </div>
-   
-
         </div>
-      
     </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default
+{
+    data()
+    {
+        return{
+            worker:[],
+            manager:[]
+        }
+    },
+     mounted()
+    {
+        axios.get("http://localhost:3000/worker")
+        .then(response=>{
+            this.worker = response.data
+            console.log(this.worker)
+        })
+        .catch(error=>console.log(error))
+
+        axios.get("http://localhost:3000/manager")
+        .then(response=>{
+            this.manager = response.data
+            console.log(this.manager)
+        })
+        .catch(error=>console.log(error))
+    },
+    methods()
+    {
+
+    }
+}
+</script>

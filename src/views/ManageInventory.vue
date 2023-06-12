@@ -15,7 +15,7 @@ document.title="Manage Inventory"
             <div>
                 <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">Urus Inventori</p>
             </div>
-            <div class="w-9/12 mx-auto mr-16 bg-white max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
+            <div class="w-9/12 min-h-screen mx-auto mr-16 bg-white max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
                 <ul class="inline-flex list-none px-8 pb-10">
                     <RouterLink to="/home" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
                     <span class="px-2">></span>
