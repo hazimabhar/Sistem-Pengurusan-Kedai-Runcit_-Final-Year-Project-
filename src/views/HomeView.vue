@@ -12,16 +12,44 @@ document.title='Home Page'
             <div>
                 <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">Operasi</p>
             </div>
-            <div class="w-9/12 mx-auto mr-16 bg-white pt-4 max-sm:w-11/12 max-sm:mx-auto rounded-3xl">
+            <div class="w-9/12 mx-auto mr-16 bg-white pt-4 pb-4 max-sm:w-11/12 max-sm:mx-auto rounded-3xl">
                 <ul>
                     <li class="px-8 pb-10">Laman Utama</li>
                 </ul>
-                <div class="w-3/5 grid grid-cols-2 gap-10 mx-auto text-center max-md:block max-md:w-2/3">
-                    <Process class="hover:text-black" to="/manageinventory" text="Urus Inventori" icon="fa-solid fa-boxes-stacked"/>
-                    <Process class="hover:text-black" to="/showstock" text="Papar Stok" icon="fa-solid fa-circle-info"/>
-                    <Process class="hover:text-black" to="/cashier" text="Juruwang" icon="fa-solid fa-cash-register"/>
-                    <Process class="hover:text-black" to="/closesale" text="Tutup Jualan" icon="fa-sharp fa-solid fa-money-bills"/>
+                <div class="flex">
+                    <div v-if="item && item.length>0" class="ml-16 ">
+                            <div class="shadow-container p-5 rounded-3xl">
+                                <div class="flex justify-center">
+                                    <i class="fa-solid fa-circle-info text-red-500 pr-3 text-2xl"></i>
+                                    <p class="font-semibold text-red-500 text-center mt-[3px] text-lg">Peringatan</p>
+                                </div>
+                                <p class="font-semibold text-base px-10">Sila Tambah stok bagi produk ini</p>
+                                <table>
+                                <thead>
+                                    <tr>
+                                        <th class="w-[5%] text-[#b3b3b3] border-b-2 font-medium" >No.</th>
+                                        <th class="w-[60%] text-[#b3b3b3] border-b-2 font-medium">Nama Produk</th>
+                                        <th class="w-[5%] text-[#b3b3b3] border-b-2 font-medium">Kuantiti</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(itemInfo, index) in item" :key="item.idItem">
+                                        <td class="w-[5%] text-slate-500 border-b-2 font-medium py-2" >{{ index+1 }}</td>
+                                        <td class="w-[60%] text-slate-500 border-b-2 font-medium text-center" >{{ itemInfo.name }}</td>
+                                        <td class="w-[5%] text-slate-500 border-b-2 font-medium text-center select-none">{{ itemInfo.quantity }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                    </div>
+                    <div class="w-1/2 grid grid-cols-2 gap-10 mx-auto text-center max-md:block max-md:w-2/3">
+                        <Process class="hover:text-black" to="/manageinventory" text="Urus Inventori" icon="fa-solid fa-boxes-stacked"/>
+                        <Process class="hover:text-black" to="/showstock" text="Papar Stok" icon="fa-solid fa-circle-info"/>
+                        <Process class="hover:text-black" to="/cashier" text="Juruwang" icon="fa-solid fa-cash-register"/>
+                        <Process class="hover:text-black" to="/closesale" text="Tutup Jualan" icon="fa-sharp fa-solid fa-money-bills"/>
+                    </div>
                 </div>
+                
             <div class="flex mt-20 justify-evenly max-md:block max-md:w-96 max-md:mx-auto max-sm:mx-auto">
                 <div class= "rounded-2xl p-5 shadow-container w-5/12 max-md:px-12 max-md:w-8/12 max-md:mx-11">
                     <p class="pb-4 text-center font-semibold ">Pekerja</p>
@@ -57,7 +85,8 @@ export default
     {
         return{
             worker:[],
-            manager:[]
+            manager:[],
+            item:[],
         }
     },
      mounted()
@@ -73,6 +102,12 @@ export default
         .then(response=>{
             this.manager = response.data
             console.log(this.manager)
+        })
+        .catch(error=>console.log(error))
+        axios.get("http://localhost:3000/item/notification")
+        .then(response=>{
+            this.item = response.data
+            console.log(this.item)
         })
         .catch(error=>console.log(error))
     },

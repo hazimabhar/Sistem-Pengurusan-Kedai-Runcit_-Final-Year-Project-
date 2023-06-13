@@ -8,69 +8,6 @@ import router from "../router"
 import { ref } from '@vue/reactivity';
 
 
-
-// async function submitLogin()
-// {
-//     console.log(icNumber.value)
-//     console.log(password.value)
-
-//     try {
-//         const response = await axios.post("http://localhost:3000/login",{
-//             icNumber : icNumber.value,
-//             password:password
-//         })
-//         sessionStorage.setItem("idAccount",JSON.stringify(response.data))
-
-//         const responseUser = await axios.get( `http://localhost:3001/login/${response.data}`)
-
-//         if(responseUser.data.role==="Pekerja")
-//         {
-//             router.push("/home")
-//         }
-//         else if(responseUser.data.role==="Pengurus")
-//         {
-//             router.push("/manager")
-//         }
-//     }
-//     catch(error)
-//     {
-//         console.log(error)
-//     }
-// }
-
-//     if (nric.value == "")
-//     {
-//         document.getElementById("nricError").innerText="Please enter your identification number"
-//     }
-//     else if (nric.value != "123")
-//     {
-//         document.getElementById("nricError").innerText="Wrong identification number"
-//         document.getElementById("nric").value=""
-//     }
-//     else
-//     {
-//         document.getElementById("nricError").innerText=""
-//     }
-//     if (password.value == "")
-//     {
-//         document.getElementById("passError").innerText="Please enter your password"
-//     }
-//     else if (password.value != "123")
-//     {
-//         document.getElementById("passError").innerText="Wrong Password"
-//         document.getElementById("password").value=""
-//     }
-//     else
-//     {
-//         document.getElementById("passError").innerText=""
-//         redirectHome()
-//     }
-// }
-
-// function redirectHome() {
-//     router.push("/home");
-// }
-
 document.title="Login"
 </script>
 <template>
@@ -96,12 +33,18 @@ document.title="Login"
             </div>
         </form>
     </div>
+    <ToastMessageVue ref="toast"/>
 </template>
 <script>
 import axios from 'axios';
+import ToastMessageVue from "../components/ToastMessage.vue";
+
 
 export default 
 {
+    components:{
+        ToastMessageVue,
+    },
     data()
     {
         return{
@@ -159,17 +102,26 @@ export default
                                 this.icNumber=''
                                 this.password=''
                             }
-                            else
+                            else if(error.response.data==="Invalid Password")
                             {
                                 this.errorNric=''
-                            }
-                            if(error.response.data==="Invalid Password")
-                            {
                                 this.errorPassword="*Salah Katalaluan"
                                 this.password=''
                             }
+                            else if(error.response.data==="Invalid Password. Please reset your password")
+                            {
+                                this.errorNric=''
+                                this.errorPassword="*Salah Katalaluan"
+                                this.password=''
+
+                                const message ='Sila Tukar Kata Laluan'
+                                const status = 'Gagal'
+                                
+                                this.$refs.toast.toast(message,status,'error')
+                            }
                             else
                             {
+                                this.errorNric = ''
                                 this.errorPassword=''
                             }
                         }

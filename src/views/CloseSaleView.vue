@@ -43,7 +43,7 @@ document.title="Tutup Jualan"
                         <div class="flex justify-between w-9/12 mx-auto bg-[#D9D9D9] p-3 px-10 rounded-3xl text-sm">
                             <p class="font-semibold">Number Sale: {{ index+1 }}</p>
                             <p class="font-semibold ml-16">Total Sale: RM {{ sale.price }}</p>
-                            <p class="font-semibold" >Worker Incharge: {{ sale.workerName }}</p>
+                            <p class="font-semibold" >Worker Incharge: {{ sale.workerName.substring(0, 15) }}</p>
                         </div>
                         <div class="flex justify-between w-9/12 mx-auto p-3 px-10 text-sm">
                             <p class="font-semibold">List Item </p>

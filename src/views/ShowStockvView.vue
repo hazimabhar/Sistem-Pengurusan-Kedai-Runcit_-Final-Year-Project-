@@ -24,7 +24,7 @@ document.title="Papar Stok"
           <div class="ml-14">
               <form class="flex max-sm:block" @submit.prevent="searchItem" autocomplete="off" >
                     <div class="relative max-sm:right-[28px] mt-[2px]" >
-                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-md:pr-0 max-md:m-0  max-sm:w-[270px]" placeholder="Barkod"  type="text"  id="kodbar">
+                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-md:pr-0 max-md:m-0  max-sm:w-[270px]" placeholder="Imbas Kodbar"  type="text"  id="kodbar">
                         <div @click="camScanner">
                             <i class="fa-solid fa-camera absolute bottom-2 pl-10 hover:opacity-50 cursor-pointer lg:hidden  max-lg:left-[62%] max-sm:left-[76%] max-sm:top-2"></i>
                         </div>

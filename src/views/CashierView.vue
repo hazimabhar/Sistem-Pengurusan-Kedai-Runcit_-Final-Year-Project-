@@ -218,7 +218,14 @@ export default
                 
             })
             })
-            .catch(error=>console.log(error))
+            .catch(error=>{
+                if (error.response && error.response.data.error === "Item not found")
+                {
+                    const message ='Produk Tidak Wujud'
+                    const status = 'Ralat'
+                    this.$refs.toast.toast(message,status,'error')   
+                }
+            })
         },
         async addQuantity(item)
         {

@@ -240,8 +240,15 @@ export default {
                 else{
                     this.errorEmail = ''
                 }
+                if(!/^\d{12}$/.test(this.nomboric))
+                {
+                    this.errorNric='*IC Tidak Sah'
+                }
+                else{
+                    this.errorNric=''
+                }
 
-                if(!this.errorPassword && !this.errorEmail)
+                if(!this.errorPassword && !this.errorEmail && !this.errorNric)
                 {
                     this.completeRegister = !this.completeRegister; // Toggle the isOpen property
 
