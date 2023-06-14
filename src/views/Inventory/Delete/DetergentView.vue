@@ -16,7 +16,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('http://localhost:3000/item/detergent')
+        axios.get('https://sistemkedairuncit.onrender.com/item/detergent')
         .then(response=> {
             this.item = response.data
             console.log(response)
@@ -30,7 +30,7 @@ export default {
         },
         deleteProduct(item)
         {            
-            axios.delete('http://localhost:3000/item/'+item)
+            axios.delete('https://sistemkedairuncit.onrender.com/item/'+item)
             .then(response => {
                 const index = this.item.findIndex(i => i.idItem === item)
                 if (index !== -1) {

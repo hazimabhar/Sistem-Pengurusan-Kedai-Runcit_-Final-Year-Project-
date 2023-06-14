@@ -93,7 +93,7 @@ components: {
                     }
      
                     console.log(data)
-                    axios.put("http://localhost:3000/resetpassword/user",data)
+                    axios.put("https://sistemkedairuncit.onrender.com/resetpassword/user",data)
                     .then(response=>console.log(response))
                     .catch(error=>console.log(error))
                     sessionStorage.clear();

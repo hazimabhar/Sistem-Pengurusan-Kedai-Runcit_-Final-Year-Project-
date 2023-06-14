@@ -132,7 +132,7 @@ export default {
             {
                 try{
                     console.log(this.barkodProduk)
-                    await axios.get("http://localhost:3000/item/search/"+ this.barkodProduk)
+                    await axios.get("https://sistemkedairuncit.onrender.com/item/search/"+ this.barkodProduk)
                     .then(response=>{
                     this.itemDetail = response.data
                     console.log(this.itemDetail)})
@@ -158,7 +158,7 @@ export default {
             },
             deleteProduct(item)
         {            
-            axios.delete('http://localhost:3000/item/'+item)
+            axios.delete('https://sistemkedairuncit.onrender.com/item/'+item)
             .then(response => {
                 const index = this.item.findIndex(i => i.idItem === item)
                 if (index !== -1) {

@@ -16,7 +16,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('http://localhost:3000/item/canned')
+        axios.get('https://sistemkedairuncit.onrender.com/item/canned')
         .then(response=> {
             this.item = response.data
             console.log(response)
@@ -58,7 +58,7 @@ export default {
 
                     console.log(newQuantity)
 
-                    await axios.put("http://localhost:3000/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
+                    await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
                     .then(response=>{
                         const update =response.data
                         console.log(update)

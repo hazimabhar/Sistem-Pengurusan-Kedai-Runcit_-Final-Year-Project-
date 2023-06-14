@@ -50,7 +50,7 @@ export default
     },
     mounted()
     {
-        axios.get("http://localhost:3000/allreport")
+        axios.get("https://sistemkedairuncit.onrender.com/allreport")
         .then(response=>{
             this.report = response.data
             console.log(this.report)

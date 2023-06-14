@@ -167,7 +167,7 @@ export default {
     {
         window.addEventListener("LR_UPLOAD_FINISH", this.handleUploadFinish);
 
-        axios.get("http://localhost:3000/report")
+        axios.get("https://sistemkedairuncit.onrender.com/report")
         .then(response=>{
             this.report = response.data
             console.log(this.report)
@@ -198,7 +198,7 @@ export default {
             }
             console.log(fileData)
 
-            axios.put("http://localhost:3000/report/file/"+this.report[0].idReport, fileData)
+            axios.put("https://sistemkedairuncit.onrender.com/report/file/"+this.report[0].idReport, fileData)
             .then(response=>console.log(response))
             .catch(error=>console.log(error))
 
@@ -247,7 +247,7 @@ export default {
 
             console.log(reportData)
 
-            axios.put("http://localhost:3000/report/"+this.report[0].idReport, reportData)
+            axios.put("https://sistemkedairuncit.onrender.com/report/"+this.report[0].idReport, reportData)
             .then(response=>console.log(response))
             .catch(error=>console.log(error))
 
@@ -257,7 +257,7 @@ export default {
         closeSale()
         {
             this.tutupJualan=true
-            axios.get("http://localhost:3000/report")
+            axios.get("https://sistemkedairuncit.onrender.com/report")
             .then(response=>{
                 this.updateReport = response.data
                 console.log(this.updateReport)
@@ -274,7 +274,7 @@ export default {
                 console.log('prices:', prices);
                 // console.log(idSale)
 
-                axios.get("http://localhost:3000/report/user/"+idAccounts)
+                axios.get("https://sistemkedairuncit.onrender.com/report/user/"+idAccounts)
                 .then(response=>
                 {
                     this.workerData = response.data
@@ -289,7 +289,7 @@ export default {
                 })
                 .catch(error=>console.log(error))
 
-            axios.get("http://localhost:3000/sale/" + idSale)
+            axios.get("https://sistemkedairuncit.onrender.com/sale/" + idSale)
             .then(response => {
                 this.listItem = response.data;
                 console.log(this.listItem);
@@ -322,7 +322,7 @@ export default {
 
                 console.log(this.idItems);
 
-                axios.get("http://localhost:3000/item/report/" + this.idItems)
+                axios.get("https://sistemkedairuncit.onrender.com/item/report/" + this.idItems)
                 .then(response => {
                     this.item = response.data;
                     console.log(this.item);

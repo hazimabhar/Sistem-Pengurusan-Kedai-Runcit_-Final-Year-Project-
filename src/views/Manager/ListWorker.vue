@@ -145,14 +145,14 @@ export default {
     },
     mounted()
     {
-        axios.get("http://localhost:3000/worker")
+        axios.get("https://sistemkedairuncit.onrender.com/worker")
         .then(response=>{
             this.worker = response.data
             console.log(this.worker)
         })
         .catch(error=>console.log(error))
 
-        axios.get("http://localhost:3000/manager")
+        axios.get("https://sistemkedairuncit.onrender.com/manager")
         .then(response=>{
             this.manager = response.data
             console.log(this.manager)
@@ -174,7 +174,7 @@ export default {
             console.log(selectedUser);
             if (this.role === 'worker')
             {
-                await axios.delete("http://localhost:3000/worker/"+selectedUser.idWorker)
+                await axios.delete("https://sistemkedairuncit.onrender.com/worker/"+selectedUser.idWorker)
                 .then(response => {
                 const index = this.worker.findIndex(i => i.idWorker === selectedUser.idWorker)
                 if (index !== -1) {
@@ -189,7 +189,7 @@ export default {
             }
             else if (this.role === 'manager')
             {
-                await axios.delete("http://localhost:3000/manager/"+selectedUser.idManager)
+                await axios.delete("https://sistemkedairuncit.onrender.com/manager/"+selectedUser.idManager)
                 .then(response => {
                 const index = this.manager.findIndex(i => i.idManager === selectedUser.idManager)
                 if (index !== -1) {

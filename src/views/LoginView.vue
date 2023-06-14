@@ -71,14 +71,14 @@ export default
                 console.log(this.icNumber)
                 console.log(this.password)
                 try {
-                    const response = await axios.post("http://localhost:3000/login",{
+                    const response = await axios.post("https://sistemkedairuncit.onrender.com/login",{
                         icNumber : this.icNumber,
                         password: this.password
                     })
                     console.log(response.data)
                     sessionStorage.setItem("idAccount",JSON.stringify(response.data))
 
-                    const responseUser = await axios.get( `http://localhost:3000/${response.data}`)
+                    const responseUser = await axios.get( `https://sistemkedairuncit.onrender.com/${response.data}`)
                     console.log(responseUser)
 
                     if(responseUser.data.role ==="Pekerja")

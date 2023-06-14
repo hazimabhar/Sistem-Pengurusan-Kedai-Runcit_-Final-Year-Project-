@@ -73,7 +73,7 @@ export default
                 console.log(this.email)
 
                 
-                    await axios.get("http://localhost:3000/resetpassword/"+this.icNumber)
+                    await axios.get("https://sistemkedairuncit.onrender.com/resetpassword/"+this.icNumber)
                 .then(response=>{
                     this.user= response.data
                     console.log(this.user.idAccount)
@@ -81,7 +81,7 @@ export default
 
                     if (this.user.role ==="Pekerja")
                     {
-                        axios.get("http://localhost:3000/resetworker/"+this.user.idAccount)
+                        axios.get("https://sistemkedairuncit.onrender.com/resetworker/"+this.user.idAccount)
                         .then(response=>{
                             this.worker=response.data
                             console.log(this.worker)
@@ -111,7 +111,7 @@ export default
                     }
                     else
                     {
-                        axios.get("http://localhost:3000/resetmanager/"+this.user.idAccount)
+                        axios.get("https://sistemkedairuncit.onrender.com/resetmanager/"+this.user.idAccount)
                         .then(response=>{
                             this.manager=response.data
                             console.log(this.manager)

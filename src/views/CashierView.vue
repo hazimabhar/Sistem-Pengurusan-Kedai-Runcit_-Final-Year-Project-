@@ -171,7 +171,7 @@ export default
         this.$refs.barkodProduk.focus()
         this.worker=JSON.parse(sessionStorage.getItem("idAccount"))
 
-        axios.get("http://localhost:3000/report/today")
+        axios.get("https://sistemkedairuncit.onrender.com/report/today")
         .then(response=>{
             this.report=response.data
             console.log(this.report)
@@ -194,7 +194,7 @@ export default
         async scanBarcode(){
             console.log(this.barkodProduk)   
 
-            await axios.get("http://localhost:3000/item/cashier/"+ this.barkodProduk)
+            await axios.get("https://sistemkedairuncit.onrender.com/item/cashier/"+ this.barkodProduk)
             .then(response=>{
                 this.itemDetail = response.data
                 console.log(this.itemDetail)
@@ -286,7 +286,7 @@ export default
             }
 
 
-            await axios.post("http://localhost:3000/salebuylist",{saleData,itemData})
+            await axios.post("https://sistemkedairuncit.onrender.com/salebuylist",{saleData,itemData})
             .then(response=>{
                 console.log(response)
                 this.listItem = [];
@@ -299,7 +299,7 @@ export default
                 })
             .catch(error=>console.log(error))  
 
-            await axios.get("http://localhost:3000/item/quantity/"+ this.idItems)
+            await axios.get("https://sistemkedairuncit.onrender.com/item/quantity/"+ this.idItems)
             .then(response=>
             {
                 this.item = response.data
@@ -341,7 +341,7 @@ export default
 
             console.log(newQuantity);
 
-            await axios.put("http://localhost:3000/item/cashier/updatequantity",newQuantity)
+            await axios.put("https://sistemkedairuncit.onrender.com/item/cashier/updatequantity",newQuantity)
             .then(response=>console.log(response))
             .catch(error=>console.log(error))
 

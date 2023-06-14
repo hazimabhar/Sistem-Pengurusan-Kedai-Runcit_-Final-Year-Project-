@@ -14,7 +14,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('http://localhost:3000/item/bread')
+        axios.get('https://sistemkedairuncit.onrender.com/item/bread')
         .then(response=> {
             this.item = response.data
             console.log(this.item[0].idItem)

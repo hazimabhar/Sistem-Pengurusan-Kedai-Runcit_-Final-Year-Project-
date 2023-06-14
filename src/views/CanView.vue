@@ -13,7 +13,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('http://localhost:3000/item/canned')
+        axios.get('https://sistemkedairuncit.onrender.com/item/canned')
         .then(response=> {
             this.item = response.data
             console.log(response)

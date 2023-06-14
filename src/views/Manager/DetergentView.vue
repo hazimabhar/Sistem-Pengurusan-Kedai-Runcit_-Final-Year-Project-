@@ -13,7 +13,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('http://localhost:3000/item/detergent')
+        axios.get('https://sistemkedairuncit.onrender.com/item/detergent')
         .then(response=> {
             this.item = response.data
             console.log(response)

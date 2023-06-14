@@ -246,7 +246,7 @@ export default {
     },
     async submitForm() {
         
-        await axios.get("http://localhost:3000/barcode")
+        await axios.get("https://sistemkedairuncit.onrender.com/barcode")
         .then(response=>{
             this.checkedBarcode = response.data
             console.log(this.checkedBarcode)
@@ -280,7 +280,7 @@ export default {
             }
             this.item= item
 
-            axios.post('http://localhost:3000/item', item)
+            axios.post('https://sistemkedairuncit.onrender.com/item', item)
             .then(response => {console.log(response.data)})
             .catch(error => {console.log(error)})
             

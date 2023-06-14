@@ -261,7 +261,7 @@ export default {
     console.log(this.itemId);
     window.addEventListener("LR_UPLOAD_FINISH", this.handleUploadFinish);
 
-        axios.get('http://localhost:3000/item/'+this.itemId)
+        axios.get('https://sistemkedairuncit.onrender.com/item/'+this.itemId)
         .then(response=> {
             this.item = response.data
             console.log(this.item)
@@ -283,7 +283,7 @@ export default {
         this.item.price = parseFloat(this.item.price)
         this.item.quantity = parseInt(this.item.quantity)
 
-        axios.put ('http://localhost:3000/item/'+this.itemId,this.item)
+        axios.put ('https://sistemkedairuncit.onrender.com/item/'+this.itemId,this.item)
         .then(response=>{
           const updateItem = response.data;
           console.log(updateItem)

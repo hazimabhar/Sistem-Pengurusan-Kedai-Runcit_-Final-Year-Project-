@@ -142,7 +142,7 @@ export default {
     async mounted()
     {
         console.log(this.userId)
-        await axios.get("http://localhost:3000/manager/"+this.userId)
+        await axios.get("https://sistemkedairuncit.onrender.com/manager/"+this.userId)
         .then(response=>{
             this.user = response.data
             console.log(this.user)
@@ -150,7 +150,7 @@ export default {
         .catch(error=>console.log(error))
         const idAccount = this.user.idAccount
         console.log(idAccount)
-        await axios.get("http://localhost:3000/"+ idAccount)
+        await axios.get("https://sistemkedairuncit.onrender.com/"+ idAccount)
         .then(response=>{
             this.cantChange = response.data
             console.log(this.cantChange)
@@ -176,7 +176,7 @@ export default {
 
                 if(!this.errorEmail)
                 {
-                    await axios.put("http://localhost:3000/manager/"+this.userId, this.user)
+                    await axios.put("https://sistemkedairuncit.onrender.com/manager/"+this.userId, this.user)
                     .then(response=>console.log(response))
                     const message ='Maklumat Pengurus Berjaya Dikemaskini'
                     const status = 'Berjaya'

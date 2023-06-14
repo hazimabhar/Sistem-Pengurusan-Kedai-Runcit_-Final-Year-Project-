@@ -91,20 +91,20 @@ export default
     },
      mounted()
     {
-        axios.get("http://localhost:3000/worker")
+        axios.get("https://sistemkedairuncit.onrender.com/worker")
         .then(response=>{
             this.worker = response.data
             console.log(this.worker)
         })
         .catch(error=>console.log(error))
 
-        axios.get("http://localhost:3000/manager")
+        axios.get("https://sistemkedairuncit.onrender.com/manager")
         .then(response=>{
             this.manager = response.data
             console.log(this.manager)
         })
         .catch(error=>console.log(error))
-        axios.get("http://localhost:3000/item/notification")
+        axios.get("https://sistemkedairuncit.onrender.com/item/notification")
         .then(response=>{
             this.item = response.data
             console.log(this.item)

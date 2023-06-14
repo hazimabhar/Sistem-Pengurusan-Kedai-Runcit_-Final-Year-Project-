@@ -185,21 +185,21 @@ export default {
   methods:{
     async submitForm()
     {
-        await axios.get("http://localhost:3000/emailmanager")
+        await axios.get("https://sistemkedairuncit.onrender.com/emailmanager")
         .then(response=>{
             this.checkedEmailManager = response.data
             console.log(this.checkedEmailManager)
         })
         .catch(error=>console.log(error))
 
-        await axios.get("http://localhost:3000/emailworker")
+        await axios.get("https://sistemkedairuncit.onrender.com/emailworker")
         .then(response=>{
             this.checkedEmailWorker = response.data
             console.log(this.checkedEmailWorker)
         })
         .catch(error=>console.log(error))
 
-        await axios.get("http://localhost:3000/nric")
+        await axios.get("https://sistemkedairuncit.onrender.com/nric")
         .then(response=>{
             this.checkedNric = response.data
             console.log(this.checkedNric)
@@ -275,12 +275,12 @@ export default {
                         console.log("Manager");
                         console.log(user);
                         console.log(info);
-                        axios.post("http://localhost:3000/", user)
+                        axios.post("https://sistemkedairuncit.onrender.com/", user)
                         .then(response=>{
                             const idAccount = response.data.idAccount
                             info.idAccount = idAccount
 
-                            axios.post("http://localhost:3000/manager", info)
+                            axios.post("https://sistemkedairuncit.onrender.com/manager", info)
                             .then(response => {console.log(response.data)})
                             .catch(error => {console.log(error)})
                         })
@@ -291,12 +291,12 @@ export default {
                         console.log("Worker");
                         console.log(user);
                         console.log(info);
-                        axios.post("http://localhost:3000/", user)
+                        axios.post("https://sistemkedairuncit.onrender.com/", user)
                         .then(response=>{
                             const idAccount = response.data.idAccount
                             info.idAccount = idAccount
 
-                            axios.post("http://localhost:3000/worker", info)
+                            axios.post("https://sistemkedairuncit.onrender.com/worker", info)
                             .then(response => {console.log(response.data)})
                             .catch(error => {console.log(error)})
                         })

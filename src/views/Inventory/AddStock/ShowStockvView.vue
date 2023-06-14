@@ -125,7 +125,7 @@ export default {
             {
                 try{
                     console.log(this.barkodProduk)
-                    await axios.get("http://localhost:3000/item/search/"+ this.barkodProduk)
+                    await axios.get("https://sistemkedairuncit.onrender.com/item/search/"+ this.barkodProduk)
                     .then(response=>{
                     this.itemDetail = response.data
                     console.log(this.itemDetail)})
@@ -179,7 +179,7 @@ export default {
 
                     console.log(newQuantity)
 
-                    await axios.put("http://localhost:3000/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
+                    await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
                     .then(response=>{
                         const update =response.data
                         console.log(update)
