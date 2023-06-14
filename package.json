@@ -12,7 +12,6 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
     "@headlessui/vue": "^1.7.7",
-    "@prisma/client": "^4.13.0",
     "@uploadcare/blocks": "0.22.9",
     "@vue/compiler-sfc": "^3.2.47",
     "axios": "^1.4.0",
