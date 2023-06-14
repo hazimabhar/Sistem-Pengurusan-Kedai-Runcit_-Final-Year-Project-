@@ -21,7 +21,7 @@ document.title="Papar Stok"
             <span class="px-2">></span>
             <li>Urus Stok</li>
           </ul>
-          <div class="ml-14">
+          <div class=" flex ml-14">
               <form class="flex max-sm:block" @submit.prevent="searchItem" autocomplete="off" >
                     <div class="relative max-sm:right-[28px] mt-[2px]" >
                         <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-md:pr-0 max-md:m-0  max-sm:w-[270px]" placeholder="Imbas Kodbar"  type="text"  id="kodbar">
@@ -33,7 +33,9 @@ document.title="Papar Stok"
                     <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
                 </div>
                 </form>
-
+                <div class="mt-1 ml-5">
+                    <RouterLink to="/allitem" class="text-blue-500 underline hover:text-black ">Lihat Semua</RouterLink>
+                </div>
              </div>
              <div>
             <p class=" max-sm:ml-6 font-medium w-3/4 mx-8 text-2xl pt-10 pb-8 max-md:text-xl max-md:pt-3 max-md:pb-2 max-md:w-full max-md:mx-0">Pilih Kategori Produk</p>
@@ -55,7 +57,7 @@ document.title="Papar Stok"
     <dialog class="w-1/4 max-sm:w-[75%] mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
         <div class="" v-if="itemDetail">
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
-                <img class="mx-auto" :src="itemDetail.image" alt="Produk">
+                <img class="mx-auto w-[45%]" :src="itemDetail.image" alt="Produk">
             </div>
             <div class="py-2" >
                 <div class="flex justify-between p-5">

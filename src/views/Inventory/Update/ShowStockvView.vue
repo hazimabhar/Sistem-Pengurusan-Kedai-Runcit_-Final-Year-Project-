@@ -159,6 +159,12 @@ export default {
 
                 }
             },
+            async toggleDialog(item)
+        {
+            this.isOpen = !this.isOpen; // Toggle the isOpen property
+            this.barkodProduk=''
+
+        },
         camScanner()
         {
             this.phoneScanner = !this.phoneScanner; // Toggle the isOpen property

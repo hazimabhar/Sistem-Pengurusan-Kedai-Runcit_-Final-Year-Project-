@@ -42,7 +42,7 @@ document.title='Home Page'
                             </table>
                             </div>
                     </div>
-                <div class="w-3/5 grid grid-cols-2 gap-10 mx-auto text-center max-md:block max-md:w-2/3">
+                <div class=" w-1/2 grid grid-cols-2 gap-10 mx-auto text-center max-md:block max-md:w-2/3">
                     <Process class="hover:text-black" to="/manager/managermanageinventory" text="Urus Inventori" icon="fa-solid fa-boxes-stacked"/>
                     <Process class="hover:text-black" to="/manager/managershowstock" text="Papar Stok" icon="fa-solid fa-circle-info"/>
                     <Process class="hover:text-black" to="/manager/registerworker" text="Daftar Pekerja" icon="fa-solid fa-file-circle-plus"/>

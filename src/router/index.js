@@ -168,6 +168,11 @@ const router = createRouter({
             component: () => import("../views/ShowStockvView.vue"),
         },
         {
+            path:"/allitem",
+            name:"allitem",
+            component:()=> import("../views/AllItem.vue")
+        },
+        {
             path: "/listitem",
             name: "listitem",
             component: () => import("../views/ListItemView.vue"),
@@ -418,7 +423,15 @@ const router = createRouter({
                 {
                     path:"updatemanager/:id",
                     component:()=> import ("../views/Manager/UpdateManager.vue")
-                }
+                },
+                {
+                    path:"report",
+                    component: ()=> import ("../views/Manager/Report.vue")
+                },
+                {
+                    path:"allitem",
+                    component:()=> import("../views/Manager/AllItem.vue")
+                },
                 
             ]
         }

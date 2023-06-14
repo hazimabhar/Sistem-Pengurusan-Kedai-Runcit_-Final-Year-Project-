@@ -29,6 +29,7 @@ import {
         ]},
         {link:"/manager/registerworker", label:"Daftar Pekerja", children:[], icon:null},
         {link:"/manager/listworker", label:"Senarai Pekerja", children:[], icon:null},
+        {link:"/manager/report", label:"Senarai Laporan", children:[], icon:null},
 
     ]
 

@@ -3,7 +3,7 @@ import { ref } from '@vue/reactivity';
 import MyButton from '../components/MyButton.vue';
 import NavBar from '../components/NavBar.vue';
 
-document.title="Tutup Jualan"
+document.title="Closing"
 
 </script>
 
@@ -29,7 +29,18 @@ document.title="Tutup Jualan"
                     <div>
                         <button class=" bg-black text-white p-5 rounded-2xl hover:bg-red-600 hover:scale-105"  :class="[tutupJualan ? '' : 'opacity-50 cursor-not-allowed']" :disabled="!tutupJualan" @click="downloadReport">Muat Turun Laporan</button>
                     </div>
+                </div> 
+                <div class="w-[20%] h-fit bg-white shadow-product p-5 rounded-xl fixed right-20 top-[250px]">
+                    <p class="font-semibold text-base text-center">Sila Muat Naik Laporan Jualan</p>
+                    <div class="flex justify-center mt-5">
+                        <label class="text-blue-500" for="">{{fileName}}</label>
+                    </div>
+                    <div class="flex mt-2 justify-center">
+                        <UploadPicture   id="upload" v-on:upload="handleUploaderEvent"/>
+                    </div>
                 </div>
+                   
+
                 <div class="mt-10" id="Report" >
                     <div class="flex justify-center items-center">
                         <h1 class="text-center text-2xl text-blue-600 font-bold">Laporan Jualan Harian</h1> 
@@ -119,6 +130,8 @@ document.title="Tutup Jualan"
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
 import ToastMessageVue from "../components/ToastMessage.vue";
+import UploadPicture from '../components/UploadPicture.vue';
+
 
 export default {
 
@@ -145,10 +158,15 @@ export default {
             quantity:[],
             item:[],
             allSaleReport:[],
+
+            fileName: '',
+            filePath: '',
         }
     },
     mounted()
     {
+        window.addEventListener("LR_UPLOAD_FINISH", this.handleUploadFinish);
+
         axios.get("http://localhost:3000/report")
         .then(response=>{
             this.report = response.data
@@ -167,6 +185,29 @@ export default {
     },
     methods:
     {
+        handleUploadFinish(e) {
+            const dataUpload = e.detail.data[0];
+            this.fileName = dataUpload.name;
+            this.filePath = dataUpload.cdnUrl + dataUpload.name;
+            console.log(this.fileName)
+            console.log(this.filePath)
+
+            const fileData={
+                filePath : this.filePath,
+                fileName : this.fileName
+            }
+            console.log(fileData)
+
+            axios.put("http://localhost:3000/report/file/"+this.report[0].idReport, fileData)
+            .then(response=>console.log(response))
+            .catch(error=>console.log(error))
+
+            
+            const message ='Laporan Berjaya Dimuatnaik'
+            const status = 'Berjaya'
+            
+            this.$refs.toast.toast(message,status,'success')
+    },
         toggleDialog()
         {
             this.isOpen=!this.isOpen
