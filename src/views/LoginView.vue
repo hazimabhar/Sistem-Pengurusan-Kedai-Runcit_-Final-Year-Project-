@@ -27,6 +27,11 @@ document.title="Login"
   
             <div class="w-max mx-auto">            
                 <MyButton txt="Log Masuk"/>
+                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
             </div>
             <div class="text-center text-[13px] py-4 underline">
                 <RouterLink to="/userinfo">Tukar Kata Laluan</RouterLink>
@@ -53,6 +58,7 @@ export default
 
             errorNric:'',
             errorPassword:'',
+            loading:false,
         }
     },
     async mounted()
@@ -68,6 +74,7 @@ export default
             {
                 this.errorNric=''
                 this.errorPassword=''
+                this.loading=true
                 console.log(this.icNumber)
                 console.log(this.password)
                 try {
@@ -129,6 +136,9 @@ export default
                     else {
                         this.errorNric = 'An error occurred during login.';
                     }
+                }
+                finally{
+                    this.loading=false
                 }
 
             }

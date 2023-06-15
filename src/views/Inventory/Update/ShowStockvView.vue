@@ -23,6 +23,11 @@ import { RouterView } from 'vue-router';
                     </div>
                 <div class="max-sm:mt-2 max-sm:ml-8 hover:text-black">
                     <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
+                    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
                 </div>
                 </form>
         <div class="w-full mt-5 grid grid-cols-8 gap-2 mx-auto text-center text-sm max-lg:grid-cols-4 max-md:grid-cols-2">
@@ -73,6 +78,11 @@ import { RouterView } from 'vue-router';
                 </div>
                 <div class="mt-[7px]">
                     <RouterLink  v-bind:to="`/updateproduct/`+updateId" class="w-max bg-blue-600 text-white p-2 px-5 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " >Kemaskini</RouterLink>
+                    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -124,6 +134,8 @@ export default {
             updateId:"",
             phoneScanner:false,
             isOpen: false,
+
+            loading:false
             
         }
     },
@@ -132,6 +144,7 @@ export default {
         async searchItem()
             {
                 try{
+                    this.loading=true
                     console.log(this.barkodProduk)
                     await axios.get("https://sistemkedairuncit.onrender.com/item/search/"+ this.barkodProduk)
                     .then(response=>{
@@ -157,6 +170,10 @@ export default {
                     }
                     this.barkodProduk=''
 
+                }
+                finally
+                {
+                    this.loading =false
                 }
             },
             async toggleDialog(item)

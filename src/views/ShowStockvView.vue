@@ -31,6 +31,11 @@ document.title="Papar Stok"
                     </div>
                 <div class="max-sm:mt-2 max-sm:ml-8 hover:text-black">
                     <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
+                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
                 </div>
                 </form>
                 <div class="mt-1 ml-5">
@@ -130,6 +135,7 @@ export default {
             phoneScanner:false,
             isOpen: false,
             
+            loading:false,
         }
     },
         methods:
@@ -137,6 +143,7 @@ export default {
         async searchItem()
             {
                 try{
+                    this.loading = true
                     console.log(this.barkodProduk)
                     await axios.get("https://sistemkedairuncit.onrender.com/item/search/"+ this.barkodProduk)
                     .then(response=>{
@@ -158,6 +165,10 @@ export default {
                     }
                     this.barkodProduk=''
 
+                }
+                finally
+                {
+                    this.loading = false
                 }
             },
         async toggleDialog()

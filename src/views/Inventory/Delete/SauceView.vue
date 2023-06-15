@@ -12,7 +12,8 @@ export default {
         return {
             item: [],
             isOpen: false,
-            selectedItem: null
+            selectedItem: null,
+            loading : false
         }
     },
     mounted(){
@@ -29,7 +30,8 @@ export default {
             this.isOpen = !this.isOpen; // Toggle the isOpen property
         },
         deleteProduct(item)
-        {            
+        {  
+            this.loading = true          
             axios.delete('https://sistemkedairuncit.onrender.com/item/'+item)
             .then(response => {
                 const index = this.item.findIndex(i => i.idItem === item)
@@ -41,7 +43,10 @@ export default {
                 this.$refs.toast.toast(message,status,'success')
             })
             .catch(error=> console.log(error))
-            this.isOpen = !this.isOpen; // Toggle the isOpen property
+            .finally(()=>{
+                this.loading = false
+                this.isOpen = !this.isOpen; // Toggle the isOpen property
+            })
             console.log(item)
         }
     }
@@ -90,6 +95,11 @@ export default {
                 </div>
                 <div>
                     <button class="bg-red-600 text-white p-2 px-8 rounded-xl hover:bg-white hover:text-red-600 hover:outline hover:outline-red-600" @click="deleteProduct(selectedItem.idItem)">Buang</button>
+                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

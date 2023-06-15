@@ -175,7 +175,7 @@ const router = createRouter({
         {
             path:"/allitem",
             name:"allitem",
-            component:()=> import("../views/AllItem.vue")
+            component:()=> import("../views/AllItem.vue"),
         },
         {
             path: "/listitem",

@@ -103,6 +103,11 @@ document.title="Register Product";
                             </div>
                             <div class="mt-[14px]">
                                 <MyButton txt="Daftar" class="max-sm:px-8" @click.prevent="submitForm"/>
+                                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                                <div class="loader-wrapper">
+                                    <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </form>
@@ -229,6 +234,8 @@ export default {
 
       checkedBarcode:'',
 
+      loading:false,
+
       item:[]
     }
   },
@@ -245,13 +252,22 @@ export default {
             console.log(this.filePath)
     },
     async submitForm() {
-        
-        await axios.get("https://sistemkedairuncit.onrender.com/barcode")
-        .then(response=>{
-            this.checkedBarcode = response.data
-            console.log(this.checkedBarcode)
-        })
-        .catch(error=>console.log(error))
+
+        try
+        {
+            this.loading=true
+            await axios.get("https://sistemkedairuncit.onrender.com/barcode")
+            .then(response=>{
+                this.checkedBarcode = response.data
+                console.log(this.checkedBarcode)
+            })
+            .catch(error=>console.log(error))
+        }
+        finally
+        {
+            this.loading=false
+        }
+
 
         const name = this.namaProduk
         const price = parseFloat(this.hargaProduk)
@@ -264,103 +280,116 @@ export default {
 
         const existingData = this.checkedBarcode.find(item => item.barcode === this.barkodProduk);
 
-        
         if(this.namaProduk && this.hargaProduk && this.berat && this.unit && this.kuantitiProduk && this.barkodProduk && this.kategori && this.filePath && !existingData)
         {
-            const item =
-            {
-                name,
-                price,
-                weight,
-                unit,
-                quantity,
-                category,
-                barcode,
-                image
+
+            this.loading=true
+            try{
+                const item =
+                {
+                    name,
+                    price,
+                    weight,
+                    unit,
+                    quantity,
+                    category,
+                    barcode,
+                    image
+                }
+                this.item= item
+
+                axios.post('https://sistemkedairuncit.onrender.com/item', item)
+                .then(response => {console.log(response.data)})
+                .catch(error => {console.log(error)})
+                
+                this.completeRegister = !this.completeRegister; // Toggle the isOpen property
+
+                this.errorName=''
+                this.errorPrice=''
+                this.errorWeight=''
+                this.errorQuantity=''
+                this.errorCategory=''
+                this.errorBarcode=''
+                this.errorCheckedBarcode=''
+                this.errorImage=''
             }
-            this.item= item
-
-            axios.post('https://sistemkedairuncit.onrender.com/item', item)
-            .then(response => {console.log(response.data)})
-            .catch(error => {console.log(error)})
+            finally
+            {
+                this.loading=false
+            }
             
-            this.completeRegister = !this.completeRegister; // Toggle the isOpen property
-
-            this.errorName=''
-            this.errorPrice=''
-            this.errorWeight=''
-            this.errorQuantity=''
-            this.errorCategory=''
-            this.errorBarcode=''
-            this.errorCheckedBarcode=''
-            this.errorImage=''
-
         }
         else
         {
-            if(this.namaProduk==='')
-            {
-                this.errorName='*Sila Masukkan Nama Produk'
+            this.loading=true
+            try{
+                if(this.namaProduk==='')
+                {
+                    this.errorName='*Sila Masukkan Nama Produk'
+                }
+                else 
+                {
+                    this.errorName=''
+                }
+                if(this.hargaProduk==='')
+                {
+                    this.errorPrice='*Sila Masukkan Harga Produk'
+                }
+                else
+                {
+                    this.errorPrice=''
+                }
+                if(this.berat===''||this.unit==='')
+                {
+                    this.errorWeight='*Sila Masukkan Berat Produk dan Pilih Unit'
+                }
+                else
+                {
+                    this.errorWeight=''
+                }
+                if(this.kuantitiProduk==='')
+                {
+                    this.errorQuantity='*Sila Masukkan Kuantiti Produk'
+                }
+                else
+                {
+                    this.errorQuantity=''
+                }
+                if(this.kategori===null)
+                {
+                    this.errorCategory='*Sila Pilih Kategori Produk'
+                }
+                else
+                {
+                    this.errorCategory=''
+                }
+                if(this.barkodProduk==='')
+                {
+                    this.errorBarcode='*Sila Masukkan Kodbar Produk'
+                }
+                else
+                {
+                    this.errorBarcode=''
+                }
+                if(this.fileName==='')
+                {
+                    this.errorImage='*Sila Masukkan Gambar Produk'
+                }
+                else
+                {
+                    this.errorImage=''
+                }
+                if(existingData)
+                {
+                    this.errorCheckedBarcode='*Kodbar ini telah didaftarkan'
+                }
+                else
+                {
+                    this.errorCheckedBarcode=''
+                }
             }
-            else 
-            {
-                this.errorName=''
-            }
-            if(this.hargaProduk==='')
-            {
-                this.errorPrice='*Sila Masukkan Harga Produk'
-            }
-            else
-            {
-                this.errorPrice=''
-            }
-            if(this.berat===''||this.unit==='')
-            {
-                this.errorWeight='*Sila Masukkan Berat Produk dan Pilih Unit'
-            }
-            else
-            {
-                this.errorWeight=''
-            }
-            if(this.kuantitiProduk==='')
-            {
-                this.errorQuantity='*Sila Masukkan Kuantiti Produk'
-            }
-            else
-            {
-                this.errorQuantity=''
-            }
-            if(this.kategori===null)
-            {
-                this.errorCategory='*Sila Pilih Kategori Produk'
-            }
-            else
-            {
-                this.errorCategory=''
-            }
-            if(this.barkodProduk==='')
-            {
-                this.errorBarcode='*Sila Masukkan Kodbar Produk'
-            }
-            else
-            {
-                this.errorBarcode=''
-            }
-            if(this.fileName==='')
-            {
-                this.errorImage='*Sila Masukkan Gambar Produk'
-            }
-            else
-            {
-                this.errorImage=''
-            }
-            if(existingData)
-            {
-                this.errorCheckedBarcode='*Kodbar ini telah didaftarkan'
-            }
-            else
-            {
-                this.errorCheckedBarcode=''
+            finally{
+                this.loading=false
             }
         }
         window.scrollTo({

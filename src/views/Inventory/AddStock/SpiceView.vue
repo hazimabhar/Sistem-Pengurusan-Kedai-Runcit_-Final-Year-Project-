@@ -13,7 +13,8 @@ export default {
         return {
             item: [],
             isOpen: false,
-            selectedItem: null
+            selectedItem: null,
+            laoding : false
         }
     },
     mounted(){
@@ -33,45 +34,53 @@ export default {
         {
             console.log(selectedItem)
             console.log(this.item.quantity)
-
-            if(this.item.quantity < 1)
-            {
-                const message ='Sila Masukkan Kuantiti'
-                const status = 'Gagal'
-                this.$refs.toast.toast(message,status,'error')
-            }
-            else{
-                const newQuantity = selectedItem.quantity+this.item.quantity
-                const oldQuantity = selectedItem.quantity
-                selectedItem.quantity=newQuantity
-                if (isNaN(selectedItem.quantity))
+            this.loading = true
+            try{
+                if(this.item.quantity < 1)
                 {
-                    selectedItem.quantity=oldQuantity
                     const message ='Sila Masukkan Kuantiti'
                     const status = 'Gagal'
                     this.$refs.toast.toast(message,status,'error')
-
                 }
-                else
-                {
-                    console.log(selectedItem.idItem)
-                    this.item.quantity=''
+                else{
+                    const newQuantity = selectedItem.quantity+this.item.quantity
+                    const oldQuantity = selectedItem.quantity
+                    selectedItem.quantity=newQuantity
+                    if (isNaN(selectedItem.quantity))
+                    {
+                        selectedItem.quantity=oldQuantity
+                        const message ='Sila Masukkan Kuantiti'
+                        const status = 'Gagal'
+                        this.$refs.toast.toast(message,status,'error')
 
-                    console.log(newQuantity)
+                    }
+                    else
+                    {
+                        console.log(selectedItem.idItem)
+                        this.item.quantity=''
 
-                    await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
-                    .then(response=>{
-                        const update =response.data
-                        console.log(update)
-                    })
-                    .catch(error=>console.log(error))
-                    this.isOpen = !this.isOpen; // Toggle the isOpen property
+                        console.log(newQuantity)
 
-                    const message ='Kuantiti Produk Telah Dikemaskini'
-                    const status = 'Berjaya'
-                    this.$refs.toast.toast(message,status,'success')
-                }
-                }
+                        await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
+                        .then(response=>{
+                            const update =response.data
+                            console.log(update)
+                        })
+                        .catch(error=>console.log(error))
+                        this.isOpen = !this.isOpen; // Toggle the isOpen property
+
+                        const message ='Kuantiti Produk Telah Dikemaskini'
+                        const status = 'Berjaya'
+                        this.$refs.toast.toast(message,status,'success')
+                    }
+                    }
+            }
+            finally
+            {
+                this.loading=false
+            }
+
+          
 
         }
     }
@@ -114,6 +123,11 @@ export default {
                 </div>
                 <div class="">
                     <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
+                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

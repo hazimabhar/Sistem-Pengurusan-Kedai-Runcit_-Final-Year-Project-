@@ -57,7 +57,8 @@ export default
     {
         return {
 
-            item:[]
+            item:[],
+            
         }
     },
     mounted()
@@ -69,7 +70,6 @@ export default
             console.log(this.item)
         })
         .catch(error=>console.log(error))
-
     }
 }
 </script>

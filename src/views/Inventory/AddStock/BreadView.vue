@@ -14,6 +14,7 @@ export default {
             isOpen: false,
             selectedItem: null,
             item:[],
+            loading : false
         }
     },
     mounted(){
@@ -33,8 +34,10 @@ export default {
         {
             console.log(selectedItem)
             console.log(this.item.quantity)
-
-            if(this.item.quantity < 1)
+            this.loading=true
+            try
+            {
+                if(this.item.quantity < 1)
             {
                 const message ='Sila Masukkan Kuantiti'
                 const status = 'Gagal'
@@ -73,6 +76,10 @@ export default {
                 }
                 }
 
+            }
+            finally{
+              this.loading = false   
+            }
         }
 
     }
@@ -115,6 +122,11 @@ export default {
                 </div>
                 <div class="">
                     <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
+                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
