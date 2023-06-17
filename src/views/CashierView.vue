@@ -52,11 +52,6 @@ document.title="Cashier"
                             <div class="bg-white shadow-product p-5 rounded-2xl border ">
                                 <input ref="barkodProduk" v-model="barkodProduk" class="w-full outline-none" type="text" placeholder="Imbas Kod Bar" id="kodbar">
                             </div>
-                            <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
-                                <div class="loader-wrapper">
-                                    <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
-                                </div>
-                            </div>
                         </form>
                     </div>
                     <div class="w-3/12 h-fit bg-white shadow-product p-4 rounded-xl fixed right-20">
@@ -205,7 +200,6 @@ export default
         async scanBarcode(){
             console.log(this.barkodProduk)   
 
-            this.loading = true
             await axios.get("https://sistemkedairuncit.onrender.com/item/cashier/"+ this.barkodProduk)
             .then(response=>{
                 this.itemDetail = response.data
@@ -238,9 +232,7 @@ export default
                     this.$refs.toast.toast(message,status,'error')   
                 }
             })
-            .finally(()=>{
-                this.loading =false
-            })
+    
         },
         async addQuantity(item)
         {
