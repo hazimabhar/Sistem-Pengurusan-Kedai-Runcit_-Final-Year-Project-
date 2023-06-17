@@ -64,7 +64,7 @@ import { RouterView } from 'vue-router';
                 <div class="">
                     <p>{{selectedItem.name}}</p>
                     <p>RM {{selectedItem.price}}</p>
-                    <p>{{selectedItem.weight}} {{selectedItem.unit}}</p>
+                    <p>{{selectedItem.weight !== null ? selectedItem.weight : 'null'}} {{selectedItem.unit !== null ? selectedItem.unit : 'null'}}</p>
                     <p>{{selectedItem.quantity}}</p>
                     <p>{{selectedItem.category}}</p>
                 </div>

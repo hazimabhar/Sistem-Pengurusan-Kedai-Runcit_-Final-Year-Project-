@@ -76,7 +76,7 @@ document.title="Papar Stok"
                 <div class="">
                     <p>{{itemDetail.name}}</p>
                     <p>RM {{itemDetail.price}}</p>
-                    <p>{{itemDetail.weight}} {{itemDetail.unit}}</p>
+                    <p>{{itemDetail.weight !== null ? itemDetail.weight : 'null'}} {{itemDetail.unit !== null ? itemDetail.unit : 'null'}}</p>
                     <p>{{itemDetail.quantity}}</p>
                     <p>{{itemDetail.category}}</p>
                 </div>

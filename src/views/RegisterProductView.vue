@@ -151,7 +151,7 @@ document.title="Register Product";
                 <div class="">
                     <p>{{item.name}}</p>
                     <p>RM {{item.price}}</p>
-                    <p>{{item.weight}} {{item.unit}}</p>
+                    <p>{{item.weight !== null ? item.weight : 'null'}} {{item.unit !== null ? item.unit : 'null'}}</p>
                     <p>{{item.quantity}}</p>
                     <p>{{item.category}}</p>
                 </div>
@@ -280,7 +280,7 @@ export default {
 
         const existingData = this.checkedBarcode.find(item => item.barcode === this.barkodProduk);
 
-        if(this.namaProduk && this.hargaProduk && this.berat && this.unit && this.kuantitiProduk && this.barkodProduk && this.kategori && this.filePath && !existingData)
+        if(this.namaProduk && this.hargaProduk && this.kuantitiProduk && this.barkodProduk && this.kategori && this.filePath && !existingData)
         {
 
             this.loading=true
@@ -338,14 +338,6 @@ export default {
                 else
                 {
                     this.errorPrice=''
-                }
-                if(this.berat===''||this.unit==='')
-                {
-                    this.errorWeight='*Sila Masukkan Berat Produk dan Pilih Unit'
-                }
-                else
-                {
-                    this.errorWeight=''
                 }
                 if(this.kuantitiProduk==='')
                 {

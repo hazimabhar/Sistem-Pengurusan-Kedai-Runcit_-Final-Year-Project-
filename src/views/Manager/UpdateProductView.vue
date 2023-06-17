@@ -291,7 +291,7 @@ export default {
       try
       {
 
-        if(this.item.name && this.item.price && this.item.weight && this.item.unit && this.item.quantity && this.item.barcode && this.item.category && this.item.image)
+        if(this.item.name && this.item.price && this.item.quantity && this.item.barcode && this.item.category && this.item.image)
       { 
         this.item.price = parseFloat(this.item.price)
         this.item.quantity = parseInt(this.item.quantity)
@@ -335,14 +335,6 @@ export default {
             else
             {
                 this.errorPrice=''
-            }
-            if(this.item.weight===''||this.item.unit==='')
-            {
-                this.errorWeight='*Sila Masukkan Berat Produk dan Pilih Unit'
-            }
-            else
-            {
-                this.errorWeight=''
             }
             if(this.item.quantity==='')
             {

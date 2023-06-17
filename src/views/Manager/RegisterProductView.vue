@@ -151,7 +151,7 @@ document.title="Register Product";
                 <div class="">
                     <p>{{item.name}}</p>
                     <p>RM {{item.price}}</p>
-                    <p>{{item.weight}} {{item.unit}}</p>
+                    <p>{{item.weight !== null ? item.weight : 'null'}} {{item.unit !== null ? item.unit : 'null'}}</p>
                     <p>{{item.quantity}}</p>
                     <p>{{item.category}}</p>
                 </div>
