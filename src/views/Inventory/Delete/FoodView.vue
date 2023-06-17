@@ -67,7 +67,7 @@ export default {
             <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
         </div>
     </div>
-  <div class="w-10/12 grid grid-cols-5 gap-10 mx-10 text-center max-md:block max-md:w-60" >
+  <div class="w-10/12 grid grid-cols-5 gap-32 mx-10 text-center max-md:block max-md:w-60" >
     <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
         <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">
             <div class="bg-white py-5 rounded-xl  h-44">
@@ -79,7 +79,7 @@ export default {
         </div>
     </RouterLink>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-    <dialog class="w-1/4 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+    <dialog class="w-[30%] mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
         <div class="" v-if="selectedItem" >
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
                 <img class="mx-auto w-[45%]" :src="selectedItem.image" alt="Produk">

@@ -51,7 +51,7 @@ document.title="Papar Stok"
             <ProductCategory to="/listitem/drink" text="Minuman" src="/drink.svg"/>
             <ProductCategory to="/listitem/spice" text="Rempah" src="/spice.svg"/>
             <ProductCategory to="/listitem/bread" text="Roti" src="/bread.svg"/>
-            <ProductCategory to="/listitem/sauce" text="Sos dan Kicap" src="/sauce.svg"/>
+            <ProductCategory to="/listitem/sauce" text="Sos & Kicap" src="/sauce.svg"/>
             <ProductCategory to="/listitem/food" text="Makanan" src="/food.svg"/>
             <ProductCategory to="/listitem/tool" text="Alatan" src="/broom.svg"/>
         </div>
@@ -59,7 +59,7 @@ document.title="Papar Stok"
     </div>
   </div>
   <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-    <dialog class="w-1/4 max-sm:w-[75%] mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+    <dialog class="w-[30%] max-sm:w-[75%] mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
         <div class="" v-if="itemDetail">
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
                 <img class="mx-auto w-[45%]" :src="itemDetail.image" alt="Produk">

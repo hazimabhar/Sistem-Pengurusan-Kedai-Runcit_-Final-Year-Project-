@@ -134,7 +134,7 @@ document.title="Register Product";
         </div>
     </dialog>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !completeRegister}"></div>
-    <dialog class="w-1/4 mx-auto shadow-product rounded-2xl  fixed top-44 z-50" v-bind:open="completeRegister">
+    <dialog class="w-fit mx-auto shadow-product rounded-2xl  fixed top-44 z-50" v-bind:open="completeRegister">
         <div class="">
             <div>
                 <p class="font-semibold text-green-700 text-center text-xl">Produk Berjaya Didaftarkan!</p>
@@ -142,16 +142,16 @@ document.title="Register Product";
             <div class="py-2" v-if="item">
                 <div class="flex justify-between p-5">
                 <div class="">
-                    <p>Nama Produk</p>
-                    <p>Harga Produk</p>
-                    <p>Berat Produk</p>
-                    <p>Kuantiti Produk</p>
-                    <p>Kategori</p>
+                    <p>Nama Produk:</p>
+                    <p>Harga Produk:</p>
+                    <p>Berat Produk:</p>
+                    <p>Kuantiti Produk:</p>
+                    <p>Kategori:</p>
                 </div>
-                <div class="">
+                <div class="ml-5">
                     <p>{{item.name}}</p>
                     <p>RM {{item.price}}</p>
-                    <p>{{item.weight !== null ? item.weight : 'null'}} {{item.unit !== null ? item.unit : 'null'}}</p>
+                    <p>{{(item.weight !== null && item.weight !== undefined && item.weight !== '') ? item.weight : 'null'}} {{(item.unit !== null && item.unit !== undefined && item.unit !== '') ? item.unit : 'null'}}</p>
                     <p>{{item.quantity}}</p>
                     <p>{{item.category}}</p>
                 </div>

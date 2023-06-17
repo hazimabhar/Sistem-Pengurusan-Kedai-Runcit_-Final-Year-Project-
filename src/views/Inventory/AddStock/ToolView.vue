@@ -99,7 +99,7 @@ export default {
             <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
         </div>
     </div>
-  <div class="w-10/12 grid grid-cols-5 gap-10 mx-10 text-center max-md:block max-md:w-60" >
+  <div class="w-10/12 grid grid-cols-5 gap-32 mx-10 text-center max-md:block max-md:w-60" >
     <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
         <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">
             <div class="bg-white py-5 rounded-xl  h-44">

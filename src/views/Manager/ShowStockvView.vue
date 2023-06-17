@@ -49,7 +49,7 @@ document.title="Papar Stok"
             <ProductCategory to="/manager/managerlistitem/drink" text="Minuman" src="/drink.svg"/>
             <ProductCategory to="/manager/managerlistitem/spice" text="Rempah" src="/spice.svg"/>
             <ProductCategory to="/manager/managerlistitem/bread" text="Roti" src="/bread.svg"/>
-            <ProductCategory to="/manager/managerlistitem/sauce" text="Sos dan Kicap" src="/sauce.svg"/>
+            <ProductCategory to="/manager/managerlistitem/sauce" text="Sos & Kicap" src="/sauce.svg"/>
             <ProductCategory to="/manager/managerlistitem/food" text="Makanan" src="/food.svg"/>
             <ProductCategory to="/manager/managerlistitem/tool" text="Alatan" src="/broom.svg"/>
         </div>

@@ -48,7 +48,7 @@ export default {
     </div>
 </div>
   <div
-    class="w-10/12 grid grid-cols-5 gap-10 mx-10 text-center max-md:block max-md:w-60"
+    class="w-10/12 grid grid-cols-5 gap-32 mx-10 text-center max-md:block max-md:w-60"
   >
     <RouterLink
       to=""
@@ -74,7 +74,7 @@ export default {
   >
 </div>
   <dialog
-    class="w-1/4 mx-auto shadow-product rounded-2xl absolute top-44 z-50"
+    class="w-[30%] mx-auto shadow-product rounded-2xl absolute top-44 z-50"
     v-bind:open="isOpen"
   >
     <div class=""  v-if="selectedItem">
