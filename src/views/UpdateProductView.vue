@@ -161,6 +161,11 @@ document.title = "Update Product";
                   class="max-sm:px-8"
                   @click.prevent="updateInfo"
                 />
+                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                    <div class="loader-wrapper">
+                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                    </div>
+                </div>
               </div>
             </div>
           </form>
@@ -214,6 +219,11 @@ document.title = "Update Product";
     </dialog>
     <ToastMessageVue ref="toast"/>
   </div>
+  <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+    <div class="loader-wrapper">
+      <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -255,20 +265,31 @@ export default {
       errorBarcode:'',
       errorCheckedBarcode:'',
       errorImage:'',
+
+      loading : false
     };
   },
   mounted(){
     console.log(this.itemId);
     window.addEventListener("LR_UPLOAD_FINISH", this.handleUploadFinish);
 
-        axios.get('https://sistemkedairuncit.onrender.com/item/'+this.itemId)
+    this.loadData()
+ 
+    },
+  methods: {
+    loadData()
+    {
+      this.loading = true
+      axios.get('https://sistemkedairuncit.onrender.com/item/'+this.itemId)
         .then(response=> {
             this.item = response.data
             console.log(this.item)
         })
         .catch(error=> console.log(error))
+        .finally(()=>{
+          this.loading = false
+        })
     },
-  methods: {
     handleUploadFinish(e) {
             const dataUpload = e.detail.data[0];
             this.fileName = dataUpload.name;
@@ -277,8 +298,12 @@ export default {
             console.log(this.item.image)
     },
     updateInfo() {
-        
-      if(this.item.name && this.item.price && this.item.weight && this.item.unit && this.item.quantity && this.item.barcode && this.item.category && this.item.image)
+      this.loading = true
+
+      try
+      {
+
+        if(this.item.name && this.item.price && this.item.weight && this.item.unit && this.item.quantity && this.item.barcode && this.item.category && this.item.image)
       { 
         this.item.price = parseFloat(this.item.price)
         this.item.quantity = parseInt(this.item.quantity)
@@ -364,6 +389,12 @@ export default {
                 this.errorImage=''
             }
         }
+      }
+      finally{
+        this.loading=false
+      }
+      
+     
     },
     toggleDialog() {
             this.isOpen = !this.isOpen; // Toggle the isOpen property

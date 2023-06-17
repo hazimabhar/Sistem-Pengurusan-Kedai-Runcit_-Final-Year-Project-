@@ -12,7 +12,7 @@ document.title="Laporan Jualan"
     <ManagerNavBar/>
     <div class="bg-slate-100 min-h-screen max-md:bg-white max-lg:bg-white ">
       <div>
-        <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl">Papar Laporan Hazim</p>
+        <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl">Papar Laporan</p>
       </div>
         <div class="w-9/12 mx-auto mr-16 bg-white max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
           <ul class="inline-flex list-none px-8 pb-10">
@@ -36,6 +36,11 @@ document.title="Laporan Jualan"
         </div>
     </div>
   </div>
+  <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+        <div class="loader-wrapper">
+            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+        </div>
+    </div>
 </template>
 <script>
 import axios from 'axios';
@@ -46,16 +51,28 @@ export default
     {
         return{
             report:[],
+            loading :false
         }
     },
     mounted()
     {
+      this.loadData()
+
+    },
+    methods:{
+      loadData()
+      {
+        this.loading = true
         axios.get("https://sistemkedairuncit.onrender.com/allreport")
         .then(response=>{
             this.report = response.data
             console.log(this.report)
         })
         .catch(error=>console.log(error))
-    },
+        .finally(()=>{
+          this.loading =false
+        })
+      }
+    }
 }
 </script>

@@ -52,6 +52,11 @@ document.title="Cashier"
                             <div class="bg-white shadow-product p-5 rounded-2xl border ">
                                 <input ref="barkodProduk" v-model="barkodProduk" class="w-full outline-none" type="text" placeholder="Imbas Kod Bar" id="kodbar">
                             </div>
+                            <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                                <div class="loader-wrapper">
+                                    <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="w-3/12 h-fit bg-white shadow-product p-4 rounded-xl fixed right-20">
@@ -131,6 +136,11 @@ document.title="Cashier"
                 </div>
                 <div >
                     <button class="w-max bg-blue-600 text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black" @click="completeSale">Sah</button>
+                    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                        <div class="loader-wrapper">
+                            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -164,6 +174,7 @@ export default
         paymentType:'',
         worker:'',
         isOpen: false,
+        loading : false,
         }
     } ,
     mounted()
@@ -194,6 +205,7 @@ export default
         async scanBarcode(){
             console.log(this.barkodProduk)   
 
+            this.loading = true
             await axios.get("https://sistemkedairuncit.onrender.com/item/cashier/"+ this.barkodProduk)
             .then(response=>{
                 this.itemDetail = response.data
@@ -225,6 +237,9 @@ export default
                     const status = 'Ralat'
                     this.$refs.toast.toast(message,status,'error')   
                 }
+            })
+            .finally(()=>{
+                this.loading =false
             })
         },
         async addQuantity(item)
@@ -285,7 +300,7 @@ export default
                 totalPrice : this.price
             }
 
-
+            this.loading = true
             await axios.post("https://sistemkedairuncit.onrender.com/salebuylist",{saleData,itemData})
             .then(response=>{
                 console.log(response)
@@ -298,6 +313,9 @@ export default
                 this.$refs.toast.toast(message, status, 'success');
                 })
             .catch(error=>console.log(error))  
+            .finally(()=>{
+                this.loading = false
+            })
 
             await axios.get("https://sistemkedairuncit.onrender.com/item/quantity/"+ this.idItems)
             .then(response=>

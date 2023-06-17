@@ -12,24 +12,36 @@ export default {
         return {
             item: [],
             isOpen: false,
-            selectedItem: null
+            selectedItem: null,
+            loading : false,
+
         }
     },
     mounted(){
-        axios.get('https://sistemkedairuncit.onrender.com/item/canned')
-        .then(response=> {
-            this.item = response.data
-            console.log(response)
-        })
-        .catch(error=> console.log(error))
+        this.loadData()
+
     },
     methods: {
+        loadData()
+        {
+            this.loading = true
+            axios.get('https://sistemkedairuncit.onrender.com/item/canned')
+            .then(response=> {
+                this.item = response.data
+                console.log(response)
+            })
+            .catch(error=> console.log(error))
+            .finally(()=>{
+                this.loading = false
+            })
+        },
         toggleDialog(item) {
             this.selectedItem = item;
             this.isOpen = !this.isOpen; // Toggle the isOpen property
         },
         deleteProduct(item)
         {            
+            this.loading=true
             axios.delete('https://sistemkedairuncit.onrender.com/item/'+item)
             .then(response => {
                 const index = this.item.findIndex(i => i.idItem === item)
@@ -41,7 +53,10 @@ export default {
                 this.$refs.toast.toast(message,status,'success')
             })
             .catch(error=> console.log(error))
-            this.isOpen = !this.isOpen; // Toggle the isOpen property
+            .finally(()=>{
+                this.loading = false
+                this.isOpen = !this.isOpen; // Toggle the isOpen property
+            })
             console.log(item)
         }
     }
@@ -49,6 +64,11 @@ export default {
 </script>
 
 <template>
+    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+    <div class="loader-wrapper">
+         <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+    </div>
+</div>
   <div class="w-10/12 grid grid-cols-5 gap-10 mx-auto text-center max-md:block max-md:w-60" >
     <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
         <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">
@@ -90,6 +110,11 @@ export default {
                 </div>
                 <div>
                     <button class="bg-red-600 text-white p-2 px-8 rounded-xl hover:bg-white hover:text-red-600 hover:outline hover:outline-red-600" @click="deleteProduct(selectedItem.idItem)">Buang</button>
+                    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                        <div class="loader-wrapper">
+                            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

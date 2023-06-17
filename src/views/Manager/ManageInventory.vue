@@ -22,7 +22,7 @@ document.title="Manage Inventory"
                 </ul>
                 <div class="w-4/5 grid grid-cols-4 gap-10 mx-auto text-center max-md:block max-md:w-60">
                     <Process class="hover:text-black " to="/manager/managermanageinventory/add" text="Tambah Stok" icon="fa-regular fa-square-plus"/>
-                    <Process class="hover:text-black" to="/manager/managermanageinventory/delete" text="Buang Stok" icon="fa-regular fa-square-minus"/>
+                    <Process class="hover:text-black" to="/manager/managermanageinventory/delete" text="Buang Produk" icon="fa-regular fa-square-minus"/>
                     <Process class="hover:text-black" to="/manager/registerproduct" text="Daftar Produk" icon="fa-solid fa-file-circle-plus"/>
                     <Process class="hover:text-black " to="/manager/managermanageinventory/update" text="Kemaskini Maklumat" icon="fa-solid fa-pen-to-square"/>
                 </div> 

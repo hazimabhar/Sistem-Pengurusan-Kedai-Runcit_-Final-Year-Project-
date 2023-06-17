@@ -84,6 +84,7 @@ components: {
                
                 if(!this.errorPassword && !this.errorConfirmPassword)
                 {
+
                     const idAccount = this.user
                     const password = this.confirmPassword
 

@@ -104,6 +104,11 @@ document.title='Home Page'
                             </div>
                             <div>
                                 <MyButton txt="Daftar" class="max-sm:px-8" @click.prevent="submitForm"/>
+                                <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                                    <div class="loader-wrapper">
+                                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -147,6 +152,7 @@ document.title='Home Page'
         </div>
 </template>
 <script>
+import router from '../../router';
 import axios from 'axios';
 
 export default {
@@ -177,6 +183,7 @@ export default {
       checkedNric:'',
 
       completeRegister:false,
+      loading : false,
 
 
       user:[]
@@ -185,7 +192,10 @@ export default {
   methods:{
     async submitForm()
     {
-        await axios.get("https://sistemkedairuncit.onrender.com/emailmanager")
+        try
+        {
+            this.loading = true
+            await axios.get("https://sistemkedairuncit.onrender.com/emailmanager")
         .then(response=>{
             this.checkedEmailManager = response.data
             console.log(this.checkedEmailManager)
@@ -224,9 +234,8 @@ export default {
 
         if(this.namapenuh && this.nomboric && this.password && this.telefon && this.email && this.alamat && this.jantina && this.peranan && !existedEmail && !existedNric)
         {
-            this.errorCheckedEmail=''
-            this.errorCheckedNric=''
-
+                this.errorCheckedEmail=''
+                this.errorCheckedNric=''
                 if(!/(?=.*[A-Z])(?=.*[0-9]).{8,}/.test(this.password)){
                     this.errorPassword ='*Kata Laluan Tidak Sah';
                 }
@@ -304,80 +313,92 @@ export default {
 
                     }
                 }
+
+
+           
         }
         else
         {
-            if(existedEmail){
+      
+         
+                if(existedEmail){
                 this.errorCheckedEmail='*Email Ini Telah Didaftarkan'
-            }
-            else{
-                this.errorCheckedEmail=''
-            }
-            if(existedNric){
-                this.errorCheckedNric='*IC Ini Telah Didaftarkan'
-            }
-            else{
-                this.errorCheckedNric=''
-            }
+                }
+                else{
+                    this.errorCheckedEmail=''
+                }
+                if(existedNric){
+                    this.errorCheckedNric='*IC Ini Telah Didaftarkan'
+                }
+                else{
+                    this.errorCheckedNric=''
+                }
 
-            if(this.namapenuh===''){
-                this.errorName='*Sila Masukkan Nama Penuh'
-            }
-            else{
-                this.errorName=''
-            }
+                if(this.namapenuh===''){
+                    this.errorName='*Sila Masukkan Nama Penuh'
+                }
+                else{
+                    this.errorName=''
+                }
 
-            if(this.nomboric===''){
-                this.errorNric='*Sila Masukkan Nombor IC'
-            }
-            else{
-                this.errorNric=''
-            }
+                if(this.nomboric===''){
+                    this.errorNric='*Sila Masukkan Nombor IC'
+                }
+                else{
+                    this.errorNric=''
+                }
 
-            if(this.password===''){
-                this.errorPassword='*Sila Masukkan Kata Laluan'
-            }
-            else{
-                this.errorPassword=''
-            }
+                if(this.password===''){
+                    this.errorPassword='*Sila Masukkan Kata Laluan'
+                }
+                else{
+                    this.errorPassword=''
+                }
 
-            if(this.telefon===''){
-                this.errorPhone='*Sila Masukkan Nombor Telefon'
-            }
-            else{
-                this.errorPhone=''
-            }
+                if(this.telefon===''){
+                    this.errorPhone='*Sila Masukkan Nombor Telefon'
+                }
+                else{
+                    this.errorPhone=''
+                }
 
-            if(this.email===''){
-                this.errorEmail='*Sila Masukkan Emel'
-            }
-            else{
-                this.errorEmail=''
-            }
-                
-            if(this.alamat===''){
-                this.errorAddress='*Sila Masukkan Alamat'
-            }
-            else{
-                this.errorAddress=''
-            }
-                
-            if(this.jantina===null){
-                this.errorGender='*Sila Pilih Jantina'
-            }
-            else{
-                this.errorGender=''
-            }
+                if(this.email===''){
+                    this.errorEmail='*Sila Masukkan Emel'
+                }
+                else{
+                    this.errorEmail=''
+                }
+                    
+                if(this.alamat===''){
+                    this.errorAddress='*Sila Masukkan Alamat'
+                }
+                else{
+                    this.errorAddress=''
+                }
+                    
+                if(this.jantina===null){
+                    this.errorGender='*Sila Pilih Jantina'
+                }
+                else{
+                    this.errorGender=''
+                }
 
-            if(this.peranan===null){
-                this.errorRole='*Sila Pilih Peranan'
-            }
-            else{
-                this.errorRole=''
-            }
+                if(this.peranan===null){
+                    this.errorRole='*Sila Pilih Peranan'
+                }
+                else{
+                    this.errorRole=''
+                }
 
-
+            }
+ 
         }
+        finally{
+            this.loading = false
+        }
+        
+
+
     },
     cancelForm()
     {

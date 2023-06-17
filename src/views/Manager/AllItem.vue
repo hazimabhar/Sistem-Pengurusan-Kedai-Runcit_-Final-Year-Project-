@@ -47,6 +47,11 @@ document.title="List Product";
             </div>
         </div>
 </div>
+<div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+    <div class="loader-wrapper">
+         <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+    </div>
+</div>
 </template>
 <script>
 import axios from 'axios';
@@ -57,11 +62,19 @@ export default
     {
         return {
 
-            item:[]
+            item:[],
+            loading : false
         }
     },
     mounted()
     {
+        this.loadData()
+    },
+methods:
+{
+    loadData()
+    {
+        this.loading=true
         axios.get("https://sistemkedairuncit.onrender.com/item")
         .then(response=>
         {
@@ -69,7 +82,11 @@ export default
             console.log(this.item)
         })
         .catch(error=>console.log(error))
-
+        .finally(()=>{
+            this.loading = false
+        })
     }
+
+}
 }
 </script>

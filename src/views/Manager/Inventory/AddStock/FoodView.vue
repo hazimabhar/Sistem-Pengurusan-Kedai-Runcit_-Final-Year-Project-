@@ -13,18 +13,28 @@ export default {
         return {
             item: [],
             isOpen: false,
-            selectedItem: null
+            selectedItem: null,
+            loading : false,
+
         }
     },
     mounted(){
-        axios.get('https://sistemkedairuncit.onrender.com/item/food')
-        .then(response=> {
-            this.item = response.data
-            console.log(response)
-        })
-        .catch(error=> console.log(error))
+        this.loadData()
     },
     methods: {
+        loadData()
+        {
+            this.loading = true
+            axios.get('https://sistemkedairuncit.onrender.com/item/food')
+            .then(response=> {
+                this.item = response.data
+                console.log(response)
+            })
+            .catch(error=> console.log(error))
+            .finally(()=>{
+                this.loading = false
+            })
+        },
         toggleDialog(item) {
             this.selectedItem = item;
             this.isOpen = !this.isOpen; // Toggle the isOpen property
@@ -33,46 +43,52 @@ export default {
         {
             console.log(selectedItem)
             console.log(this.item.quantity)
+            this.loading=true
 
-            if(this.item.quantity < 1)
-            {
-                const message ='Sila Masukkan Kuantiti'
-                const status = 'Gagal'
-                this.$refs.toast.toast(message,status,'error')
-            }
-            else{
-                const newQuantity = selectedItem.quantity+this.item.quantity
-                const oldQuantity = selectedItem.quantity
-                selectedItem.quantity=newQuantity
-                if (isNaN(selectedItem.quantity))
+            try{
+                if(this.item.quantity < 1)
                 {
-                    selectedItem.quantity=oldQuantity
                     const message ='Sila Masukkan Kuantiti'
                     const status = 'Gagal'
                     this.$refs.toast.toast(message,status,'error')
-
                 }
-                else
-                {
-                    console.log(selectedItem.idItem)
-                    this.item.quantity=''
+                else{
+                    const newQuantity = selectedItem.quantity+this.item.quantity
+                    const oldQuantity = selectedItem.quantity
+                    selectedItem.quantity=newQuantity
+                    if (isNaN(selectedItem.quantity))
+                    {
+                        selectedItem.quantity=oldQuantity
+                        const message ='Sila Masukkan Kuantiti'
+                        const status = 'Gagal'
+                        this.$refs.toast.toast(message,status,'error')
 
-                    console.log(newQuantity)
+                    }
+                    else
+                    {
+                        console.log(selectedItem.idItem)
+                        this.item.quantity=''
 
-                    await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
-                    .then(response=>{
-                        const update =response.data
-                        console.log(update)
-                    })
-                    .catch(error=>console.log(error))
-                    this.isOpen = !this.isOpen; // Toggle the isOpen property
+                        console.log(newQuantity)
 
-                    const message ='Kuantiti Produk Telah Dikemaskini'
-                    const status = 'Berjaya'
-                    this.$refs.toast.toast(message,status,'success')
-                }
-                }
+                        await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
+                        .then(response=>{
+                            const update =response.data
+                            console.log(update)
+                        })
+                        .catch(error=>console.log(error))
+                        this.isOpen = !this.isOpen; // Toggle the isOpen property
 
+                        const message ='Kuantiti Produk Telah Dikemaskini'
+                        const status = 'Berjaya'
+                        this.$refs.toast.toast(message,status,'success')
+                    }
+                    }
+            }
+            finally{
+                this.loading = false
+
+            }
         }
     }
 }
@@ -80,6 +96,11 @@ export default {
 </script>
 
 <template>
+    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+    <div class="loader-wrapper">
+         <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+    </div>
+</div>
   <div class="w-10/12 grid grid-cols-5 gap-10 mx-auto text-center max-md:block max-md:w-60" >
     <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
         <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">
@@ -115,6 +136,11 @@ export default {
                 </div>
                 <div class="">
                     <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
+                    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                        <div class="loader-wrapper">
+                            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

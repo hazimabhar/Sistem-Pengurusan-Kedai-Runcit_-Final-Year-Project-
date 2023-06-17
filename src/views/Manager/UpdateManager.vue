@@ -106,6 +106,11 @@ document.title='Home Page'
    
         </div>
         <ToastMessageVue ref="toast"/>
+        <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                                    <div class="loader-wrapper">
+                                        <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                                    </div>
+                            </div>
 </template>
 <script>
 import axios from 'axios';
@@ -136,35 +141,50 @@ export default {
             errorAddress:'',
             errorGender:'',
 
+            loading : false
 
         }
     },
     async mounted()
     {
         console.log(this.userId)
-        await axios.get("https://sistemkedairuncit.onrender.com/manager/"+this.userId)
-        .then(response=>{
-            this.user = response.data
-            console.log(this.user)
-        })
-        .catch(error=>console.log(error))
-        const idAccount = this.user.idAccount
-        console.log(idAccount)
-        await axios.get("https://sistemkedairuncit.onrender.com/"+ idAccount)
-        .then(response=>{
-            this.cantChange = response.data
-            console.log(this.cantChange)
-        })
+        this.loadData()
+  
     },
     methods:
     {
+        async loadData()
+        {
+            this.loading = true 
+           
+                await axios.get("https://sistemkedairuncit.onrender.com/manager/"+this.userId)
+                .then(response=>{
+                    this.user = response.data
+                    console.log(this.user)
+                })
+                .catch(error=>console.log(error))
+                const idAccount = this.user.idAccount
+                console.log(idAccount)
+                await axios.get("https://sistemkedairuncit.onrender.com/"+ idAccount)
+                .then(response=>{
+                    this.cantChange = response.data
+                    console.log(this.cantChange)
+                })
+                .finally(()=>{
+                    this.loading = false
+                })
+           
+            
+        },
         async submitForm()
         {
             console.log(this.user)
             console.log(this.userId)
             console.log(this.user.email)
+            this.loading = true
 
-            if(this.user.name && this.user.phoneNumber && this.user.email && this.user.address && this.user.gender)
+            try {
+                if(this.user.name && this.user.phoneNumber && this.user.email && this.user.address && this.user.gender)
             {
 
                 if(!/^[\w.-]+@[a-zA-Z_-]+\.[a-zA-Z]{2,4}$/.test(this.user.email)){
@@ -239,6 +259,12 @@ export default {
 
 
         }
+                
+            } finally {
+                this.loading = false
+                
+            }
+           
         }
     }
 }

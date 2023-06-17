@@ -8,6 +8,7 @@ document.title='Home Page'
 </script>
 
 <template>
+  
     <div >
         <ManagerNavBar/>
         <div class="bg-slate-100 max-md:bg-white max-lg:bg-white ]">
@@ -122,6 +123,11 @@ document.title='Home Page'
     </dialog>
         </div>
         <ToastMessageVue ref="toast"/>
+        <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+        <div class="loader-wrapper">
+            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -139,28 +145,42 @@ export default {
             manager:[],
             isOpen: false,
             selectedUser: null,
-            role:null
+            role:null,
+
+            loading : false,
 
         }
     },
     mounted()
     {
-        axios.get("https://sistemkedairuncit.onrender.com/worker")
-        .then(response=>{
-            this.worker = response.data
-            console.log(this.worker)
-        })
-        .catch(error=>console.log(error))
-
-        axios.get("https://sistemkedairuncit.onrender.com/manager")
-        .then(response=>{
-            this.manager = response.data
-            console.log(this.manager)
-        })
-        .catch(error=>console.log(error))
-
+        this.loadData()
     },
     methods:{
+        loadData()
+        {
+                this.loading = true
+                axios.get("https://sistemkedairuncit.onrender.com/worker")
+                .then(response=>{
+                    this.worker = response.data
+                    console.log(this.worker)
+                })
+                .catch(error=>console.log(error))
+                .finally(()=>{
+                    this.loading =false
+                })
+
+                axios.get("https://sistemkedairuncit.onrender.com/manager")
+                .then(response=>{
+                    this.manager = response.data
+                    console.log(this.manager)
+                })
+                .catch(error=>console.log(error))
+                .finally(()=>{
+                    this.loading =false
+                })
+                
+          
+        },
         toggleDialog(user, role)
         {
             console.log(user)
@@ -174,6 +194,7 @@ export default {
             console.log(selectedUser);
             if (this.role === 'worker')
             {
+                this.loading =true
                 await axios.delete("https://sistemkedairuncit.onrender.com/worker/"+selectedUser.idWorker)
                 .then(response => {
                 const index = this.worker.findIndex(i => i.idWorker === selectedUser.idWorker)
@@ -183,12 +204,16 @@ export default {
                 const message ='Rekod Pekerja Berjaya Dibuang'
                 const status = 'Berjaya'
                 this.$refs.toast.toast(message,status,'success')
-            })
-            .catch(error=>console.log(error))
-            this.isOpen = !this.isOpen; // Toggle the isOpen property
+                })
+                .catch(error=>console.log(error))
+                .finally(()=>{
+                    this.loading = false
+                })
+                this.isOpen = !this.isOpen; // Toggle the isOpen property
             }
             else if (this.role === 'manager')
             {
+                this.loading =true
                 await axios.delete("https://sistemkedairuncit.onrender.com/manager/"+selectedUser.idManager)
                 .then(response => {
                 const index = this.manager.findIndex(i => i.idManager === selectedUser.idManager)
@@ -198,9 +223,12 @@ export default {
                 const message ='Rekod Pengguna Berjaya Dibuang'
                 const status = 'Berjaya'
                 this.$refs.toast.toast(message,status,'success')
-            })
-            .catch(error=>console.log(error))
-            this.isOpen = !this.isOpen; // Toggle the isOpen property
+                })
+                .catch(error=>console.log(error))
+                .finally(()=>{
+                    this.loading = false
+                })
+                this.isOpen = !this.isOpen; // Toggle the isOpen property
             }
 
 

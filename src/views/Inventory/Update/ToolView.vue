@@ -10,18 +10,28 @@ export default {
             item: [],
             isOpen: false,
             selectedItem: null,
-            updateId:""
+            updateId:"",
+            loading : false
         }
     },
     mounted(){
-        axios.get('https://sistemkedairuncit.onrender.com/item/tool')
-        .then(response=> {
-            this.item = response.data
-            console.log(response)
-        })
-        .catch(error=> console.log(error))
+        this.loadData()
+
     },
     methods: {
+        loadData()
+        {
+            this.loading = true
+            axios.get('https://sistemkedairuncit.onrender.com/item/tool')
+            .then(response=> {
+                this.item = response.data
+                console.log(response)
+            })
+            .catch(error=> console.log(error))
+            .finally(()=>{
+                this.loading = false
+            })
+        },
         toggleDialog(item) {
             this.selectedItem = item;
             this.updateId=this.selectedItem.idItem
@@ -31,6 +41,11 @@ export default {
 }
 </script>
 <template>
+    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+        <div class="loader-wrapper">
+            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+        </div>
+    </div>
     <div class="w-10/12 grid grid-cols-5 gap-10 mx-auto text-center max-md:block max-md:w-60" >
       <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
           <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110">

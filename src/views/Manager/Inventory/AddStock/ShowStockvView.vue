@@ -23,6 +23,11 @@ import { RouterView } from 'vue-router';
                     </div>
                 <div class="max-sm:mt-2 max-sm:ml-8 hover:text-black">
                     <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
+                    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                        <div class="loader-wrapper">
+                            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                        </div>
+                    </div>
                 </div>
                 </form>
         <div class="w-full mt-5 grid grid-cols-8 gap-2 mx-auto text-center text-sm max-lg:grid-cols-4 max-md:grid-cols-2">
@@ -65,6 +70,11 @@ import { RouterView } from 'vue-router';
                 </div>
                 <div class="">
                     <button class="w-max bg-black text-white p-2 px-10 rounded-xl hover:bg-white hover:text-black hover:outline hover:outline-black " @click="updateStock(selectedItem)">Sah</button>
+                    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+                        <div class="loader-wrapper">
+                            <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,14 +126,16 @@ export default {
 
             phoneScanner:false,
             isOpen: false,
-            
+
+            loading : false,
         }
     },
         methods:
         {
-        async searchItem()
+            async searchItem()
             {
                 try{
+                    this.loading = true
                     console.log(this.barkodProduk)
                     await axios.get("https://sistemkedairuncit.onrender.com/item/search/"+ this.barkodProduk)
                     .then(response=>{
@@ -148,50 +160,60 @@ export default {
                     this.barkodProduk=''
 
                 }
+                finally{
+                    this.loading=false
+                }
             },
             async updateStock(selectedItem)
         {
             console.log(selectedItem)
             console.log(this.item.quantity)
-
-            if(this.item.quantity < 1)
+            this.loading=true
+            try
             {
-                const message ='Sila Masukkan Kuantiti'
-                const status = 'Gagal'
-                this.$refs.toast.toast(message,status,'error')
-            }
-            else{
-                const newQuantity = selectedItem.quantity+this.item.quantity
-                const oldQuantity = selectedItem.quantity
-                selectedItem.quantity=newQuantity
-                if (isNaN(selectedItem.quantity))
+                if(this.item.quantity < 1)
                 {
-                    selectedItem.quantity=oldQuantity
                     const message ='Sila Masukkan Kuantiti'
                     const status = 'Gagal'
                     this.$refs.toast.toast(message,status,'error')
-
                 }
-                else
-                {
-                    console.log(selectedItem.idItem)
-                    this.item.quantity=''
+                else{
+                    const newQuantity = selectedItem.quantity+this.item.quantity
+                    const oldQuantity = selectedItem.quantity
+                    selectedItem.quantity=newQuantity
+                    if (isNaN(selectedItem.quantity))
+                    {
+                        selectedItem.quantity=oldQuantity
+                        const message ='Sila Masukkan Kuantiti'
+                        const status = 'Gagal'
+                        this.$refs.toast.toast(message,status,'error')
 
-                    console.log(newQuantity)
+                    }
+                    else
+                    {
+                        console.log(selectedItem.idItem)
+                        this.item.quantity=''
 
-                    await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
-                    .then(response=>{
-                        const update =response.data
-                        console.log(update)
-                    })
-                    .catch(error=>console.log(error))
-                    this.isOpen = !this.isOpen; // Toggle the isOpen property
+                        console.log(newQuantity)
 
-                    const message ='Kuantiti Telah Dikemaskini'
-                    const status = 'Berjaya'
-                    this.$refs.toast.toast(message,status,'success')
-                }
-                }
+                        await axios.put("https://sistemkedairuncit.onrender.com/item/updatestock/"+ selectedItem.idItem,{newQuantity:newQuantity})
+                        .then(response=>{
+                            const update =response.data
+                            console.log(update)
+                        })
+                        .catch(error=>console.log(error))
+                        this.isOpen = !this.isOpen; // Toggle the isOpen property
+
+                        const message ='Kuantiti Telah Dikemaskini'
+                        const status = 'Berjaya'
+                        this.$refs.toast.toast(message,status,'success')
+                    }
+                    }
+            }
+            finally
+            {
+                this.loading=false
+            }
 
         },
         async toggleDialog(item)

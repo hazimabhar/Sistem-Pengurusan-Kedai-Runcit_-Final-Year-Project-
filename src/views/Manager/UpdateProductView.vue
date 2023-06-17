@@ -261,14 +261,23 @@ export default {
     console.log(this.itemId);
     window.addEventListener("LR_UPLOAD_FINISH", this.handleUploadFinish);
 
-        axios.get('https://sistemkedairuncit.onrender.com/item/'+this.itemId)
+    this.loadData()
+ 
+    },
+  methods: {
+    loadData()
+    {
+      this.loading = true
+      axios.get('https://sistemkedairuncit.onrender.com/item/'+this.itemId)
         .then(response=> {
             this.item = response.data
             console.log(this.item)
         })
         .catch(error=> console.log(error))
+        .finally(()=>{
+          this.loading = false
+        })
     },
-  methods: {
     handleUploadFinish(e) {
             const dataUpload = e.detail.data[0];
             this.fileName = dataUpload.name;
@@ -277,8 +286,12 @@ export default {
             console.log(this.item.image)
     },
     updateInfo() {
-        
-      if(this.item.name && this.item.price && this.item.weight && this.item.unit && this.item.quantity && this.item.barcode && this.item.category && this.item.image)
+      this.loading = true
+
+      try
+      {
+
+        if(this.item.name && this.item.price && this.item.weight && this.item.unit && this.item.quantity && this.item.barcode && this.item.category && this.item.image)
       { 
         this.item.price = parseFloat(this.item.price)
         this.item.quantity = parseInt(this.item.quantity)
@@ -364,6 +377,10 @@ export default {
                 this.errorImage=''
             }
         }
+      }
+      finally{
+        this.loading=false
+      }
     },
     toggleDialog() {
             this.isOpen = !this.isOpen; // Toggle the isOpen property

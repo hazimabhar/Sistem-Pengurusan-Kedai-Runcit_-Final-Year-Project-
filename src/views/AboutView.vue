@@ -31,6 +31,11 @@ document.title="Reset Password"
             </div>
         </form>
     </div>
+    <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
+    <div class="loader-wrapper">
+         <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
+    </div>
+</div>
 </template>
 <script>
 import axios from 'axios';
@@ -52,6 +57,7 @@ export default
             errorNric:'',
             errorphoneNumber:'',
             errorEmail:'',
+            loading : false,
         }
     },
     async mounted()
@@ -65,6 +71,7 @@ export default
         {
             if(this.icNumber&&this.phoneNumber&&this.email)
             {
+                this.loading = true
                 this.errorNric=''
                 this.errorphoneNumber=''
                 this.errorEmail=''
@@ -74,7 +81,7 @@ export default
 
                 
                     await axios.get("https://sistemkedairuncit.onrender.com/resetpassword/"+this.icNumber)
-                .then(response=>{
+                    .then(response=>{
                     this.user= response.data
                     console.log(this.user.idAccount)
                     sessionStorage.setItem("idAccount",JSON.stringify(this.user.idAccount))
@@ -150,6 +157,8 @@ export default
                         this.phoneNumber=''
                         this.email=''
                     }
+                }).finally(()=>{
+                    this.loading = false
                 })
             }
             else
