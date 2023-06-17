@@ -47,7 +47,7 @@ export default {
         </div>
     </div>
   <div
-    class="w-10/12 grid grid-cols-5 gap-10 mx-auto text-center max-md:block max-md:w-60"
+    class="w-10/12 grid grid-cols-5 gap-10 mx-10 text-center max-md:block max-md:w-60"
   >
     <RouterLink
       to=""
@@ -61,7 +61,7 @@ export default {
         <div class="bg-white py-5 rounded-xl h-44">
           <img class="mx-auto h-[100%]" :src="item.image" alt="Produk">
         </div>
-        <div class="p-2">
+        <div class="p-2 h-16">
           {{ item.name }}
         </div>
       </div>
