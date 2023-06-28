@@ -44,6 +44,14 @@ export default {
             
         }
     },
+    mounted() {
+        const mediaQuery = window.matchMedia('(max-width: 850px)'); // Adjust the breakpoint as needed
+        this.openSideBar = mediaQuery.matches;
+
+        mediaQuery.addEventListener('change', (event) => {
+        this.openSideBar = event.matches;
+        });
+    },
         methods:
         {
         closeOpenSideBar()

@@ -162,24 +162,19 @@ export default {
                 axios.get("https://sistemkedairuncit.onrender.com/worker")
                 .then(response=>{
                     this.worker = response.data
-                    console.log(this.worker)
                 })
                 .catch(error=>console.log(error))
                 .finally(()=>{
                     this.loading =false
                 })
-
                 axios.get("https://sistemkedairuncit.onrender.com/manager")
                 .then(response=>{
                     this.manager = response.data
-                    console.log(this.manager)
                 })
                 .catch(error=>console.log(error))
                 .finally(()=>{
                     this.loading =false
                 })
-                
-          
         },
         toggleDialog(user, role)
         {

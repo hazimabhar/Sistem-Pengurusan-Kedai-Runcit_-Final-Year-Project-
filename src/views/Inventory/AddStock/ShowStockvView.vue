@@ -11,17 +11,17 @@ import { RouterView } from 'vue-router';
     <div>
         <div class="w-[90%] mx-auto max-md:w-full">
         <div>
-            <p class="font-medium w-3/4  text-2xl pt-10 pb-6 max-md:text-xl max-md:pt-3 max-md:pb-2 max-md:w-full max-md:mx-0">Pilih Kategori Produk</p>
+            <p class="font-medium w-3/4 text-2xl pt-10 pb-6 max-sm:text-lg max-sm:pb-2 max-sm:pl-2">Pilih Kategori Produk</p>
         </div>
         <form class="flex max-sm:block" @submit.prevent="searchItem" autocomplete="off" >
-                    <div class="relative max-sm:right-[28px] mt-[2px]" >
-                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-md:pr-0 max-md:m-0  max-sm:w-[270px]" placeholder="Imbas Kodbar"  type="text"  id="kodbar">
+                    <div class="relative  mt-[2px]" >
+                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-sm:pr-[100px]" placeholder="Imbas Kodbar"  type="text"  id="kodbar">
                         <div @click="camScanner">
-                            <i class="fa-solid fa-camera absolute bottom-2 pl-10 hover:opacity-50 cursor-pointer lg:hidden  max-lg:left-[62%] max-sm:left-[76%] max-sm:top-2"></i>
+                            <i class="fa-solid fa-camera absolute bottom-2 pl-10 hover:opacity-50 cursor-pointer lg:hidden max-lg:top-2 max-lg:left-[85%] max-sm:left-[76%] max-sm:top-2"></i>
                         </div>
                     </div>
-                <div class="max-sm:mt-2 max-sm:ml-8 hover:text-black">
-                    <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
+                <div class="max-sm:mt-2 max-sm:ml-24 hover:text-black ">
+                    <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-lg:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
                 <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
                     <div class="loader-wrapper">
                         <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
@@ -45,7 +45,7 @@ import { RouterView } from 'vue-router';
         </div>
     </div>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-    <dialog class=" w-1/3 mx-auto shadow-product rounded-2xl  fixed top-44 z-50" v-bind:open="isOpen">
+    <dialog class=" w-1/3 mx-auto shadow-product rounded-2xl fixed top-44 z-50 max-lg:w-4/5" v-bind:open="isOpen">
         <div class="" v-if="selectedItem" >
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
                 <img class="mx-auto w-[45%]" :src="selectedItem.image" alt="Produk">

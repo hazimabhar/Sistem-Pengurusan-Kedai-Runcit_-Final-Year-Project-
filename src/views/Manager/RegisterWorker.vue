@@ -281,9 +281,6 @@ export default {
 
                     if (role === "Pengurus")
                     {
-                        console.log("Manager");
-                        console.log(user);
-                        console.log(info);
                         axios.post("https://sistemkedairuncit.onrender.com/", user)
                         .then(response=>{
                             const idAccount = response.data.idAccount
@@ -297,9 +294,6 @@ export default {
                     }
                     else
                     {
-                        console.log("Worker");
-                        console.log(user);
-                        console.log(info);
                         axios.post("https://sistemkedairuncit.onrender.com/", user)
                         .then(response=>{
                             const idAccount = response.data.idAccount

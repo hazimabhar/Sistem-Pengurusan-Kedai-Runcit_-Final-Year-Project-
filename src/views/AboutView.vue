@@ -12,8 +12,8 @@ document.title="Reset Password"
 </script>
 <template>
     <div class="bg-teal-500 w-screen min-h-screen  grid place-items-center">
-        <form class="bg-white w-2/4 rounded-3xl shadow-login max-md:w-4/5" @submit.prevent="submitLogin">
-            <h1 class="font-bold tracking-wider text-xl text-center py-10">Sila Masukkan Maklumat Anda</h1>
+        <form class="bg-white w-2/4 rounded-3xl shadow-login max-lg:w-4/5 max-sm:4/5" @submit.prevent="submitLogin">
+            <h1 class="font-bold text-xl text-center py-10 max-lg:text-3xl max-sm:text-base">Sila Masukkan Maklumat Anda</h1>
             <div class="w-4/5 mx-auto">
                 <MyLabel text="Nombor Kad Pengenalan" />
                 <input class="mt-2 mb-2 bg-gray-300 w-full p-3 rounded-xl focus:outline-emerald-700 shadow-input" placeholder="888888888888" v-model="icNumber" type="text" id="icNumber" ><br>
@@ -165,7 +165,7 @@ export default
             {
                 if(this.icNumber==='')
                 {
-                    this.errorNric='*Sila Masukkan Nombor Kad Pengenalan Anda'
+                    this.errorNric='*xNombor Kad Pengenalan '
 
                 }else{
                     this.errorNric=''
