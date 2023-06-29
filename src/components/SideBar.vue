@@ -69,7 +69,7 @@ import {
         </nav>
     </div> 
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-        <dialog class="w-1/5 mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+        <dialog class="w-1/5 mx-auto shadow-product rounded-2xl fixed top-44 z-50 max-lg:w-1/2 max-sm:w-4/5" v-bind:open="isOpen">
         <div class="">
             <div class="mb-5">
                 <p class="font-semibold text-red-600 text-center text-xl">Log Keluar?</p>            

@@ -13,10 +13,10 @@ document.title="Register Product";
     <NavBar/>
     <div class="bg-slate-100 min-h-screen max-md:bg-white ">
         <div>
-            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">Daftar Produk</p>
+            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-lg:w-4/5 max-sm:text-2xl max-sm:pb-2 ">Daftar Produk</p>
         </div>
             <div class="w-9/12 mx-auto mr-16 bg-white max-lg:w-11/12 max-lg:mx-auto max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
-                <ul class="inline-flex list-none px-8 pb-10">
+                <ul class="inline-flex list-nonepx-8 pb-10 max-lg:pl-14 max-sm:pl-0 max-sm:text-xs max-sm:pb-5">
                     <RouterLink to="/home" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
                     <span class="px-2">></span>
                     <RouterLink to="/manageinventory" class="text-blue-500 hover:underline">Urus Inventori</RouterLink> 
@@ -24,7 +24,7 @@ document.title="Register Product";
                     <li>Daftar Produk</li>
                 </ul>
                 <div class="w-full px-10 max-sm:p-0">
-                    <p class=" text-xl font-semibold mb-4">Sila Masukkan Maklumat Produk</p>
+                    <p class=" text-xl font-semibold mb-4 max-sm:text-lg">Sila Masukkan Maklumat Produk</p>
                     <form class="" @submit.prevent="registerProduct()">
                         <div class="flex justify-between max-sm:block">
                             <div class="">
@@ -99,7 +99,7 @@ document.title="Register Product";
                         </div>
                         <div class="w-max mx-auto flex gap-10 mt-1 max-sm:gap-5">
                             <div class="mt-[31px]">
-                                <RouterLink  to="/manageinventory" class="w-max bg-red-600 text-white rounded-3xl py-2 px-20 mt-6 hover:outline hover:outline-black  hover:bg-white hover:text-black" >Batal</RouterLink>
+                                <RouterLink  to="/manageinventory" class="w-max bg-red-600 text-white rounded-3xl py-2 px-20 mt-6 max-sm:px-8 hover:outline hover:outline-black  hover:bg-white hover:text-black" >Batal</RouterLink>
                             </div>
                             <div class="mt-[14px]">
                                 <MyButton txt="Daftar" class="max-sm:px-8" @click.prevent="submitForm"/>
@@ -177,7 +177,7 @@ document.title="Register Product";
                 <div class="flex flex-col items-center my-4">
                     <div class="section mx-auto w-11/12 text-xs">
                         <BarcodeScanner
-                            v-bind:qrbox="300"
+                            v-bind:qrbox="600"
                             v-bind:fps="10"
                             @scan-success="scanBarcode"
                             class="mx-auto"

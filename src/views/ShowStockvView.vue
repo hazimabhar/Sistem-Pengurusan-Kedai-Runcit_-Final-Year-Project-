@@ -13,32 +13,33 @@ document.title="Papar Stok"
     <NavBar/>
     <div class="bg-slate-100 min-h-screen max-md:bg-white max-lg:bg-white ">
       <div>
-        <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl">Papar Stok</p>
+        <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-lg:w-4/5">Papar Stok</p>
       </div>
-        <div class="w-9/12 mx-auto mr-16 bg-white max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
-          <ul class="inline-flex list-none px-8 pb-10">
+      <div class="w-9/12 min-h-screen mx-auto mr-16 bg-white max-lg:w-[100%] rounded-3xl p-5 max-sm:pt-4">
+          <ul class="inline-flex list-nonepx-8 pb-10 max-lg:pl-14 max-sm:pl-5 max-sm:text-xs max-sm:pb-5">
             <RouterLink to="/home" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
             <span class="px-2">></span>
             <li>Urus Stok</li>
           </ul>
-          <div class=" flex ml-14">
+          <div class="flex ml-14 ">
               <form class="flex max-sm:block" @submit.prevent="searchItem" autocomplete="off" >
                     <div class="relative max-sm:right-[28px] mt-[2px]" >
-                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-md:pr-0 max-md:m-0  max-sm:w-[270px]" placeholder="Imbas Kodbar"  type="text"  id="kodbar">
+                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-lg:pr-52 max-sm:pr-14 " placeholder="Imbas Kodbar"  type="text"  id="kodbar">
                         <div @click="camScanner">
-                            <i class="fa-solid fa-camera absolute bottom-2 pl-10 hover:opacity-50 cursor-pointer lg:hidden  max-lg:left-[62%] max-sm:left-[76%] max-sm:top-2"></i>
+                            <i class="fa-solid fa-camera absolute bottom-2 pl-10 hover:opacity-50 cursor-pointer lg:hidden  max-lg:left-[82%] max-lg:top-2 max-sm:left-[76%] max-sm:top-2"></i>
                         </div>
                     </div>
-                <div class="max-sm:mt-2 max-sm:ml-8 hover:text-black">
-                    <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
+                <div class="max-sm:mt-2 max-sm:ml-8 max-sm:flex hover:text-black">
+                    <button class="ml-5 text-white bg-teal-500 py-[6px] px-4 rounded-3xl hover:outline hover:outline-black max-sm:hover:outline-none max-sm:ml-10" :disabled="barkodProduk === ''">Cari <i class="pl-5 max-sm:pl-2 text-sm fa-solid fa-magnifying-glass text-white"></i></button>
                 <div v-if="loading" class="fixed inset-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
                     <div class="loader-wrapper">
                         <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
                     </div>
                 </div>
+
                 </div>
                 </form>
-                <div class="mt-1 ml-5">
+                <div class="mt-1 ml-5 max-sm:hidden">
                     <RouterLink to="/allitem" class="text-blue-500 underline hover:text-black ">Lihat Semua</RouterLink>
                 </div>
              </div>
@@ -54,12 +55,15 @@ document.title="Papar Stok"
             <ProductCategory to="/listitem/sauce" text="Sos & Kicap" src="/sauce.svg"/>
             <ProductCategory to="/listitem/food" text="Makanan" src="/food.svg"/>
             <ProductCategory to="/listitem/tool" text="Alatan" src="/broom.svg"/>
+            <div class=" lg:hidden max-lg:hidden max-sm:flex max-sm:justify-center items-end max-sm:pb-5">
+                <RouterLink to="/allitem" class="text-blue-500 underline hover:text-black text-xs">Lihat Semua ></RouterLink>
+            </div>
         </div>
         </div>
     </div>
   </div>
   <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !isOpen}"></div>
-    <dialog class="w-[30%] max-sm:w-[75%] mx-auto shadow-product rounded-2xl  absolute top-44 z-50" v-bind:open="isOpen">
+  <dialog class=" w-1/3 mx-auto shadow-product rounded-2xl fixed top-44 z-50 max-lg:w-[50%] max-sm:w-4/5" v-bind:open="isOpen">
         <div class="" v-if="itemDetail">
             <div class="py-5 rounded-xl  border-solid border-2 border-teal-500">
                 <img class="mx-auto w-[45%]" :src="itemDetail.image" alt="Produk">
@@ -97,7 +101,7 @@ document.title="Papar Stok"
                 <div class="flex flex-col items-center my-4">
                     <div class="section mx-auto w-11/12 text-xs">
                         <BarcodeScanner
-                            v-bind:qrbox="300"
+                            v-bind:qrbox="600"
                             v-bind:fps="10"
                             @scan-success="scanBarcode"
                             class="mx-auto"

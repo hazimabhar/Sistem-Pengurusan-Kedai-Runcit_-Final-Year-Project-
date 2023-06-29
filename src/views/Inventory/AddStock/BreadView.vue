@@ -101,9 +101,9 @@ export default {
          <div class="loader animate-spin rounded-full border-t-4 border-b-4 border-gray-200 h-12 w-12"></div>
     </div>
 </div>
-<div class="w-10/12 grid grid-cols-5 gap-32 mx-10 text-center max-lg:grid-cols-3 max-lg:gap-10 max-lg:ml-16 max-lg:mt-10 max-sm:ml-2" >
+<div class="w-10/12 grid grid-cols-5 gap-32 gap-y-5 mx-10 text-center max-lg:grid-cols-3 max-lg:gap-10 max-lg:ml-16 max-sm:grid-cols-2 max-sm:ml-6 max-sm:gap-2 " >
     <RouterLink to="" v-for="item in item" v-bind:key="item.idItem" @click="toggleDialog(item)">
-        <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110 max-sm:w-[100px]">
+        <div class="bg-teal-500 text-white w-48  rounded-2xl p-1 ease-in-out duration-500 hover:scale-110 max-sm:w-[130px]">
             <div class="bg-white py-5 rounded-xl h-44 max-sm:h-[120px] ">
                 <img class="mx-auto h-[100%]" :src="item.image" alt="Produk">
             </div>

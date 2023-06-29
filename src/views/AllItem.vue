@@ -11,30 +11,30 @@ document.title="List Product";
 <template>
   <div>
     <NavBar/>
-    <div class="bg-slate-100 min-h-screen max-md:bg-white ">
+    <div class="bg-slate-100 min-h-screen max-lg:bg-white ">
         <div>
-            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">Daftar Produk</p>
+            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8  max-lg:w-4/5 max-sm:text-2xl max-sm:pb-2 ">Senarai Semua Barangan</p>
         </div>
-            <div class="w-9/12  min-h-screen mx-auto mr-16 bg-white max-lg:w-11/12 max-lg:mx-auto max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
-                <ul class="inline-flex list-none px-8 pb-10">
+        <div class="w-9/12 min-h-screen mx-auto mr-16 bg-white max-lg:w-[100%] rounded-3xl p-5 max-sm:pt-4">
+                <ul class="inline-flex list-nonepx-8 pb-10 max-lg:pl-14 max-sm:pl-5 max-sm:text-[10px] max-sm:pb-5 max-sm:w-full">
                     <RouterLink to="/home" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
-                    <span class="px-2">></span>
-                    <RouterLink to="/showstock" class="text-blue-500 hover:underline">Urus Stok</RouterLink> 
+                    <span class="px-2 ">></span>
+                    <RouterLink to="/showstock" class="text-blue-500 hover:underline ">Urus Stok</RouterLink> 
                     <span class="px-2">></span>
                     <li>Senarai Semua Produk</li>
                 </ul>
-                <div class="w-full px-10 max-sm:p-0">
-                    <p class=" text-xl font-semibold mb-4">Senarai Produk</p>
+                <div class="w-full px-10 max-lg:px-14 max-sm:px-5">
+                    <p class=" text-xl font-semibold mb-4 max-sm:text-lg">Senarai Produk</p>
                     <table>
-                            <thead class="bg-teal-500 text-sm text-white">
+                            <thead class="bg-teal-500 text-sm text-white max-sm:text-xs">
                                 <tr>
-                                    <th class="w-[5%]   font-semibold py-2 px-2 rounded-l-2xl" >No.</th>
-                                    <th class="w-[60%] font-semibold">Nama Produk</th>
-                                    <th class="w-[5%]  font-semibold">Kuantiti</th>
-                                    <th class="w-[15%] font-semibold py-2 px-2 rounded-r-2xl">Harga</th>
+                                    <th class="w-1/12 max-sm:w-1/6  font-semibold py-2 px-2 rounded-l-2xl" >No.</th>
+                                    <th class="w-6/12 max-sm:w-4/6 font-semibold">Nama Produk</th>
+                                    <th class="w-1/12 max-sm:w-1/6 font-semibold">Kuantiti</th>
+                                    <th class="w-3/12 max-sm:w-1/6 font-semibold py-2 px-2 rounded-r-2xl">Harga</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="max-sm:text-xs">
                                 <tr v-for="(item, index) in item" v-bind:key="item.idItem">
                                     <td class="w-[5%] border-b-2 text-slate-500 font-medium py-2 text-center" >{{ index+1 }}</td>
                                     <td class="w-[60%] border-b-2 text-slate-500 font-medium text-center" >{{ item.name }}</td>
