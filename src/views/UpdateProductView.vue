@@ -199,7 +199,7 @@ document.title = "Update Product";
                 <div class="flex flex-col items-center my-4">
                     <div class="section mx-auto w-11/12 text-xs">
                         <BarcodeScanner
-                            v-bind:qrbox="600"
+                            v-bind:qrbox="400"
                             v-bind:fps="10"
                             @scan-success="scanBarcode"
                             class="mx-auto"
