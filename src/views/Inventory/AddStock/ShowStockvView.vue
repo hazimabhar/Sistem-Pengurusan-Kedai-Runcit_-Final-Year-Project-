@@ -15,7 +15,7 @@ import { RouterView } from 'vue-router';
         </div>
         <form class="flex max-sm:block" @submit.prevent="searchItem" autocomplete="off" >
                     <div class="relative  mt-[2px]" >
-                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-lg:pr-[200px] max-sm:pr-[30px]" placeholder="Imbas Kodbar"  type="text"  id="kodbar">
+                        <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-lg:pr-[230px] max-sm:pr-[20px]" placeholder="Imbas Kodbar"  type="text"  id="kodbar">
                         <div @click="camScanner">
                             <i class="fa-solid fa-camera absolute bottom-2 pl-10 hover:opacity-50 cursor-pointer lg:hidden max-lg:top-2 max-lg:left-[85%] max-sm:left-[76%] max-sm:top-2"></i>
                         </div>
