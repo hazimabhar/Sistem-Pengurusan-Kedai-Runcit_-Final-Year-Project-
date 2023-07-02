@@ -92,7 +92,7 @@ document.title="Papar Stok"
         </div>
     </dialog>
     <div id="overlay" class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-50" v-bind:class="{'hidden': !phoneScanner}"></div>
-    <dialog class="w-[70%] mx-auto shadow-product rounded-2xl  fixed top-44 z-50" v-bind:open="phoneScanner">
+    <dialog class="w-[70%] mx-auto shadow-product rounded-2xl  fixed top-44 z-50 max-sm:w-4/5" v-bind:open="phoneScanner">
         <div class="">
             <div class="justify-center text-center">
                 <div>
