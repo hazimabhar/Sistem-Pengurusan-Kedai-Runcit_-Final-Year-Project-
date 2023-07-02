@@ -12,12 +12,12 @@ document.title="Closing"
     <NavBar/>
     <div class="bg-slate-100 min-h-screen max-md:bg-white max-lg:bg-white ">
         <div>
-            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-md:text-3xl ">
+            <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-lg:w-4/5 max-sm:text-2xl max-sm:pb-2 ">
                 Hasil Jualan
             </p>
         </div>
-            <div class="w-9/12 mx-auto mr-16 bg-white max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
-                <ul class="inline-flex list-none px-8 pb-10">
+        <div class="w-9/12 min-h-screen mx-auto mr-16 bg-white max-lg:w-[100%] rounded-3xl p-5 max-sm:pt-4">
+                <ul class="inline-flex list-nonepx-8 pb-10 max-lg:pl-16 max-sm:pl-5 max-sm:text-xs max-sm:pb-5">
                     <RouterLink to="/home" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
                     <span class="px-2">></span>
                     <li>Tutup Jualan</li>
@@ -30,7 +30,7 @@ document.title="Closing"
                         <button class=" bg-black text-white p-5 rounded-2xl hover:bg-red-600 hover:scale-105"  :class="[tutupJualan ? '' : 'opacity-50 cursor-not-allowed']" :disabled="!tutupJualan" @click="downloadReport">Muat Turun Laporan</button>
                     </div>
                 </div> 
-                <div class="w-[20%] h-fit bg-white shadow-product p-5 rounded-xl fixed right-20 top-[250px]">
+                <div class="w-[20%] h-fit bg-white shadow-product p-5 rounded-xl fixed right-20 top-[250px] max-lg:right-3 max-lg:top-[220px]">
                     <p class="font-semibold text-base text-center">Sila Muat Naik Laporan Jualan</p>
                     <div class="flex justify-center mt-5">
                         <label class="text-blue-500" for="">{{fileName}}</label>
@@ -52,9 +52,9 @@ document.title="Closing"
                     </div>
                     <div class="pb-5" v-for="(sale, index) in allSaleReport" :key="index">
                         <div class="flex justify-between w-9/12 mx-auto bg-[#D9D9D9] p-3 px-10 rounded-3xl text-sm">
-                            <p class="font-semibold">Number Sale: {{ index+1 }}</p>
-                            <p class="font-semibold ml-16">Total Sale: RM {{ sale.price }}</p>
-                            <p class="font-semibold" >Worker Incharge: {{ sale.workerName.substring(0, 15) }}</p>
+                            <p class="font-semibold">Number : {{ index+1 }}</p>
+                            <p class="font-semibold ml-16">Total : RM {{ sale.price }}</p>
+                            <p class="font-semibold" >Worker : {{ sale.workerName.substring(0, 15) }}</p>
                         </div>
                         <div class="flex justify-between w-9/12 mx-auto p-3 px-10 text-sm">
                             <p class="font-semibold">List Item </p>
