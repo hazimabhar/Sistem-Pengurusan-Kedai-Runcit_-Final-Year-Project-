@@ -22,7 +22,7 @@ document.title="Papar Stok"
             <li>Urus Stok</li>
           </ul>
           <div class="flex ml-14 ">
-              <form class="flex max-sm:block" @submit.prevent="searchItem" autocomplete="off" >
+              <form class="flex max-sm:block max-sm:w-[70%]" @submit.prevent="searchItem" autocomplete="off" >
                     <div class="relative max-sm:right-[28px] mt-[2px]" >
                         <input ref="barkodProduk" v-model="barkodProduk" class=" bg-white py-1 px-5 pr-80 rounded-3xl outline outline-1 outline-emerald-700 shadow-input max-lg:pr-[150px] max-sm:pl-5 max-sm:pr-0  " placeholder="Imbas Kodbar"  type="text"  id="kodbar">
                         <div @click="camScanner">
