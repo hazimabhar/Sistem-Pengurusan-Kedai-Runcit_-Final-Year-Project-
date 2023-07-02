@@ -23,7 +23,7 @@ document.title='Home Page'
                                     <i class="fa-solid fa-circle-info text-red-500 pr-3 text-2xl"></i>
                                     <p class="font-semibold text-red-500 text-center mt-[3px] text-lg max-sm:text-base">Peringatan</p>
                                 </div>
-                                <p class="font-semibold text-base px-10 max-sm:px-2">Sila Tambah stok bagi produk ini</p>
+                                <p class="font-semibold text-center text-base px-10 max-sm:px-2">Sila Tambah stok bagi produk ini</p>
                                 <table>
                                 <thead>
                                     <tr>
