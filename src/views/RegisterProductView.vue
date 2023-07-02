@@ -15,15 +15,15 @@ document.title="Register Product";
         <div>
             <p class="font-bold w-1/2 mx-auto text-4xl pt-24 pb-8 max-lg:w-4/5 max-sm:text-2xl max-sm:pb-2 ">Daftar Produk</p>
         </div>
-            <div class="w-9/12 mx-auto mr-16 bg-white max-lg:w-4/5 max-lg:mx-auto max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
-                <ul class="inline-flex list-nonepx-8 pb-10 max-lg:pl-14 max-sm:pl-0 max-sm:text-xs max-sm:pb-5">
+            <div class="w-9/12 mx-auto mr-16 bg-white max-lg:w-4/5 max-lg:mx-auto max-lg:p-0 max-sm:w-11/12 max-sm:mx-auto rounded-3xl p-5">
+                <ul class="inline-flex list-nonepx-8 pb-10 max-lg:pl-0 max-sm:pl-0 max-sm:text-xs max-sm:pb-5">
                     <RouterLink to="/home" class="text-blue-500 hover:underline">Laman Utama</RouterLink> 
                     <span class="px-2">></span>
                     <RouterLink to="/manageinventory" class="text-blue-500 hover:underline">Urus Inventori</RouterLink> 
                     <span class="px-2">></span>
                     <li>Daftar Produk</li>
                 </ul>
-                <div class="w-full px-10 max-sm:p-0">
+                <div class="w-full px-10 max-sm:p-0 max-lg:p-0">
                     <p class=" text-xl font-semibold mb-4 max-sm:text-lg">Sila Masukkan Maklumat Produk</p>
                     <form autocomplete="off" class="" @submit.prevent="registerProduct()">
                         <div class="flex justify-between max-sm:block">
